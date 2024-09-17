@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpmtxtugd5fmr"]
+
+[ext_resource type="Script" path="res://Scripts/Player/PlayerStateMachine.cs" id="1_kprvd"]
+[ext_resource type="Script" path="res://Scripts/InputReader.cs" id="2_fwbsm"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6chwa"]
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("inputReader")]
+script = ExtResource("1_kprvd")
+inputReader = NodePath("InputReader")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_6chwa")
+
+[node name="InputReader" type="Node2D" parent="."]
+script = ExtResource("2_fwbsm")
