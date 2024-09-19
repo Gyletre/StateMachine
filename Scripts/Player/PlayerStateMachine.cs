@@ -1,14 +1,26 @@
 using Core;
 using Godot;
 using System;
+using Classes;
+using System.Collections.Generic;
 
 namespace StateMachine{
 	public partial class PlayerStateMachine :  StateMachine
 	{
-		[Export] public InputReader inputReader = new InputReader();
-		[Export] public float speed {get; private set;} = 50;
-		public bool canMove = false;
 		
+		[Export] public InputReader inputReader = new InputReader();
+		[Export] public AnimationPlayer animator;
+		[Export] public float speed {get; private set;} = 200;
+		public ClassManager classManager {get; private set; } = new ClassManager();
+		public bool canMove = false;
+		public bool attackFinished = false;
+		
+		
+		public override void _Ready(){
+			classManager.AddClass(new Warrior(this));
+			SwitchState(new PlayerMoveState(this));
+
+		}
 		public override void _PhysicsProcess(double delta)
 		{
 			Velocity = Vector2.Zero;
@@ -17,9 +29,8 @@ namespace StateMachine{
 			}
 			MoveAndSlide();
 		}
-		public override void _Ready(){
-			SwitchState(new PlayerMoveState(this));
-		}
-	}
+
+        
+    }
 
 }
