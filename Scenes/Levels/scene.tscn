@@ -1,9 +1,38 @@
-[gd_scene load_steps=2 format=3 uid="uid://vtw5fq5qkgsm"]
+[gd_scene load_steps=3 format=3 uid="uid://vtw5fq5qkgsm"]
 
 [ext_resource type="PackedScene" uid="uid://cpmtxtugd5fmr" path="res://Scenes/Entities/player.tscn" id="1_d724n"]
+[ext_resource type="PackedScene" uid="uid://bb80r0o32ds20" path="res://Scenes/Entities/get_class.tscn" id="2_vauuy"]
 
 [node name="Scene" type="Node2D"]
 
-[node name="Player" parent="." instance=ExtResource("1_d724n")]
-
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Player" parent="." groups=["Player"] instance=ExtResource("1_d724n")]
+
+[node name="GetMageClass" parent="." instance=ExtResource("2_vauuy")]
+position = Vector2(76, -52)
+classToAdd = 2
+
+[node name="GetClericClass" parent="." instance=ExtResource("2_vauuy")]
+position = Vector2(-63, -54)
+classToAdd = 3
+
+[node name="GetArcherClass" parent="." instance=ExtResource("2_vauuy")]
+position = Vector2(-62, 58)
+classToAdd = 4
+
+[node name="GetWarriorClass" parent="." instance=ExtResource("2_vauuy")]
+position = Vector2(76, 57)
+classToAdd = 1
+
+[node name="GetBattleMageClass" parent="." instance=ExtResource("2_vauuy")]
+position = Vector2(159, -1)
+classToAdd = 7
+
+[node name="GetBattleMageClass2" parent="." instance=ExtResource("2_vauuy")]
+position = Vector2(-155, -4)
+classToAdd = 7
+
+[node name="GetBattleMageClass3" parent="." instance=ExtResource("2_vauuy")]
+position = Vector2(3, 106)
+classToAdd = 7

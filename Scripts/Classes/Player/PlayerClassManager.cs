@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using StateMachine;
 
 namespace Classes{
-    public class ClassManager{
+    public class PlayerClassManager{
         public int totalLevel { get; private set; }
         List<ClassList> prerequisitesMet = new List<ClassList>();
         List<Class> classes = new List<Class>();
@@ -31,7 +30,9 @@ namespace Classes{
         }
         public void GainExp(int exp)
         {
-            Class lastClass =classes.Last();
+            
+            Class lastClass = classes.Last();
+            GD.Print("Gained " + exp + " exp! Level: "+ lastClass.level +" "+ lastClass.exp+"/"+lastClass.ExpToLvlUp());
             if(lastClass.exp + exp >= lastClass.ExpToLvlUp() && !lastClass.maxed) {
                 totalLevel ++;
             }

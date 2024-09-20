@@ -27,6 +27,7 @@ namespace StateMachine{
         }
         private void Jump() {
             GD.Print("Jump!");
+            stateMachine.classManager.GainExp(100);
         }
 
         

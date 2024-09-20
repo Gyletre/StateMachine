@@ -11,7 +11,7 @@ namespace StateMachine{
 		[Export] public InputReader inputReader = new InputReader();
 		[Export] public AnimationPlayer animator;
 		[Export] public float speed {get; private set;} = 200;
-		public ClassManager classManager {get; private set; } = new ClassManager();
+		public PlayerClassManager classManager {get; private set; } = new PlayerClassManager();
 		public bool canMove = false;
 		public bool attackFinished = false;
 		
@@ -19,6 +19,7 @@ namespace StateMachine{
 		public override void _Ready(){
 			classManager.AddClass(new Warrior(this));
 			SwitchState(new PlayerMoveState(this));
+			
 
 		}
 		public override void _PhysicsProcess(double delta)
@@ -29,8 +30,5 @@ namespace StateMachine{
 			}
 			MoveAndSlide();
 		}
-
-        
     }
-
 }

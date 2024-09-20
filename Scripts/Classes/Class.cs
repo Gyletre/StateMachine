@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 using System.Security.Cryptography.X509Certificates;
+using Godot;
 
 namespace Classes{
     public class Class{
@@ -8,7 +9,7 @@ namespace Classes{
         public StatSpread statScaling {get; private set;}
         public int exp {get; private set;}
         public bool maxed {get; private set;} = false;
-        int level;
+        public int level {get; private set;}
 
         public void GainExp(int amount){
             if(maxed) return;
@@ -35,16 +36,11 @@ namespace Classes{
             {
                 exp -= ExpToLvlUp();
                 level++;
-                ImproveStats();
                 if(level >= 10){
                     level = 10;
                     maxed = true;
                 }
             }
-        }
-        private void ImproveStats()
-        {
-            statScaling.LevelUp(level);
         }
 
         
@@ -52,17 +48,17 @@ namespace Classes{
         public int GetStat(StatType type){
             switch (type){
                 case StatType.Health:
-                    return statScaling.health.value;
+                    return statScaling.health.Get(level);
                 case StatType.Attack:
-                    return statScaling.attack.value;
+                    return statScaling.attack.Get(level);
                 case StatType.Magic:
-                    return statScaling.magic.value;
+                    return statScaling.magic.Get(level);
                 case StatType.Agility:
-                    return statScaling.agility.value;
+                    return statScaling.agility.Get(level);
                 case StatType.Defence:
-                    return statScaling.defence.value;
+                    return statScaling.defence.Get(level);
                 case StatType.Resist:
-                    return statScaling.resist.value;
+                    return statScaling.resist.Get(level);
             }
             return -1;
         }
@@ -99,24 +95,14 @@ namespace Classes{
             defence = new Stat(baseDefence);
             resist = new Stat(baseResist);
         }
-        public void LevelUp(int level){
-            health.Improve(level);
-            attack.Improve(level);
-            magic.Improve(level);
-            agility.Improve(level);
-            defence.Improve(level);
-            resist.Improve(level);
-        }
         
         public struct Stat{
             public Stat(int bStat){
                 scaling = bStat;
-                value = scaling;
             }
-            public void Improve(int level){
-                value = scaling * level;
+            public int Get(int level){
+                return scaling*level;
             }
-            public int value;
             private int scaling;
             }
     }
