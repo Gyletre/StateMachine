@@ -19,30 +19,9 @@ public partial class Area2DAddPlayerClass : Area2D
     public void OnBodyEntered(Node2D body){
 		if(body.IsInGroup("Player")){
 			if (body is PlayerStateMachine playerStateMachine){
-				playerStateMachine.classManager.AddClass(GetClassFromTag(classToAdd, playerStateMachine));
+				playerStateMachine.classManager.AddClass(classToAdd);
 			}
 		}
 	}
-	private Class GetClassFromTag(ClassList tag, PlayerStateMachine psm){
-		switch(tag){
-			case ClassList.Mage:
-				return new Mage(psm);
-			case ClassList.Warrior:
-				return new Warrior(psm);
-			case ClassList.Cleric:
-				return new Cleric(psm);
-			case ClassList.Archer:
-				return new Archer(psm);
-			case ClassList.Sniper:
-				return new Sniper(psm);
-			case ClassList.Paladin:
-				return new Paladin(psm);
-			case ClassList.BattleMage:
-				return new BattleMage(psm);
-
-		
-		}
-		return new Class();
-		
-	}
+	
 }

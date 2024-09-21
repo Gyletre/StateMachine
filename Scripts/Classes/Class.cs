@@ -43,8 +43,6 @@ namespace Classes{
             }
         }
 
-        
-        
         public int GetStat(StatType type){
             switch (type){
                 case StatType.Health:
@@ -64,7 +62,6 @@ namespace Classes{
         }
 
     }
-    
     
     public struct StatSpread{
         public Stat health;
@@ -101,7 +98,7 @@ namespace Classes{
                 scaling = bStat;
             }
             public int Get(int level){
-                return scaling*level;
+                return (int)(scaling*(1+0.2*(level-1)));
             }
             private int scaling;
             }

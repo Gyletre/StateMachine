@@ -1,8 +1,6 @@
 using Core;
 using Godot;
-using System;
 using Classes;
-using System.Collections.Generic;
 
 namespace StateMachine{
 	public partial class PlayerStateMachine :  StateMachine
@@ -17,7 +15,7 @@ namespace StateMachine{
 		
 		
 		public override void _Ready(){
-			classManager.AddClass(new Warrior(this));
+			classManager.AddClass(ClassList.Warrior);
 			SwitchState(new PlayerMoveState(this));
 			
 

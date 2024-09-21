@@ -29,10 +29,14 @@ classToAdd = 1
 position = Vector2(159, -1)
 classToAdd = 7
 
-[node name="GetBattleMageClass2" parent="." instance=ExtResource("2_vauuy")]
+[node name="GetPaladinClass" parent="." instance=ExtResource("2_vauuy")]
 position = Vector2(-155, -4)
-classToAdd = 7
+classToAdd = 6
 
-[node name="GetBattleMageClass3" parent="." instance=ExtResource("2_vauuy")]
+[node name="GetSniperClass" parent="." instance=ExtResource("2_vauuy")]
 position = Vector2(3, 106)
-classToAdd = 7
+classToAdd = 5
+
+[node name="GetMysticClass" parent="." instance=ExtResource("2_vauuy")]
+position = Vector2(5, -109)
+classToAdd = 8

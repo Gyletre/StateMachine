@@ -7,6 +7,7 @@ namespace Classes{
         Archer,
         Sniper,
         Paladin,
-        BattleMage
+        BattleMage,
+        Mystic
     }
 }
