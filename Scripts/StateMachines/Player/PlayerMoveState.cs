@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Linq;
 using Godot;
 
 namespace StateMachine{
@@ -13,6 +14,9 @@ namespace StateMachine{
         {
             stateMachine.inputReader.JumpEvent += Jump;
             stateMachine.canMove = true;
+            if(stateMachine.classManager.abilities.Count > 0){
+                stateMachine.inputReader.ability1 += stateMachine.classManager.abilities.First();
+            }
         }
         public override void Tick(double delta)
         {

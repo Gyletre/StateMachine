@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://dkrm2pa3xtjtw"]
+
+[ext_resource type="Script" path="res://Scripts/Projectiles/Firebolt.cs" id="1_3wy6e"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_atowv"]
+size = Vector2(10, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w3wfx"]
+size = Vector2(10, 10)
+
+[node name="Firebolt" type="Node2D"]
+script = ExtResource("1_3wy6e")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_atowv")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_w3wfx")
+
+[connection signal="body_entered" from="Area2D" to="." method="OnCollision"]

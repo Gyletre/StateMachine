@@ -2,14 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Core;
 
 namespace Classes{
     public class PlayerClassManager{
+        public InputReader inputReader;
         public int totalLevel { get; private set; }
+        public List<Action<Node2D>> abilities {get; private set;}
         List<ClassList> prerequisitesMet = new List<ClassList>();
         List<Class> classes = new List<Class>();
         
-
         public void AddClass(ClassList newClass){
             foreach (Class c in classes){
                 if(!c.maxed){
@@ -51,6 +53,7 @@ namespace Classes{
                 totalLevel ++;
             }
             lastClass.GainExp(exp);
+            abilities = GetAbilityList();
         }
         public int GetStat(StatType type)
         {
@@ -60,6 +63,21 @@ namespace Classes{
                 value += c.GetStat(type);
             }
             return value;
+        }
+        private List<Action<Node2D>> GetAbilityList(){
+            List<Action<Node2D>> abils = new List<Action<Node2D>>();
+            foreach (var c in classes){
+                if (c is PlayerBaseClass pc){
+                    if(pc.GetAbilities() != null) abils.AddRange(pc.GetAbilities());
+                }
+            }
+            if (abils.Count > 0){
+                foreach (var c in abils) 
+                {
+                    GD.Print(c.Method.Name);
+                }
+            }
+            return abils;
         }
         private Class GetClassFromTag(ClassList tag){
 		switch(tag){

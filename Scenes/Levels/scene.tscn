@@ -9,34 +9,36 @@
 
 [node name="Player" parent="." groups=["Player"] instance=ExtResource("1_d724n")]
 
-[node name="GetMageClass" parent="." instance=ExtResource("2_vauuy")]
+[node name="ClassGivers" type="Node2D" parent="."]
+
+[node name="GetMageClass" parent="ClassGivers" instance=ExtResource("2_vauuy")]
 position = Vector2(76, -52)
 classToAdd = 2
 
-[node name="GetClericClass" parent="." instance=ExtResource("2_vauuy")]
+[node name="GetClericClass" parent="ClassGivers" instance=ExtResource("2_vauuy")]
 position = Vector2(-63, -54)
 classToAdd = 3
 
-[node name="GetArcherClass" parent="." instance=ExtResource("2_vauuy")]
+[node name="GetArcherClass" parent="ClassGivers" instance=ExtResource("2_vauuy")]
 position = Vector2(-62, 58)
 classToAdd = 4
 
-[node name="GetWarriorClass" parent="." instance=ExtResource("2_vauuy")]
+[node name="GetWarriorClass" parent="ClassGivers" instance=ExtResource("2_vauuy")]
 position = Vector2(76, 57)
 classToAdd = 1
 
-[node name="GetBattleMageClass" parent="." instance=ExtResource("2_vauuy")]
+[node name="GetBattleMageClass" parent="ClassGivers" instance=ExtResource("2_vauuy")]
 position = Vector2(159, -1)
 classToAdd = 7
 
-[node name="GetPaladinClass" parent="." instance=ExtResource("2_vauuy")]
+[node name="GetPaladinClass" parent="ClassGivers" instance=ExtResource("2_vauuy")]
 position = Vector2(-155, -4)
 classToAdd = 6
 
-[node name="GetSniperClass" parent="." instance=ExtResource("2_vauuy")]
+[node name="GetSniperClass" parent="ClassGivers" instance=ExtResource("2_vauuy")]
 position = Vector2(3, 106)
 classToAdd = 5
 
-[node name="GetMysticClass" parent="." instance=ExtResource("2_vauuy")]
+[node name="GetMysticClass" parent="ClassGivers" instance=ExtResource("2_vauuy")]
 position = Vector2(5, -109)
 classToAdd = 8

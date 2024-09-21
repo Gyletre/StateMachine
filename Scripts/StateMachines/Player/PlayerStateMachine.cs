@@ -15,6 +15,7 @@ namespace StateMachine{
 		
 		
 		public override void _Ready(){
+			
 			classManager.AddClass(ClassList.Warrior);
 			SwitchState(new PlayerMoveState(this));
 			
