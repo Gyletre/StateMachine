@@ -2,8 +2,10 @@ using System;
 using System.Dynamic;
 using Godot;
 
-namespace Core{
-    public partial class InputReader: Node2D{
+namespace Core
+{
+    public partial class InputReader : Node2D
+    {
         Node2D player;
         public override void _Ready()
         {
@@ -21,29 +23,34 @@ namespace Core{
         public override void _UnhandledInput(InputEvent evt)
         {
             isAttacking = Input.IsActionPressed("attack");
-            
-            if (Input.IsActionJustPressed("dodge")){
+
+            if (Input.IsActionJustPressed("dodge"))
+            {
                 DodgeEvent?.Invoke();
-                    GD.Print("dodge");
+                GD.Print("dodge");
             }
-            if (Input.IsActionJustPressed("jump")){
+            if (Input.IsActionJustPressed("jump"))
+            {
                 JumpEvent?.Invoke();
             }
-            float x,y = 0f;
+            float x, y = 0f;
             x = Input.GetActionStrength("right") - Input.GetActionStrength("left");
             y = Input.GetActionStrength("down") - Input.GetActionStrength("up");
 
-            moveDirection = new Vector2(x,y);
-            if (evt.IsActionPressed("ability1")){
+            moveDirection = new Vector2(x, y);
+            if (evt.IsActionPressed("ability1"))
+            {
                 ability1?.Invoke(player);
             }
-            if (evt.IsActionPressed("ability2")){
+            if (evt.IsActionPressed("ability2"))
+            {
                 ability2?.Invoke(player);
             }
-            if (evt.IsActionPressed("ability3")){
+            if (evt.IsActionPressed("ability3"))
+            {
                 ability3?.Invoke(player);
             }
         }
-        
+
     }
 }

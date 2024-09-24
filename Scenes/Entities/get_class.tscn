@@ -1,20 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://bb80r0o32ds20"]
+[gd_scene load_steps=4 format=3 uid="uid://bb80r0o32ds20"]
 
 [ext_resource type="Script" path="res://Scripts/Classes/Area2DAddPlayerClass.cs" id="1_sla1r"]
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_8isgu"]
+size = Vector2(64, 16)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u5ibm"]
-size = Vector2(49, 20)
+size = Vector2(64, 16)
 
 [node name="GetClass" type="Area2D"]
 script = ExtResource("1_sla1r")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_8isgu")
+
 [node name="Label" type="Label" parent="."]
-offset_left = -22.0
-offset_top = -13.0
-offset_right = 21.0
-offset_bottom = 10.0
+offset_left = -32.0
+offset_top = -12.0
+offset_right = 32.0
+offset_bottom = 11.0
 text = "class
 "
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_u5ibm")

@@ -1,5 +1,7 @@
-namespace Classes{
-    public enum ClassList{
+namespace Classes
+{
+    public enum ClassList
+    {
         Base,
         Warrior,
         Mage,

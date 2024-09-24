@@ -1,7 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cpmtxtugd5fmr"]
+[gd_scene load_steps=10 format=3 uid="uid://cpmtxtugd5fmr"]
 
 [ext_resource type="Script" path="res://Scripts/StateMachines/Player/PlayerStateMachine.cs" id="1_6k6vq"]
 [ext_resource type="Script" path="res://Scripts/InputReader.cs" id="2_fwbsm"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1u4y8"]
+size = Vector2(20, 30)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6chwa"]
 
@@ -93,12 +96,20 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7q2fu"]
 size = Vector2(30, 5)
 
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_030rn"]
+size = Vector2(30, 5)
+
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("inputReader", "animator")]
 script = ExtResource("1_6k6vq")
 inputReader = NodePath("InputReader")
 animator = NodePath("Animator")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.226808, 0.954104, 1, 1)
+texture = SubResource("PlaceholderTexture2D_1u4y8")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CapsuleShape2D_6chwa")
 
 [node name="InputReader" type="Node2D" parent="."]
@@ -116,5 +127,8 @@ position = Vector2(17, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Weapon"]
 position = Vector2(12, 0)
 shape = SubResource("RectangleShape2D_7q2fu")
+
+[node name="Sprite2D" type="Sprite2D" parent="Weapon/CollisionShape2D"]
+texture = SubResource("PlaceholderTexture2D_030rn")
 
 [connection signal="animation_finished" from="Animator" to="." method="OnAnimatorAnimationFinished"]
