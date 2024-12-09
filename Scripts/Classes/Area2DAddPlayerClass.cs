@@ -1,7 +1,7 @@
 using Godot;
 using StateMachine;
 using System;
-using Classes;
+using Game.Classes;
 
 public partial class Area2DAddPlayerClass : Area2D
 {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Classes
+namespace Game.Classes
 {
     public class Mystic : PlayerAdvancedClass
     {

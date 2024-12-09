@@ -4,7 +4,7 @@ using System.Linq;
 using Godot;
 using Core;
 
-namespace Classes
+namespace Game.Classes
 {
     public class PlayerClassManager
     {
@@ -114,8 +114,6 @@ namespace Classes
                     return new BattleMage();
                 case ClassList.Mystic:
                     return new Mystic();
-
-
             }
             return new Class();
 

@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 using System.Security.Cryptography.X509Certificates;
 using Godot;
 
-namespace Classes
+namespace Game.Classes
 {
     public class Class
     {

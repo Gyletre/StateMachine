@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 
-namespace Classes
+namespace Game.Classes
 {
     public class Mage : PlayerBaseClass
     {

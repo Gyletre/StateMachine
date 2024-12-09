@@ -1,6 +1,8 @@
 using Core;
 using Godot;
-using Classes;
+using Game.Classes;
+using System;
+using Interface;
 
 namespace StateMachine
 {
@@ -8,7 +10,7 @@ namespace StateMachine
 	{
 
 		[Export] public InputReader inputReader = new InputReader();
-		[Export] public AnimationPlayer animator;
+		[Export] public AnimationTree animationTree;
 		[Export] public float speed { get; private set; } = 200;
 		public PlayerClassManager classManager { get; private set; } = new PlayerClassManager();
 		public bool canMove = false;
@@ -20,9 +22,19 @@ namespace StateMachine
 
 			classManager.AddClass(ClassList.Warrior);
 			SwitchState(new PlayerMoveState(this));
+			GetNode<Area2D>("MeleeHitBox").BodyEntered += OnAttack;
 
 
 		}
+
+		private void OnAttack(Node2D body)
+		{
+			if (body is Enemy e)
+			{
+				e.TakeDamage(this, classManager.GetStat(StatType.Attack));
+			}
+		}
+
 		public override void _PhysicsProcess(double delta)
 		{
 			Velocity = Vector2.Zero;

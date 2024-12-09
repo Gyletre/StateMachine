@@ -1,6 +1,6 @@
 using System.Reflection.Metadata;
 using Godot;
-using Classes;
+using Game.Classes;
 
 namespace StateMachine
 {
@@ -14,23 +14,16 @@ namespace StateMachine
 
         public override void Enter()
         {
-            stateMachine.animator.Play("attack");
-            stateMachine.attackFinished = false;
-            GD.Print("Attack: " + stateMachine.classManager.GetStat(StatType.Attack) + " Magic: " + stateMachine.classManager.GetStat(StatType.Magic));
+            //start attack
 
         }
         public override void Tick(double delta)
         {
-            if (!stateMachine.animator.IsPlaying())
-            {
-                stateMachine.SwitchState(new PlayerMoveState(stateMachine));
-            }
-
-
+            //exit when animation is done
         }
         public override void Exit()
         {
-
+            
         }
 
 

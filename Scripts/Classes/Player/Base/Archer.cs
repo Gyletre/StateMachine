@@ -1,6 +1,6 @@
 
 
-namespace Classes
+namespace Game.Classes
 {
     public class Archer : PlayerBaseClass
     {

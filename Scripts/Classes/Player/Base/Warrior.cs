@@ -1,5 +1,5 @@
 
-namespace Classes
+namespace Game.Classes
 {
     public class Warrior : PlayerBaseClass
     {

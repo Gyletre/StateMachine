@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Godot;
-namespace Classes
+namespace Game.Classes
 {
     public class PlayerBaseClass : Class
     {

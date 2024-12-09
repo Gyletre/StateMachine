@@ -1,4 +1,4 @@
-namespace Classes
+namespace Game.Classes
 {
     public enum ClassList
     {
