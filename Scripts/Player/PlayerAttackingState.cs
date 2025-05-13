@@ -1,7 +1,9 @@
-using System.Reflection.Metadata;
+using System;
 using Godot;
+using Animation;
 
-namespace StateMachine{
+namespace StateMachine
+{
     public class PlayerAttackingState : PlayerBaseState
     {
         public PlayerAttackingState(PlayerStateMachine stateMachine) : base(stateMachine)
@@ -12,20 +14,22 @@ namespace StateMachine{
         public override void Enter()
         {
             GD.Print("Attack");
-            //start attack animation
+            stateMachine.animator.SwitchAnimation(AnimationType.Attack0, OnAnimationEnded);
         }
         public override void Tick(double delta)
         {
-            //handle collision
-            //return to testState after attack, or 
-            
-            stateMachine.SwitchState(new PlayerMoveState(stateMachine));
+
         }
         public override void Exit()
         {
-            
+            stateMachine.inputReader.IsAttacking();
         }
 
-        
+        void OnAnimationEnded()
+        {
+            stateMachine.SwitchState(new PlayerMoveState(stateMachine));
+        }
+
+
     }
 }

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DirectionalAnimation" load_steps=3 format=3 uid="uid://l1gc63bfnupl"]
+
+[ext_resource type="Script" path="res://Scripts/Animation/DirectionalAnimation.cs" id="1_dcpoj"]
+[ext_resource type="Texture2D" uid="uid://bwh3vvcvb3swm" path="res://project_assets/human/paladin/Paladin_attack.png" id="2_vkq31"]
+
+[resource]
+script = ExtResource("1_dcpoj")
+type = 4
+looping = false
+texture = ExtResource("2_vkq31")
+YOffset = 16
+length = 5
+times = PackedFloat32Array(0.1, 0.1, 0.1, 0.1, 0.1)

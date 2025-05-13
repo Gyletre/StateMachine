@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="DirectionalAnimation" load_steps=3 format=3 uid="uid://btott7i5c1e2q"]
+
+[ext_resource type="Script" path="res://Scripts/Animation/DirectionalAnimation.cs" id="1_ucrax"]
+[ext_resource type="Texture2D" uid="uid://p55xd7et0tey" path="res://project_assets/human/paladin/Paladin_hit.png" id="2_7bva6"]
+
+[resource]
+script = ExtResource("1_ucrax")
+type = 2
+texture = ExtResource("2_7bva6")
+length = 2
+times = PackedFloat32Array(0.4, 0.2)
+looping = false
