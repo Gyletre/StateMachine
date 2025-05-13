@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://bau2kfuvknso5"]
+
+[ext_resource type="Script" path="res://Scripts/AbilityMenu.cs" id="1_i8av1"]
+
+[node name="Ability Menu" type="Control" node_paths=PackedStringArray("abilityList")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i8av1")
+abilityList = NodePath("MarginContainer/ItemList")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 591.0
+offset_bottom = 301.0
+
+[node name="ItemList" type="ItemList" parent="MarginContainer"]
+layout_mode = 2
+select_mode = 1
+item_count = 2
+item_0/text = "Fireball"
+item_1/text = "lettuce (+2 damage)"
+item_1/disabled = true

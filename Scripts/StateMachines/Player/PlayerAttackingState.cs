@@ -1,31 +1,39 @@
-using System.Reflection.Metadata;
+using System;
 using Godot;
-using Game.Classes;
+using Animation;
 
 namespace StateMachine
 {
-    public class PlayerAttackingState : PlayerBaseState
+    namespace StateMachine
     {
-
-        public PlayerAttackingState(PlayerStateMachine stateMachine) : base(stateMachine)
+        public class PlayerAttackingState : PlayerBaseState
         {
-            this.stateMachine = stateMachine;
-        }
 
-        public override void Enter()
-        {
-            //start attack
+            public PlayerAttackingState(PlayerStateMachine stateMachine) : base(stateMachine)
+            {
+                this.stateMachine = stateMachine;
+            }
+
+            public override void Enter()
+            {
+                GD.Print("Attack");
+                stateMachine.animator.SwitchAnimation(AnimationType.Attack0, OnAnimationEnded);
+            }
+            public override void Tick(double delta)
+            {
+
+            }
+            public override void Exit()
+            {
+                stateMachine.inputReader.IsAttacking();
+            }
+
+            void OnAnimationEnded()
+            {
+                stateMachine.SwitchState(new PlayerMoveState(stateMachine));
+            }
+
+
 
         }
-        public override void Tick(double delta)
-        {
-            //exit when animation is done
-        }
-        public override void Exit()
-        {
-            
-        }
-
-
     }
-}

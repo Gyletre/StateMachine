@@ -1,43 +1,49 @@
-using System.Diagnostics;
-using System.Linq;
 using Godot;
+using Animation;
 
 namespace StateMachine
 {
-    public class PlayerMoveState : PlayerBaseState
+    namespace StateMachine
     {
-        public PlayerMoveState(PlayerStateMachine stateMachine) : base(stateMachine)
+        public class PlayerMoveState : PlayerBaseState
         {
-            this.stateMachine = stateMachine;
-        }
+            public PlayerMoveState(PlayerStateMachine stateMachine) : base(stateMachine)
+            {
+                this.stateMachine = stateMachine;
+            }
 
-        public override void Enter()
-        {
-            stateMachine.inputReader.JumpEvent += Jump;
-            stateMachine.canMove = true;
-            if (stateMachine.classManager.abilities != null)
+            public override void Enter()
             {
-                stateMachine.inputReader.ability1 += stateMachine.classManager.abilities.First();
+                stateMachine.animator.SwitchAnimation(AnimationType.Idle);
+                stateMachine.inputReader.JumpEvent += Jump;
             }
-        }
-        public override void Tick(double delta)
-        {
-            if (stateMachine.inputReader.isAttacking)
+            public override void Tick(double delta)
             {
-                stateMachine.SwitchState(new PlayerAttackingState(stateMachine));
+                stateMachine.animator.SwitchDirection(stateMachine.inputReader.moveDirection);
+
+                stateMachine.Velocity = Vector2.Zero;
+                stateMachine.Velocity = stateMachine.inputReader.moveDirection * stateMachine.speed;
+                if (stateMachine.Velocity != Vector2.Zero) stateMachine.animator.SwitchAnimation(AnimationType.Walking);
+                else stateMachine.animator.SwitchAnimation(AnimationType.Idle);
+                stateMachine.MoveAndSlide();
+                if (stateMachine.inputReader.IsAttacking())
+                {
+                    stateMachine.SwitchState(new PlayerAttackingState(stateMachine));
+                }
             }
-        }
-        public override void Exit()
-        {
-            stateMachine.inputReader.JumpEvent -= Jump;
-            stateMachine.canMove = false;
-        }
+            public override void Exit()
+            {
+                stateMachine.inputReader.JumpEvent -= Jump;
+            }
+            private void Jump()
+            {
         private void Jump()
-        {
-            GD.Print("Jump!");
-            stateMachine.classManager.GainExp(100);
+            {
+                GD.Print("Jump!");
+                stateMachine.classManager.GainExp(100);
+            }
+
+
+
         }
-
-
     }
-}
