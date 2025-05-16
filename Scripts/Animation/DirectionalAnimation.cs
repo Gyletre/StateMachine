@@ -1,6 +1,6 @@
 using System.Dynamic;
 using Godot;
-namespace Animation;
+
 [GlobalClass]
 public partial class DirectionalAnimation : Resource
 {
@@ -10,18 +10,32 @@ public partial class DirectionalAnimation : Resource
 	[Export] public int YOffset = 0;
 	[Export] public int length;
 	[Export] public float[] times { get; private set; }
+	[Export] public int hitFrame = -1;
 
-
-	public int animationNumber = 0;
+	public int frameNumber = 0;
 }
-
+/// <summary>
+/// All animation types. All types below "Attack" is Player specific
+/// </summary>
 public enum AnimationType
 {
 	Idle,
 	Walking,
 	Hurt,
 	Death,
-	Attack0,
-	Attack1,
-	Attack2,
+	Attack,
+	MeleeAttack,
+	CastSpell,
+	RangedAttack,
+	StartFishing,
+	FishIdle,
+	FishJerk,
+	Grab,
+	Hammering,
+	Hoeing,
+	ItemGot,
+	Jump,
+	Mining,
+	Watering,
+	Woodcutting
 }

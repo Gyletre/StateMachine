@@ -8,28 +8,36 @@ namespace StateMachine
     {
         public PlayerAttackingState(PlayerStateMachine stateMachine) : base(stateMachine)
         {
-            this.stateMachine = stateMachine;
         }
 
         public override void Enter()
         {
-            GD.Print("Attack");
-            stateMachine.animator.SwitchAnimation(AnimationType.Attack0, OnAnimationEnded);
+            stateMachine.animator.SwitchAnimation(AnimationType.MeleeAttack, OnHit, OnAnimationEnded);
         }
-        public override void Tick(double delta)
-        {
 
-        }
+        public override void Tick(double delta) { }
+
         public override void Exit()
         {
             stateMachine.inputReader.IsAttacking();
         }
+        private void OnHit(int direction, float time)
+        {
+            stateMachine.hitBoxManager.MoveHitBox(direction, time, TargetHit);
+        }
+
+        private void TargetHit(Node2D body)
+        {
+            if (body is Enemy e)
+            {
+                e.TakeDamage(stateMachine.damage);
+            }
+        }
+
 
         void OnAnimationEnded()
         {
             stateMachine.SwitchState(new PlayerMoveState(stateMachine));
         }
-
-
     }
 }

@@ -1,0 +1,75 @@
+[gd_scene load_steps=16 format=3 uid="uid://bmy8ijrdfe0t8"]
+
+[ext_resource type="Script" uid="uid://wo26qu38n8ir" path="res://Scripts/Enemies/EnemyStateMachine.cs" id="1_t5ks0"]
+[ext_resource type="Texture2D" uid="uid://dr8q78j6jlb2d" path="res://project_assets/dragons/red_dragon/AdultRedDragon_idle.png" id="2_u7hq0"]
+[ext_resource type="Script" uid="uid://i7831e0an6g8" path="res://Scripts/Animation/Animator.cs" id="3_0x8cv"]
+[ext_resource type="Resource" uid="uid://421d65p7qwwd" path="res://Scenes/Entities/enemy/red_dragon/dragon_idle.tres" id="4_176vx"]
+[ext_resource type="Resource" uid="uid://j21il0acokwo" path="res://Scenes/Entities/enemy/red_dragon/dragon_hurt.tres" id="5_b1oqf"]
+[ext_resource type="Resource" uid="uid://x7rku3h8bkuq" path="res://Scenes/Entities/enemy/red_dragon/dragon_walk.tres" id="6_5wvlb"]
+[ext_resource type="Script" uid="uid://oadva4h6awjf" path="res://Scripts/Animation/HitBoxManager.cs" id="6_e1b82"]
+[ext_resource type="Resource" uid="uid://bblgba00phue" path="res://Scenes/Entities/enemy/red_dragon/dragon_attack.tres" id="7_reveh"]
+[ext_resource type="Resource" uid="uid://ciwns2gwlytpj" path="res://Scenes/Entities/enemy/red_dragon/dragon_death.tres" id="8_1adq4"]
+[ext_resource type="Script" uid="uid://0ajawvxewg7j" path="res://Scripts/Animation/HitBox.cs" id="10_x6wq0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x33hq"]
+radius = 25.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jik5b"]
+radius = 26.33
+height = 61.56
+
+[sub_resource type="Resource" id="Resource_xl2lo"]
+script = ExtResource("10_x6wq0")
+positions = PackedVector2Array(0, 58, -71, 2, 71, 2, 0, -58)
+radius = 28.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ura2y"]
+radius = 28.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n70f3"]
+radius = 138.014
+
+[node name="Dragon" type="CharacterBody2D" node_paths=PackedStringArray("hitbox", "detectionArea", "hitBoxManager", "animator") groups=["enemy"]]
+script = ExtResource("1_t5ks0")
+hitbox = NodePath("HitBox")
+detectionArea = NodePath("HuntingRange")
+hitBoxManager = NodePath("AttackHitBox")
+animator = NodePath("AnimatedSprite")
+attackCooldown = 2.0
+attack = 10
+
+[node name="Environment collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_x33hq")
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, 2)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_jik5b")
+
+[node name="AnimatedSprite" type="Sprite2D" parent="." node_paths=PackedStringArray("hitBoxManager")]
+position = Vector2(0, 18)
+texture = ExtResource("2_u7hq0")
+offset = Vector2(0, -18)
+hframes = 4
+vframes = 4
+frame = 14
+script = ExtResource("3_0x8cv")
+animations = Array[Object]([ExtResource("4_176vx"), ExtResource("5_b1oqf"), ExtResource("6_5wvlb"), ExtResource("7_reveh"), ExtResource("8_1adq4")])
+hitBoxManager = NodePath("../AttackHitBox")
+
+[node name="AttackHitBox" type="Area2D" parent="." node_paths=PackedStringArray("collider")]
+script = ExtResource("6_e1b82")
+collider = NodePath("CollisionShape2D")
+hitBox = SubResource("Resource_xl2lo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitBox"]
+shape = SubResource("CircleShape2D_ura2y")
+disabled = true
+
+[node name="HuntingRange" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HuntingRange"]
+shape = SubResource("CircleShape2D_n70f3")

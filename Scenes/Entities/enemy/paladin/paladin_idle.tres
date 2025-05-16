@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DirectionalAnimation" load_steps=3 format=3 uid="uid://b6vl27ah7qxed"]
+
+[ext_resource type="Script" uid="uid://ck2qlx5qlwci7" path="res://Scripts/Animation/DirectionalAnimation.cs" id="1_vhf70"]
+[ext_resource type="Texture2D" uid="uid://c0efuvxf503n" path="res://project_assets/human/paladin/Paladin_idle.png" id="2_wnpbv"]
+
+[resource]
+script = ExtResource("1_vhf70")
+type = 0
+looping = true
+texture = ExtResource("2_wnpbv")
+YOffset = -16
+length = 4
+times = PackedFloat32Array(0.5, 0.5, 0.5, 0.5)
+hitFrame = -1

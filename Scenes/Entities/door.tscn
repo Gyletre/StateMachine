@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccq4t51ktb14f"]
+
+[ext_resource type="TileSet" uid="uid://dcrcklyaib8dk" path="res://project_assets/tiles/franuka/full.tres" id="1_badb6"]
+[ext_resource type="Script" uid="uid://b8myad8qe21wc" path="res://Scripts/Environment/Door.cs" id="1_myu2h"]
+[ext_resource type="PackedScene" uid="uid://bwwfx4r28nnm3" path="res://Scenes/UI/interactable.tscn" id="2_t0j7c"]
+
+[node name="Door" type="Node2D" node_paths=PackedStringArray("interactableArea")]
+script = ExtResource("1_myu2h")
+interactableArea = NodePath("Interactable")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray(0, 0, 1, 0, 1, 0, 0, 0, 29, 0, 22, 0, 0, 0)
+tile_set = ExtResource("1_badb6")
+
+[node name="Interactable" parent="." instance=ExtResource("2_t0j7c")]
+position = Vector2(48, 41)
+action_name = "enter"

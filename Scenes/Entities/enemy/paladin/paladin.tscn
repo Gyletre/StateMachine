@@ -1,0 +1,65 @@
+[gd_scene load_steps=15 format=3 uid="uid://drdj13csn6sv2"]
+
+[ext_resource type="Script" uid="uid://wo26qu38n8ir" path="res://Scripts/Enemies/EnemyStateMachine.cs" id="1_2qn2m"]
+[ext_resource type="Texture2D" uid="uid://c0efuvxf503n" path="res://project_assets/human/paladin/Paladin_idle.png" id="2_jop48"]
+[ext_resource type="Script" uid="uid://i7831e0an6g8" path="res://Scripts/Animation/Animator.cs" id="3_tgb5t"]
+[ext_resource type="Resource" uid="uid://b6vl27ah7qxed" path="res://Scenes/Entities/enemy/paladin/paladin_idle.tres" id="4_81c71"]
+[ext_resource type="Resource" uid="uid://bkm11wscrvmfc" path="res://Scenes/Entities/enemy/paladin/paladin_walking.tres" id="5_8gqe3"]
+[ext_resource type="Resource" uid="uid://btott7i5c1e2q" path="res://Scenes/Entities/enemy/paladin/paladin_hurt.tres" id="6_c0ani"]
+[ext_resource type="Resource" uid="uid://dbe3cbrua5vsc" path="res://Scenes/Entities/enemy/paladin/paladin_death.tres" id="7_hy0cd"]
+[ext_resource type="Resource" uid="uid://l1gc63bfnupl" path="res://Scenes/Entities/enemy/paladin/paladin_attack.tres" id="8_2urk1"]
+[ext_resource type="Script" uid="uid://oadva4h6awjf" path="res://Scripts/Animation/HitBoxManager.cs" id="9_bgfrr"]
+[ext_resource type="Resource" uid="uid://ci8j33ggbvul3" path="res://Scenes/Entities/enemy/paladin/paladin_attack_hit_box.tres" id="10_43eip"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jy1h7"]
+radius = 14.0
+height = 32.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o2257"]
+radius = 15.0
+height = 34.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ats82"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uo3tp"]
+radius = 100.0
+
+[node name="Paladin" type="CharacterBody2D" node_paths=PackedStringArray("hitbox", "detectionArea", "hitBoxManager", "animator") groups=["enemy"]]
+script = ExtResource("1_2qn2m")
+hitbox = NodePath("HitBox")
+detectionArea = NodePath("DetectorRange")
+hitBoxManager = NodePath("HitBoxHandler")
+animator = NodePath("AnimatedSprite")
+attackCooldown = 1.5
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -9)
+shape = SubResource("CapsuleShape2D_jy1h7")
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, -9)
+shape = SubResource("CapsuleShape2D_o2257")
+
+[node name="AnimatedSprite" type="Sprite2D" parent="." node_paths=PackedStringArray("hitBoxManager")]
+texture = ExtResource("2_jop48")
+offset = Vector2(0, -16)
+hframes = 4
+vframes = 4
+script = ExtResource("3_tgb5t")
+animations = Array[Object]([ExtResource("4_81c71"), ExtResource("5_8gqe3"), ExtResource("6_c0ani"), ExtResource("7_hy0cd"), ExtResource("8_2urk1")])
+hitBoxManager = NodePath("../HitBoxHandler")
+
+[node name="HitBoxHandler" type="Area2D" parent="." node_paths=PackedStringArray("collider")]
+script = ExtResource("9_bgfrr")
+collider = NodePath("CollisionShape2D")
+hitBox = ExtResource("10_43eip")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxHandler"]
+shape = SubResource("CircleShape2D_ats82")
+
+[node name="DetectorRange" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectorRange"]
+shape = SubResource("CircleShape2D_uo3tp")
