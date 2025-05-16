@@ -10,5 +10,5 @@ looping = false
 texture = ExtResource("2_chm83")
 YOffset = 0
 length = 5
-times = PackedFloat32Array(0.1, 0.1, 0.1, 0.1, 0.1)
+times = PackedFloat32Array(0.5, 0.1, 0.1, 0.1, 0.1)
 hitFrame = 1

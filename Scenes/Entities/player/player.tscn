@@ -99,6 +99,7 @@ vframes = 4
 script = ExtResource("4_alk63")
 animations = Array[Object]([SubResource("Resource_k5sfr"), SubResource("Resource_b7chc"), SubResource("Resource_cirw3"), SubResource("Resource_4h0yc"), SubResource("Resource_hksvg")])
 hitBoxManager = NodePath("../AttackHitBoxManager")
+baseYOffset = null
 
 [node name="AttackHitBoxManager" type="Area2D" parent="." node_paths=PackedStringArray("collider")]
 script = ExtResource("10_u8phf")

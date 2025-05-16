@@ -13,11 +13,11 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jy1h7"]
 radius = 14.0
-height = 32.0
+height = 38.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o2257"]
 radius = 15.0
-height = 34.0
+height = 39.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ats82"]
 
@@ -33,13 +33,13 @@ animator = NodePath("AnimatedSprite")
 attackCooldown = 1.5
 
 [node name="Collision" type="CollisionShape2D" parent="."]
-position = Vector2(0, -9)
+position = Vector2(0, -12)
 shape = SubResource("CapsuleShape2D_jy1h7")
 
 [node name="HitBox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(0, -9)
+position = Vector2(0, -12)
 shape = SubResource("CapsuleShape2D_o2257")
 
 [node name="AnimatedSprite" type="Sprite2D" parent="." node_paths=PackedStringArray("hitBoxManager")]
@@ -50,6 +50,7 @@ vframes = 4
 script = ExtResource("3_tgb5t")
 animations = Array[Object]([ExtResource("4_81c71"), ExtResource("5_8gqe3"), ExtResource("6_c0ani"), ExtResource("7_hy0cd"), ExtResource("8_2urk1")])
 hitBoxManager = NodePath("../HitBoxHandler")
+baseYOffset = null
 
 [node name="HitBoxHandler" type="Area2D" parent="." node_paths=PackedStringArray("collider")]
 script = ExtResource("9_bgfrr")

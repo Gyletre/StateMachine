@@ -10,18 +10,24 @@ public partial class SceneManager : Node2D
 {
 	[Export] Node sceneHolder;
 	[Export] PlayerStateMachine player;
+	bool paused = false;
+	float enemySpeed = 1f;
+	float playerSpeed = 1f;
 	public void LoadMap(SceneConfig sceneToLoad)
 	{
 		foreach (Node n in sceneHolder.GetChildren())
 		{
 			n.QueueFree();
 		}
-		sceneHolder.AddChild(sceneToLoad.scene.Instantiate<Node2D>());
+
+		sceneHolder.AddChild(ResourceLoader.Load<PackedScene>(sceneToLoad.scene).Instantiate<Node2D>());
 		player.GlobalPosition = sceneToLoad.playerPos;
 	}
+
+
 	public void SlowEnemies(float rate, float duration)
 	{
-		GD.Print("This is not implemented yet");
+		if (rate > 0) enemySpeed = rate;
 		var enemies = GetTree().GetNodesInGroup("enemy");
 		foreach (Enemy e in enemies)
 		{
@@ -38,6 +44,7 @@ public partial class SceneManager : Node2D
 	}
 	public void SlowPlayer(float rate, float duration)
 	{
+		if (rate > 0) playerSpeed = rate;
 		player.SlowDown(rate);
 		if (duration > 0)
 		{
@@ -47,4 +54,26 @@ public partial class SceneManager : Node2D
 			};
 		}
 	}
+	public void Pause()
+	{
+		SlowPlayer(0, -1);
+		SlowEnemies(0, -1);
+		paused = true;
+	}
+	public void Unpause()
+	{
+		SlowPlayer(playerSpeed, -1);
+		SlowEnemies(enemySpeed, -1);
+		paused = false;
+	}
+	public override void _Process(double delta)
+	{
+		if (Input.IsActionJustPressed("pause"))
+		{
+			if (paused) Unpause();
+			else Pause();
+		}
+
+	}
+
 }

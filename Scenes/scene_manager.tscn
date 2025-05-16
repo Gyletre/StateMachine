@@ -4,15 +4,19 @@
 [ext_resource type="PackedScene" uid="uid://vtw5fq5qkgsm" path="res://Scenes/Levels/green_city.tscn" id="1_gukrn"]
 [ext_resource type="PackedScene" uid="uid://cpmtxtugd5fmr" path="res://Scenes/Entities/player/player.tscn" id="2_2lire"]
 
-[node name="SceneManager" type="Node2D"]
+[node name="SceneManager" type="Node2D" node_paths=PackedStringArray("sceneHolder", "player")]
 y_sort_enabled = true
 script = ExtResource("1_ak3r1")
+sceneHolder = NodePath("SceneHolder")
+player = NodePath("Player")
 
 [node name="SceneHolder" type="Node2D" parent="."]
 y_sort_enabled = true
 
 [node name="GreenCity" parent="SceneHolder" instance=ExtResource("1_gukrn")]
-position = Vector2(576, 319)
 
 [node name="Player" parent="." instance=ExtResource("2_2lire")]
 position = Vector2(512, 119)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(2, 0)
