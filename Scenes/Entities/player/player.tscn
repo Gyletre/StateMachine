@@ -1,0 +1,111 @@
+[gd_scene load_steps=20 format=3 uid="uid://cpmtxtugd5fmr"]
+
+[ext_resource type="Script" uid="uid://dsk3uwixhfs22" path="res://Scripts/Player/PlayerStateMachine.cs" id="1_l5wed"]
+[ext_resource type="Script" uid="uid://1q26hmymm07e" path="res://Scripts/InputReader.cs" id="2_qlsqw"]
+[ext_resource type="Texture2D" uid="uid://to32bfocgim1" path="res://project_assets/hero/Hero_melee.png" id="3_6b4lp"]
+[ext_resource type="Script" uid="uid://i7831e0an6g8" path="res://Scripts/Animation/Animator.cs" id="4_alk63"]
+[ext_resource type="Script" uid="uid://ck2qlx5qlwci7" path="res://Scripts/Animation/DirectionalAnimation.cs" id="5_d7d75"]
+[ext_resource type="Texture2D" uid="uid://c6ngkv5hbyblh" path="res://project_assets/hero/Hero_idle.png" id="6_8wki5"]
+[ext_resource type="Texture2D" uid="uid://buk0xna0r8qcc" path="res://project_assets/hero/Hero_walk.png" id="7_qutje"]
+[ext_resource type="Texture2D" uid="uid://cw0hymglvr6fs" path="res://project_assets/hero/Hero_hit.png" id="8_w7em6"]
+[ext_resource type="Texture2D" uid="uid://bxmmclse5spja" path="res://project_assets/hero/Hero_die.png" id="9_h2gvh"]
+[ext_resource type="Script" uid="uid://oadva4h6awjf" path="res://Scripts/Animation/HitBoxManager.cs" id="10_u8phf"]
+[ext_resource type="Script" uid="uid://0ajawvxewg7j" path="res://Scripts/Animation/HitBox.cs" id="11_5arc8"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6chwa"]
+radius = 14.0
+height = 34.0
+
+[sub_resource type="Resource" id="Resource_k5sfr"]
+script = ExtResource("5_d7d75")
+type = 0
+looping = true
+texture = ExtResource("6_8wki5")
+YOffset = -8
+length = 4
+times = PackedFloat32Array(0.5, 0.5, 0.5, 0.5)
+hitFrame = -1
+
+[sub_resource type="Resource" id="Resource_b7chc"]
+script = ExtResource("5_d7d75")
+type = 1
+looping = true
+texture = ExtResource("7_qutje")
+YOffset = -8
+length = 4
+times = PackedFloat32Array(0.25, 0.25, 0.25, 0.25)
+hitFrame = -1
+
+[sub_resource type="Resource" id="Resource_cirw3"]
+script = ExtResource("5_d7d75")
+type = 5
+looping = false
+texture = ExtResource("3_6b4lp")
+YOffset = -8
+length = 4
+times = PackedFloat32Array(0.1, 0.1, 0.1, 0.1)
+hitFrame = 0
+
+[sub_resource type="Resource" id="Resource_4h0yc"]
+script = ExtResource("5_d7d75")
+type = 2
+looping = false
+texture = ExtResource("8_w7em6")
+YOffset = -8
+length = 2
+times = PackedFloat32Array(0.4, 0.2)
+hitFrame = -1
+
+[sub_resource type="Resource" id="Resource_hksvg"]
+script = ExtResource("5_d7d75")
+type = 3
+looping = false
+texture = ExtResource("9_h2gvh")
+YOffset = -8
+length = 1
+times = PackedFloat32Array(1)
+hitFrame = -1
+
+[sub_resource type="Resource" id="Resource_jvrqy"]
+script = ExtResource("11_5arc8")
+positions = PackedVector2Array(5, 9, -23, -18, 23, -18, -5, -37)
+radius = 25.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a367b"]
+radius = 25.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("inputReader", "animator", "hitBoxManager")]
+y_sort_enabled = true
+script = ExtResource("1_l5wed")
+inputReader = NodePath("InputReader")
+speed = 100.0
+animator = NodePath("AnimatedSprite")
+hitBoxManager = NodePath("AttackHitBoxManager")
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2(0, -17)
+shape = SubResource("CapsuleShape2D_6chwa")
+
+[node name="InputReader" type="Node" parent="."]
+script = ExtResource("2_qlsqw")
+
+[node name="AnimatedSprite" type="Sprite2D" parent="." node_paths=PackedStringArray("hitBoxManager")]
+y_sort_enabled = true
+position = Vector2(0, -6)
+texture = ExtResource("6_8wki5")
+offset = Vector2(0, -8)
+hframes = 4
+vframes = 4
+script = ExtResource("4_alk63")
+animations = Array[Object]([SubResource("Resource_k5sfr"), SubResource("Resource_b7chc"), SubResource("Resource_cirw3"), SubResource("Resource_4h0yc"), SubResource("Resource_hksvg")])
+hitBoxManager = NodePath("../AttackHitBoxManager")
+
+[node name="AttackHitBoxManager" type="Area2D" parent="." node_paths=PackedStringArray("collider")]
+script = ExtResource("10_u8phf")
+collider = NodePath("AttackHitBox")
+hitBox = SubResource("Resource_jvrqy")
+
+[node name="AttackHitBox" type="CollisionShape2D" parent="AttackHitBoxManager"]
+position = Vector2(-5, -37)
+shape = SubResource("CircleShape2D_a367b")
+disabled = true

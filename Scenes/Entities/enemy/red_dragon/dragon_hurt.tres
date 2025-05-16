@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DirectionalAnimation" load_steps=3 format=3 uid="uid://j21il0acokwo"]
+
+[ext_resource type="Script" uid="uid://ck2qlx5qlwci7" path="res://Scripts/Animation/DirectionalAnimation.cs" id="1_d8gie"]
+[ext_resource type="Texture2D" uid="uid://dq4je8m12wsdq" path="res://project_assets/dragons/red_dragon/AdultRedDragon_hit.png" id="2_2fnot"]
+
+[resource]
+script = ExtResource("1_d8gie")
+type = 2
+looping = false
+texture = ExtResource("2_2fnot")
+YOffset = -18
+length = 2
+times = PackedFloat32Array(0.4, 0.2)
+hitFrame = -1
