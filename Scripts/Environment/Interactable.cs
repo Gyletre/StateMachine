@@ -4,8 +4,7 @@ using System;
 public partial class Interactable : Area2D
 {
 	public Action OnInteract;
-	[Export] string action_name = "interact";
-	[Export] Label text;
+	[Export] public Label text;
 
 	bool isActive;
 	// Called when the node enters the scene tree for the first time.
@@ -14,7 +13,6 @@ public partial class Interactable : Area2D
 		BodyEntered += EnableInteract;
 		BodyExited += DisableInteract;
 		text.Visible = false;
-		text.Text = "Press E to " + action_name;
 		text.Position = new Vector2(-text.Size.X / 2, text.Position.Y);
 	}
 

@@ -12,6 +12,7 @@ public class EnemyHurtState : EnemyBaseState
     public override void Enter()
     {
         stateMachine.animator.SwitchAnimation(AnimationType.Hurt, OnEnd: OnEnd);
+        stateMachine.invincibilityTime = stateMachine.invincibility;
     }
 
     public override void Tick(double delta) { }

@@ -24,7 +24,11 @@ public partial class EnemyStateMachine : StateMachine, Enemy
 
 	public void TakeDamage(int amount)
 	{
-		if (invincibilityTime > 0.1 || amount < 1) return;
+		if (invincibilityTime > 0.1 || amount < 1)
+		{
+			GD.Print("invincibility time: " + invincibilityTime + "damage from attack would be: " + amount);
+			return;
+		}
 		GD.Print("Took " + amount + " damage.");
 		hp -= amount;
 		SwitchState(new EnemyHurtState(this));

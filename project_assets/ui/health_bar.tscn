@@ -7,6 +7,8 @@
 z_index = 1
 script = ExtResource("1_6i1q8")
 healthBarFill = NodePath("Fill")
+visibilityTime = null
+fadeTime = null
 
 [node name="Background" type="TileMapLayer" parent="."]
 y_sort_enabled = true
