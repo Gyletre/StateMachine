@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8njvjgtraw0i"]
+
+[ext_resource type="Script" uid="uid://bd87hsbj7qxmr" path="res://Scripts/MapConstrictCamera.cs" id="1_lvmtu"]
+
+[node name="MapConstrictCamera" type="Node"]
+script = ExtResource("1_lvmtu")
+
+[node name="TL" type="Node2D" parent="."]
+position = Vector2(-576, -320)
+
+[node name="BR" type="Node2D" parent="."]
+position = Vector2(576, 320)

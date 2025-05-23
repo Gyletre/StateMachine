@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://vtw5fq5qkgsm"]
+[gd_scene load_steps=11 format=4 uid="uid://vtw5fq5qkgsm"]
 
 [ext_resource type="TileSet" uid="uid://d1135588x1rok" path="res://project_assets/tiles/franuka/cities/green_city/green_city.tres" id="2_1lbkn"]
 [ext_resource type="TileSet" uid="uid://owk6v4gp7m2j" path="res://project_assets/tiles/franuka/overworld.tres" id="2_p3gtb"]
@@ -7,12 +7,18 @@
 [ext_resource type="PackedScene" uid="uid://ccq4t51ktb14f" path="res://Scenes/Entities/door.tscn" id="6_5drjp"]
 [ext_resource type="PackedScene" uid="uid://drdj13csn6sv2" path="res://Scenes/Entities/enemy/paladin/paladin.tscn" id="6_ptfot"]
 [ext_resource type="Script" uid="uid://bbr64qqoev8kg" path="res://Scripts/SceneManagement/SceneConfig.cs" id="6_xucae"]
+[ext_resource type="PackedScene" uid="uid://c8njvjgtraw0i" path="res://Scenes/UI/map_constrict_camera.tscn" id="8_s4yi8"]
 
 [sub_resource type="Resource" id="Resource_02l4q"]
 script = ExtResource("6_xucae")
 scene = "uid://cxqg1wumgmcui"
 playerPos = Vector2(-162, 90)
 metadata/_custom_type_script = "uid://bbr64qqoev8kg"
+
+[sub_resource type="Resource" id="Resource_l07ov"]
+script = ExtResource("6_xucae")
+scene = "res://Scenes/Levels/castle_town.tscn"
+playerPos = Vector2(300, 765)
 
 [node name="GreenCity" type="Node2D"]
 y_sort_enabled = true
@@ -25,19 +31,17 @@ tile_set = ExtResource("2_p3gtb")
 y_sort_origin = -600
 
 [node name="Building" type="TileMapLayer" parent="Ground"]
-modulate = Color(0.8, 0.8, 0.8, 1)
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAD4//3/BwAAAAAAAAD6/wIACAAAAAAAAAAGAAIADAAAAAAAAAAKAAIADQAAAAAAAAAFAP3/CgAAAAAAAAAKAPv/CQAAAAAAAAA=")
 tile_set = ExtResource("2_1lbkn")
 
 [node name="Environment" type="TileMapLayer" parent="Ground"]
-modulate = Color(0.8, 0.8, 0.8, 1)
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AADy//j/AAAGABQAAAANAP7/AAAVAAYAAAAPAP7/AAAVAAYAAAANAAAAAAAVAAQAAAAPAAAAAAAVAAQAAAANAAIAAAAVAAIAAAAPAAIAAAAVAAIAAAAJAAAAAAAQAAMAAAAGAP3/AAAJAAMAAAD7/wIAAAAKAAMAAADz//j/AAAKAAQAAAD5/wMAAAAOAAUAAADu//j/AAAFAAQAAADu//r/AAAFAAQAAADu//z/AAAFAAQAAADu//7/AAAFAAQAAADu/wAAAAAFAAQAAADu/wIAAAAFAAQAAADu/wQAAAAFAAQAAADu/wYAAAAFAAQAAADu/wgAAAAFAAQAAADv/wkAAAAFAAQAAADw/wgAAAAFAAQAAADx/wkAAAAFAAQAAADy/wgAAAAFAAQAAADz/wkAAAAFAAQAAAD0/wgAAAAFAAQAAAD1/wkAAAAFAAQAAAD2/wgAAAAFAAQAAAD3/wkAAAAFAAQAAAD4/wgAAAAFAAQAAAD5/wkAAAAFAAQAAAD6/wgAAAAFAAQAAAD7/wkAAAAFAAQAAAD8/wgAAAAFAAQAAAD9/wkAAAAFAAQAAADv/wcAAAAFAAQAAADv/wUAAAAFAAQAAADv/wMAAAAFAAQAAADv/wEAAAAFAAQAAADv////AAAFAAQAAADv//3/AAAFAAQAAADv//v/AAAFAAQAAADv//n/AAAFAAQAAAADAAkAAAAFAAQAAAAEAAgAAAAFAAQAAAAFAAkAAAAFAAQAAAAGAAgAAAAFAAQAAAAHAAkAAAAFAAQAAAAIAAgAAAAFAAQAAAAJAAkAAAAFAAQAAAAKAAgAAAAFAAQAAAALAAkAAAAFAAQAAAAMAAgAAAAFAAQAAAANAAkAAAAFAAQAAAAOAAgAAAAFAAQAAAAPAAkAAAAFAAQAAAAQAAgAAAAFAAQAAAARAAkAAAAFAAQAAAARAAcAAAAFAAQAAAAQAAYAAAAFAAQAAAARAAUAAAAFAAQAAAAQAAQAAAAFAAQAAAARAAMAAAAFAAQAAAAQAAIAAAAFAAQAAAARAAEAAAAFAAQAAAAQAAAAAAAFAAQAAAARAP//AAAFAAQAAAAQAP7/AAAFAAQAAAARAP3/AAAFAAQAAAAQAPz/AAAFAAQAAAARAPv/AAAFAAQAAAAQAPr/AAAFAAQAAAARAPn/AAAFAAQAAAAQAPj/AAAFAAQAAAARAPf/AAAFAAQAAAAQAPb/AAAFAAQAAAAPAPf/AAAFAAQAAAAOAPb/AAAFAAQAAAANAPf/AAAFAAQAAAAMAPb/AAAFAAQAAAALAPf/AAAFAAQAAAAKAPb/AAAFAAQAAAAJAPf/AAAFAAQAAAAIAPb/AAAFAAQAAAAHAPf/AAAFAAQAAAAGAPb/AAAFAAQAAAAFAPf/AAAFAAQAAAAEAPb/AAAFAAQAAAADAPf/AAAFAAQAAAACAPb/AAAFAAQAAAD6//b/AAAFAAQAAAD5//f/AAAFAAQAAAD4//b/AAAFAAQAAAD3//f/AAAFAAQAAAD2//b/AAAFAAQAAAD1//f/AAAFAAQAAAAAAAAAAAAHAAYAAAD//wEAAAAHAAYAAAABAAEAAAAHAAYAAAD7//f/AAAFAAQAAAABAPf/AAAFAAQAAAD+/wgAAAAFAAQAAAD//wkAAAAFAAQAAAAAAAgAAAAFAAQAAAABAAkAAAAFAAQAAAACAAgAAAAFAAQAAAA=")
 tile_set = ExtResource("2_te26m")
 
 [node name="Door" parent="." instance=ExtResource("6_5drjp")]
-position = Vector2(128, -128)
+position = Vector2(176, -84)
 toEnter = SubResource("Resource_02l4q")
 action_name = "enter"
 
@@ -46,4 +50,10 @@ position = Vector2(-369, 56)
 
 [node name="Dragon" parent="." instance=ExtResource("3_orb2y")]
 position = Vector2(449, 180)
-hp = 100
+
+[node name="MapConstrictCamera" parent="." instance=ExtResource("8_s4yi8")]
+
+[node name="Door2" parent="." instance=ExtResource("6_5drjp")]
+position = Vector2(-46, -276)
+toEnter = SubResource("Resource_l07ov")
+action_name = "go to castle"

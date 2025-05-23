@@ -1,7 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://bmy8ijrdfe0t8"]
+[gd_scene load_steps=17 format=3 uid="uid://bmy8ijrdfe0t8"]
 
 [ext_resource type="Script" uid="uid://wo26qu38n8ir" path="res://Scripts/Enemies/EnemyStateMachine.cs" id="1_t5ks0"]
-[ext_resource type="Texture2D" uid="uid://dr8q78j6jlb2d" path="res://project_assets/dragons/red_dragon/AdultRedDragon_idle.png" id="2_u7hq0"]
+[ext_resource type="Texture2D" uid="uid://dr8q78j6jlb2d" path="res://project_assets/monsters/dragons/red_dragon/AdultRedDragon_idle.png" id="2_u7hq0"]
 [ext_resource type="Script" uid="uid://i7831e0an6g8" path="res://Scripts/Animation/Animator.cs" id="3_0x8cv"]
 [ext_resource type="Resource" uid="uid://421d65p7qwwd" path="res://Scenes/Entities/enemy/red_dragon/dragon_idle.tres" id="4_176vx"]
 [ext_resource type="Resource" uid="uid://j21il0acokwo" path="res://Scenes/Entities/enemy/red_dragon/dragon_hurt.tres" id="5_b1oqf"]
@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://bblgba00phue" path="res://Scenes/Entities/enemy/red_dragon/dragon_attack.tres" id="7_reveh"]
 [ext_resource type="Resource" uid="uid://ciwns2gwlytpj" path="res://Scenes/Entities/enemy/red_dragon/dragon_death.tres" id="8_1adq4"]
 [ext_resource type="Script" uid="uid://0ajawvxewg7j" path="res://Scripts/Animation/HitBox.cs" id="10_x6wq0"]
+[ext_resource type="PackedScene" uid="uid://lynjcu4em1e8" path="res://Scenes/UI/health_bar.tscn" id="11_otxxj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x33hq"]
 radius = 32.0
@@ -28,13 +29,17 @@ radius = 28.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_n70f3"]
 radius = 138.014
 
-[node name="Dragon" type="CharacterBody2D" node_paths=PackedStringArray("hitbox", "detectionArea", "hitBoxManager", "animator") groups=["enemy"]]
+[node name="Dragon" type="CharacterBody2D" node_paths=PackedStringArray("hitbox", "detectionArea", "hitBoxManager", "animator", "healthBar") groups=["enemy"]]
 script = ExtResource("1_t5ks0")
 hitbox = NodePath("HitBox")
 detectionArea = NodePath("HuntingRange")
 hitBoxManager = NodePath("AttackHitBox")
 animator = NodePath("AnimatedSprite")
+speed = 80
 attackCooldown = 2.0
+hp = 100
+healthBar = NodePath("HealthBar")
+attack = 20
 
 [node name="Environment collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
@@ -47,7 +52,7 @@ position = Vector2(0, 2)
 rotation = 1.5708
 shape = SubResource("CircleShape2D_kjp8r")
 
-[node name="AnimatedSprite" type="Sprite2D" parent="." node_paths=PackedStringArray("hitBoxManager")]
+[node name="AnimatedSprite" type="Sprite2D" parent="."]
 position = Vector2(0, 18)
 texture = ExtResource("2_u7hq0")
 offset = Vector2(0, -18)
@@ -56,8 +61,6 @@ vframes = 4
 frame = 14
 script = ExtResource("3_0x8cv")
 animations = Array[Object]([ExtResource("4_176vx"), ExtResource("5_b1oqf"), ExtResource("6_5wvlb"), ExtResource("7_reveh"), ExtResource("8_1adq4")])
-hitBoxManager = NodePath("../AttackHitBox")
-baseYOffset = null
 
 [node name="AttackHitBox" type="Area2D" parent="." node_paths=PackedStringArray("collider")]
 script = ExtResource("6_e1b82")
@@ -72,3 +75,6 @@ disabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HuntingRange"]
 shape = SubResource("CircleShape2D_n70f3")
+
+[node name="HealthBar" parent="." instance=ExtResource("11_otxxj")]
+position = Vector2(0, -45)

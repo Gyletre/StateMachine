@@ -2,13 +2,12 @@ using Godot;
 using System;
 using System.Diagnostics;
 
-namespace Animation;
+namespace Game.Animation;
 
 public partial class Animator : Sprite2D
 {
 	// Only one animation per tag
 	[Export] DirectionalAnimation[] animations;
-	[Export] HitBoxManager hitBoxManager;
 	[Export] float baseYOffset;
 
 	public float animationSpeed = 1;

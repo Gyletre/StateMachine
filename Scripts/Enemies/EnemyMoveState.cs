@@ -1,7 +1,7 @@
 using Godot;
 
 
-namespace StateMachine;
+namespace Game.StateMachine.EnemyState;
 
 public class EnemyMoveState : EnemyBaseState
 {
@@ -26,7 +26,7 @@ public class EnemyMoveState : EnemyBaseState
             GetClosestAttackDirection(out shortestDir, out shortestLen, out direction);
 
             stateMachine.animator.SwitchDirection(shortestDir);
-            if (shortestLen < 20)
+            if (shortestLen < stateMachine.hitBoxManager.GetHitBoxRadius())
             {
                 if (stateMachine.attackCooldownTime == 0)
                     stateMachine.SwitchState(new EnemyAttackState(stateMachine));

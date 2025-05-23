@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvctrotsrikbn"]
+
+[ext_resource type="TileSet" uid="uid://uoycf5ho42bj" path="res://project_assets/tiles/finalbossblues/fbb_tiles.tres" id="1_vtasu"]
+
+[node name="TilemapLayers" type="Node2D"]
+y_sort_enabled = true
+
+[node name="GroundBase" type="TileMapLayer" parent="."]
+z_index = -2
+y_sort_enabled = true
+scale = Vector2(2, 2)
+tile_set = ExtResource("1_vtasu")
+
+[node name="Path" type="TileMapLayer" parent="GroundBase"]
+z_index = 1
+y_sort_enabled = true
+tile_set = ExtResource("1_vtasu")
+
+[node name="ElevatedGround" type="TileMapLayer" parent="GroundBase"]
+z_index = 3
+tile_set = ExtResource("1_vtasu")
+
+[node name="Structures" type="TileMapLayer" parent="."]
+y_sort_enabled = true
+scale = Vector2(2, 2)
+tile_set = ExtResource("1_vtasu")
+
+[node name="Decor" type="TileMapLayer" parent="Structures"]
+y_sort_enabled = true
+tile_set = ExtResource("1_vtasu")

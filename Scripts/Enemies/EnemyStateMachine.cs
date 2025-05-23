@@ -1,8 +1,10 @@
 using Godot;
-using Animation;
+using Game.Animation;
 using System;
+using Scene;
+using Game.UI;
 
-namespace StateMachine;
+namespace Game.StateMachine.EnemyState;
 
 public partial class EnemyStateMachine : StateMachine, Enemy
 {
@@ -12,21 +14,22 @@ public partial class EnemyStateMachine : StateMachine, Enemy
 	[Export] public Animator animator;
 	[Export] public int speed = 70;
 	[Export] public double attackCooldown = 1;
-	[Export] public double invincibility = 0.6;
 	[Export] public int hp = 50;
-	public int attack = 5;
+	[Export] public HealthBar healthBar;
+	[Export] public int attack = 5;
+	public Action<int> OnDamageTaken;
 	public double attackCooldownTime = 0;
-	public double invincibilityTime = 0;
 
 	public bool detectedPlayer = false;
 	public Node2D player;
+	public bool invulnerable;
 
 
 	public void TakeDamage(int amount)
 	{
-		if (invincibilityTime > 0.1 || amount < 1)
+		if (amount < 1 || invulnerable)
 		{
-			GD.Print("invincibility time: " + invincibilityTime + "damage from attack would be: " + amount);
+			GD.Print("invulnerable");
 			return;
 		}
 		GD.Print("Took " + amount + " damage.");
@@ -42,6 +45,9 @@ public partial class EnemyStateMachine : StateMachine, Enemy
 
 	public override void _Ready()
 	{
+		SceneManager.enemies.Add(this);
+		healthBar.UpdateMaxHP(hp);
+		OnDamageTaken += healthBar.UpdateHealthBar;
 		hitbox.BodyEntered += OnCollideWithPlayer;
 		detectionArea.BodyEntered += HuntPlayer;
 		detectionArea.BodyExited += StopHuntingPlayer;
@@ -50,8 +56,12 @@ public partial class EnemyStateMachine : StateMachine, Enemy
 	public override void _Process(double delta)
 	{
 		attackCooldownTime = Mathf.Max(0, attackCooldownTime - (delta * slowrate));
-		invincibilityTime = Mathf.Max(0, attackCooldownTime - (delta * slowrate));
 	}
+	public override void _ExitTree()
+	{
+		SceneManager.enemies.Remove(this);
+	}
+
 	private void HuntPlayer(Node2D body)
 	{
 		if (body is Player)

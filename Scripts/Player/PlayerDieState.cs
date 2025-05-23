@@ -1,8 +1,6 @@
-using System;
 using Godot;
-using Animation;
 
-namespace StateMachine;
+namespace Game.StateMachine.PlayerState;
 
 public class PlayerDieState : PlayerBaseState
 {

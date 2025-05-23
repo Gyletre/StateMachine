@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace StateMachine;
+namespace Game.StateMachine.EnemyState;
 
 public class EnemyDieState : EnemyBaseState
 {
@@ -12,6 +12,7 @@ public class EnemyDieState : EnemyBaseState
     public override void Enter()
     {
         stateMachine.animator.SwitchAnimation(AnimationType.Death, OnEnd: Die);
+        stateMachine.invulnerable = true;
     }
 
     public override void Tick(double delta) { }

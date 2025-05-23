@@ -1,6 +1,6 @@
 using Godot;
 
-namespace StateMachine;
+namespace Game.StateMachine.EnemyState;
 
 public abstract class EnemyBaseState : State
 {
