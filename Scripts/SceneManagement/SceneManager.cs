@@ -1,15 +1,13 @@
 using Godot;
-using Godot.Collections;
-using StateMachine;
-using System;
-using System.Linq;
+using System.Collections.Generic;
 
-namespace Scene;
+namespace Game;
 
 public partial class SceneManager : Node2D
 {
 	[Export] Node sceneHolder;
-	[Export] PlayerStateMachine player;
+	public static PlayerManageable player;
+	public static List<Enemy> enemies = new();
 	bool paused = false;
 	float enemySpeed = 1f;
 	float playerSpeed = 1f;
@@ -21,14 +19,15 @@ public partial class SceneManager : Node2D
 		}
 
 		sceneHolder.AddChild(ResourceLoader.Load<PackedScene>(sceneToLoad.scene).Instantiate<Node2D>());
-		player.GlobalPosition = sceneToLoad.playerPos;
+		player.SetGlobalPos(sceneToLoad.playerPos);
+		enemiesDefeated = false;
 	}
 
 
 	public void SlowEnemies(float rate, float duration)
 	{
 		if (rate > 0) enemySpeed = rate;
-		var enemies = GetTree().GetNodesInGroup("enemy");
+
 		foreach (Enemy e in enemies)
 		{
 			e.SlowDown(rate);
@@ -73,7 +72,19 @@ public partial class SceneManager : Node2D
 			if (paused) Unpause();
 			else Pause();
 		}
+		if (enemies.Count == 0)
+		{
+			PrintEnemiesDefeated();
+		}
 
 	}
-
+	bool enemiesDefeated = false;
+	private void PrintEnemiesDefeated()
+	{
+		if (!enemiesDefeated)
+		{
+			enemiesDefeated = true;
+			GD.Print("no more enemies");
+		}
+	}
 }

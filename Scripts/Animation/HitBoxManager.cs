@@ -1,6 +1,7 @@
 using Godot;
-using StateMachine;
 using System;
+
+namespace Game;
 
 public partial class HitBoxManager : Area2D
 {
@@ -28,6 +29,10 @@ public partial class HitBoxManager : Area2D
 	public Vector2[] GetHitBoxLocations()
 	{
 		return hitBox.positions;
+	}
+	public float GetHitBoxRadius()
+	{
+		return hitBox.radius;
 	}
 
 	private void OnHit(Node2D body)

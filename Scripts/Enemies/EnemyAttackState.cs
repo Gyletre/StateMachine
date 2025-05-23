@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace StateMachine;
+namespace Game.StateMachine.EnemyState;
 
 public class EnemyAttackState : EnemyBaseState
 {
@@ -13,6 +13,7 @@ public class EnemyAttackState : EnemyBaseState
     {
         stateMachine.animator.SwitchAnimation(AnimationType.Attack, OnHit, OnAttackFinished);
         stateMachine.attackCooldownTime = stateMachine.attackCooldown;
+        stateMachine.invulnerable = true;
     }
 
     public override void Tick(double delta) { }
@@ -23,6 +24,7 @@ public class EnemyAttackState : EnemyBaseState
     private void OnHit(int direction, float time)
     {
         stateMachine.hitBoxManager.MoveHitBox(direction, time, TargetHit);
+        stateMachine.invulnerable = false;
     }
 
     private void TargetHit(Node2D body)

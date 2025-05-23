@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://lynjcu4em1e8"]
+
+[ext_resource type="Script" uid="uid://bqun0qobk6m4h" path="res://project_assets/ui/HealthBar.cs" id="1_6i1q8"]
+[ext_resource type="TileSet" uid="uid://bgb7vxsmbjb54" path="res://project_assets/ui/ui.tres" id="1_j6l8y"]
+
+[node name="HealthBar" type="Node2D" node_paths=PackedStringArray("healthBarFill")]
+z_index = 1
+y_sort_enabled = true
+scale = Vector2(0.36, 0.4)
+script = ExtResource("1_6i1q8")
+healthBarFill = NodePath("Fill")
+
+[node name="Background" type="TileMapLayer" parent="."]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(0, -16)
+tile_map_data = PackedByteArray(0, 0, 254, 255, 0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 255, 255, 0, 0, 0, 0, 1, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 14, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 0, 14, 0, 0, 0)
+tile_set = ExtResource("1_j6l8y")
+
+[node name="Fill" type="TileMapLayer" parent="."]
+z_index = 2
+y_sort_enabled = true
+position = Vector2(-56, -16)
+tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 14, 0, 0, 0, 1, 0, 0, 0, 0, 0, 13, 0, 14, 0, 0, 0, 3, 0, 0, 0, 0, 0, 14, 0, 15, 0, 0, 0, 2, 0, 0, 0, 0, 0, 13, 0, 14, 0, 0, 0)
+tile_set = ExtResource("1_j6l8y")

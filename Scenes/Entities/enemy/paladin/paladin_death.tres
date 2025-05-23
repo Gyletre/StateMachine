@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="DirectionalAnimation" load_steps=3 format=3 uid="uid://dbe3cbrua5vsc"]
 
 [ext_resource type="Script" uid="uid://ck2qlx5qlwci7" path="res://Scripts/Animation/DirectionalAnimation.cs" id="1_wppby"]
-[ext_resource type="Texture2D" uid="uid://cectyk720a11r" path="res://project_assets/human/paladin/Paladin_die.png" id="2_bmy7d"]
+[ext_resource type="Texture2D" uid="uid://cectyk720a11r" path="res://project_assets/monsters/human/paladin/Paladin_die.png" id="2_bmy7d"]
 
 [resource]
 script = ExtResource("1_wppby")

@@ -1,0 +1,94 @@
+[gd_scene load_steps=15 format=3 uid="uid://byw5m3tp6cyha"]
+
+[ext_resource type="PackedScene" uid="uid://cnlfl3bhxo4u0" path="res://Scenes/Entities/enemy/enemy.tscn" id="1_tgpos"]
+[ext_resource type="Texture2D" uid="uid://cvsvxjl3qjuko" path="res://project_assets/monsters/wildlings/ogre/Ogre_attack.png" id="2_ro2cu"]
+[ext_resource type="Script" uid="uid://ck2qlx5qlwci7" path="res://Scripts/Animation/DirectionalAnimation.cs" id="3_ti87h"]
+[ext_resource type="Texture2D" uid="uid://b2h1hih2hm4kb" path="res://project_assets/monsters/wildlings/ogre/Ogre_idle.png" id="4_083fq"]
+[ext_resource type="Texture2D" uid="uid://bdtbqwmuk2tju" path="res://project_assets/monsters/wildlings/ogre/Ogre_walk.png" id="5_5wupo"]
+[ext_resource type="Texture2D" uid="uid://dbw1h5a13h7sa" path="res://project_assets/monsters/wildlings/ogre/Ogre_hit.png" id="6_vwi10"]
+[ext_resource type="Texture2D" uid="uid://bdx8uflg7wkxf" path="res://project_assets/monsters/wildlings/ogre/Ogre_die.png" id="7_l4gsq"]
+[ext_resource type="Script" uid="uid://0ajawvxewg7j" path="res://Scripts/Animation/HitBox.cs" id="8_lrpji"]
+
+[sub_resource type="Resource" id="Resource_2gq4t"]
+script = ExtResource("3_ti87h")
+type = 0
+looping = true
+texture = ExtResource("4_083fq")
+YOffset = 0
+length = 4
+times = PackedFloat32Array(0.5, 0.5, 0.5, 0.5)
+hitFrame = -1
+
+[sub_resource type="Resource" id="Resource_e8hah"]
+script = ExtResource("3_ti87h")
+type = 1
+looping = true
+texture = ExtResource("5_5wupo")
+YOffset = 0
+length = 4
+times = PackedFloat32Array(0.25, 0.25, 0.25, 0.25)
+hitFrame = -1
+
+[sub_resource type="Resource" id="Resource_fqpyk"]
+script = ExtResource("3_ti87h")
+type = 2
+looping = false
+texture = ExtResource("6_vwi10")
+YOffset = 0
+length = 2
+times = PackedFloat32Array(0.4, 0.2)
+hitFrame = -1
+
+[sub_resource type="Resource" id="Resource_nek2e"]
+script = ExtResource("3_ti87h")
+type = 4
+looping = false
+texture = ExtResource("2_ro2cu")
+YOffset = 0
+length = 5
+times = PackedFloat32Array(0.6, 0.2, 0.2, 0.2, 0.2)
+hitFrame = 1
+
+[sub_resource type="Resource" id="Resource_vyjpy"]
+script = ExtResource("3_ti87h")
+type = 3
+looping = false
+texture = ExtResource("7_l4gsq")
+YOffset = 0
+length = 1
+times = PackedFloat32Array(1)
+hitFrame = -1
+
+[sub_resource type="Resource" id="Resource_5ijnv"]
+script = ExtResource("8_lrpji")
+positions = PackedVector2Array(-4, 40, -40, 6, 40, 6, 3, -40)
+radius = 24.0
+
+[node name="Ogre" instance=ExtResource("1_tgpos")]
+speed = 60
+hp = 200
+attack = 15
+
+[node name="Collider" parent="." index="0"]
+position = Vector2(0, 10)
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("4_083fq")
+hframes = 4
+vframes = 4
+frame = 4
+animations = Array[Object]([SubResource("Resource_2gq4t"), SubResource("Resource_e8hah"), SubResource("Resource_fqpyk"), SubResource("Resource_nek2e"), SubResource("Resource_vyjpy")])
+
+[node name="Collision" parent="HitBox" index="0"]
+position = Vector2(0, 10)
+
+[node name="Collision" parent="DetectionArea" index="0" groups=["enemy"]]
+
+[node name="AttackHitBox" parent="." index="4"]
+hitBox = SubResource("Resource_5ijnv")
+
+[node name="Collision" parent="AttackHitBox" index="0"]
+position = Vector2(3, -40)
+
+[node name="HealthBar" parent="." index="5"]
+position = Vector2(0, -25)

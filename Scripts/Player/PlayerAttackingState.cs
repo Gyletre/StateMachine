@@ -1,8 +1,6 @@
-using System;
 using Godot;
-using Animation;
 
-namespace StateMachine
+namespace Game.StateMachine.PlayerState
 {
     public class PlayerAttackingState : PlayerBaseState
     {
@@ -30,7 +28,7 @@ namespace StateMachine
         {
             if (body is Enemy e)
             {
-                e.TakeDamage(stateMachine.damage);
+                e.TakeDamage(stateMachine.GetAttack());
             }
         }
 

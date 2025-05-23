@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using Godot;
 
-namespace StateMachine
+namespace Game.StateMachine
 {
     public abstract partial class StateMachine : CharacterBody2D
     {

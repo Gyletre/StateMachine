@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace StateMachine;
+namespace Game.StateMachine.EnemyState;
 
 public class EnemyHurtState : EnemyBaseState
 {
@@ -12,12 +12,16 @@ public class EnemyHurtState : EnemyBaseState
     public override void Enter()
     {
         stateMachine.animator.SwitchAnimation(AnimationType.Hurt, OnEnd: OnEnd);
-        stateMachine.invincibilityTime = stateMachine.invincibility;
+        stateMachine.OnDamageTaken?.Invoke(stateMachine.hp);
+        stateMachine.invulnerable = true;
     }
 
     public override void Tick(double delta) { }
 
-    public override void Exit() { }
+    public override void Exit()
+    {
+        stateMachine.invulnerable = false;
+    }
 
 
     private void OnEnd()

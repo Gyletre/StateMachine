@@ -1,8 +1,7 @@
 using System;
 using Godot;
-using Animation;
 
-namespace StateMachine;
+namespace Game.StateMachine.PlayerState;
 
 public class PlayerHurtState : PlayerBaseState
 {
@@ -13,6 +12,7 @@ public class PlayerHurtState : PlayerBaseState
     public override void Enter()
     {
         stateMachine.animator.SwitchAnimation(AnimationType.Hurt, OnEnd: ReturnToMove);
+        stateMachine.OnDamageTaken?.Invoke(stateMachine.hp);
         stateMachine.invincibilityTime = stateMachine.invincibility;
     }
 
