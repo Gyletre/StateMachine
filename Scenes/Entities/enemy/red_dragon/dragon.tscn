@@ -29,7 +29,7 @@ radius = 28.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_n70f3"]
 radius = 138.014
 
-[node name="Dragon" type="CharacterBody2D" node_paths=PackedStringArray("hitbox", "detectionArea", "hitBoxManager", "animator", "healthBar") groups=["enemy"]]
+[node name="Dragon" type="CharacterBody2D" node_paths=PackedStringArray("hitbox", "detectionArea", "hitBoxManager", "animator", "healthBar")]
 script = ExtResource("1_t5ks0")
 hitbox = NodePath("HitBox")
 detectionArea = NodePath("HuntingRange")
@@ -58,7 +58,6 @@ texture = ExtResource("2_u7hq0")
 offset = Vector2(0, -18)
 hframes = 4
 vframes = 4
-frame = 14
 script = ExtResource("3_0x8cv")
 animations = Array[Object]([ExtResource("4_176vx"), ExtResource("5_b1oqf"), ExtResource("6_5wvlb"), ExtResource("7_reveh"), ExtResource("8_1adq4")])
 

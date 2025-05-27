@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://ldpvr4fmttm3"]
+[gd_scene load_steps=7 format=3 uid="uid://ldpvr4fmttm3"]
 
 [ext_resource type="Script" uid="uid://3f2q2us7c66g" path="res://Scripts/SceneManagement/SceneManager.cs" id="1_ak3r1"]
 [ext_resource type="PackedScene" uid="uid://vtw5fq5qkgsm" path="res://Scenes/Levels/green_city.tscn" id="1_gukrn"]
 [ext_resource type="PackedScene" uid="uid://cpmtxtugd5fmr" path="res://Scenes/Entities/player/player.tscn" id="2_2lire"]
+[ext_resource type="PackedScene" uid="uid://b8144pyhpi88k" path="res://Scenes/Entities/npc/quest/quest_manager.tscn" id="3_t7rfq"]
 [ext_resource type="Script" uid="uid://qdyx26nqcc30" path="res://Scripts/Camera.cs" id="4_8j8h1"]
 [ext_resource type="PackedScene" uid="uid://bjl06syux4xup" path="res://Scenes/UI/spell_menu.tscn" id="5_py5r8"]
 
@@ -13,6 +14,8 @@ sceneHolder = NodePath("SceneHolder")
 
 [node name="Player" parent="." instance=ExtResource("2_2lire")]
 position = Vector2(-26, -119)
+
+[node name="QuestManager" parent="." instance=ExtResource("3_t7rfq")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(2, -51)

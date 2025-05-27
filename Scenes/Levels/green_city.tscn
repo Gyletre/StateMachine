@@ -1,13 +1,15 @@
-[gd_scene load_steps=11 format=4 uid="uid://vtw5fq5qkgsm"]
+[gd_scene load_steps=13 format=4 uid="uid://vtw5fq5qkgsm"]
 
+[ext_resource type="Script" uid="uid://bvrl05h37f67w" path="res://Scripts/SceneManagement/Level.cs" id="1_xucae"]
 [ext_resource type="TileSet" uid="uid://d1135588x1rok" path="res://project_assets/tiles/franuka/cities/green_city/green_city.tres" id="2_1lbkn"]
 [ext_resource type="TileSet" uid="uid://owk6v4gp7m2j" path="res://project_assets/tiles/franuka/overworld.tres" id="2_p3gtb"]
 [ext_resource type="TileSet" uid="uid://dcrcklyaib8dk" path="res://project_assets/tiles/franuka/full.tres" id="2_te26m"]
-[ext_resource type="PackedScene" uid="uid://bmy8ijrdfe0t8" path="res://Scenes/Entities/enemy/red_dragon/dragon.tscn" id="3_orb2y"]
 [ext_resource type="PackedScene" uid="uid://ccq4t51ktb14f" path="res://Scenes/Entities/door.tscn" id="6_5drjp"]
 [ext_resource type="PackedScene" uid="uid://drdj13csn6sv2" path="res://Scenes/Entities/enemy/paladin/paladin.tscn" id="6_ptfot"]
 [ext_resource type="Script" uid="uid://bbr64qqoev8kg" path="res://Scripts/SceneManagement/SceneConfig.cs" id="6_xucae"]
 [ext_resource type="PackedScene" uid="uid://c8njvjgtraw0i" path="res://Scenes/UI/map_constrict_camera.tscn" id="8_s4yi8"]
+[ext_resource type="PackedScene" uid="uid://do7hl00dmpsp0" path="res://Scenes/Entities/npc/npc.tscn" id="10_02l4q"]
+[ext_resource type="PackedScene" uid="uid://diwnnjmsiixfr" path="res://Scenes/Entities/npc/quest/quest.tscn" id="11_l68ju"]
 
 [sub_resource type="Resource" id="Resource_02l4q"]
 script = ExtResource("6_xucae")
@@ -20,8 +22,9 @@ script = ExtResource("6_xucae")
 scene = "res://Scenes/Levels/castle_town.tscn"
 playerPos = Vector2(300, 765)
 
-[node name="GreenCity" type="Node2D"]
+[node name="GreenTown" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_xucae")
 
 [node name="Ground" type="TileMapLayer" parent="."]
 modulate = Color(0.8, 0.8, 0.8, 1)
@@ -43,17 +46,21 @@ tile_set = ExtResource("2_te26m")
 [node name="Door" parent="." instance=ExtResource("6_5drjp")]
 position = Vector2(176, -84)
 toEnter = SubResource("Resource_02l4q")
-action_name = "enter"
 
 [node name="Paladin" parent="." instance=ExtResource("6_ptfot")]
 position = Vector2(-369, 56)
-
-[node name="Dragon" parent="." instance=ExtResource("3_orb2y")]
-position = Vector2(449, 180)
 
 [node name="MapConstrictCamera" parent="." instance=ExtResource("8_s4yi8")]
 
 [node name="Door2" parent="." instance=ExtResource("6_5drjp")]
 position = Vector2(-46, -276)
 toEnter = SubResource("Resource_l07ov")
-action_name = "go to castle"
+
+[node name="NPC" parent="." node_paths=PackedStringArray("quest") instance=ExtResource("10_02l4q")]
+position = Vector2(-118, -126)
+quest = NodePath("Quest")
+
+[node name="Quest" parent="NPC" instance=ExtResource("11_l68ju")]
+questName = "save forest town"
+spellQuestReward = 3
+goldQuestReward = 13

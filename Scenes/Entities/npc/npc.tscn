@@ -1,0 +1,51 @@
+[gd_scene load_steps=10 format=3 uid="uid://do7hl00dmpsp0"]
+
+[ext_resource type="Script" uid="uid://cmsde3rpe8pii" path="res://Scripts/npc/Npc.cs" id="1_irxsx"]
+[ext_resource type="Texture2D" uid="uid://cgn2al7jwwjgg" path="res://project_assets/npc/female/purple_hat/NPC 13_idle (32x48).png" id="1_xnj0s"]
+[ext_resource type="Script" uid="uid://i7831e0an6g8" path="res://Scripts/Animation/Animator.cs" id="2_irxsx"]
+[ext_resource type="Script" uid="uid://ck2qlx5qlwci7" path="res://Scripts/Animation/DirectionalAnimation.cs" id="3_vbdl7"]
+[ext_resource type="Texture2D" uid="uid://vnigmgxq2oj1" path="res://project_assets/npc/female/purple_hat/NPC 13_walk (32x48).png" id="4_mlcj2"]
+[ext_resource type="PackedScene" uid="uid://bwwfx4r28nnm3" path="res://Scenes/UI/interactable.tscn" id="6_vbdl7"]
+
+[sub_resource type="Resource" id="Resource_t32tn"]
+script = ExtResource("3_vbdl7")
+type = 0
+looping = true
+texture = ExtResource("1_xnj0s")
+YOffset = 0
+length = 4
+times = PackedFloat32Array(0.5, 0.5, 0.5, 0.5)
+hitFrame = -1
+metadata/_custom_type_script = "uid://ck2qlx5qlwci7"
+
+[sub_resource type="Resource" id="Resource_5kp6w"]
+script = ExtResource("3_vbdl7")
+type = 1
+looping = true
+texture = ExtResource("4_mlcj2")
+YOffset = 0
+length = 4
+times = PackedFloat32Array(0.25, 0.25, 0.25, 0.25)
+hitFrame = -1
+metadata/_custom_type_script = "uid://ck2qlx5qlwci7"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sbdkv"]
+
+[node name="NPC" type="CharacterBody2D" node_paths=PackedStringArray("talkArea")]
+script = ExtResource("1_irxsx")
+talkArea = NodePath("Interactable")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_xnj0s")
+offset = Vector2(0, -8)
+hframes = 4
+vframes = 4
+script = ExtResource("2_irxsx")
+animations = Array[Object]([SubResource("Resource_t32tn"), SubResource("Resource_5kp6w")])
+baseYOffset = -8.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_sbdkv")
+
+[node name="Interactable" parent="." instance=ExtResource("6_vbdl7")]

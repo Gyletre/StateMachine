@@ -1,12 +1,11 @@
 using Godot;
-using Scene;
-using System;
-using System.Data;
+
+namespace Game.Camera;
 
 public partial class Camera : Camera2D
 {
     public static Camera instance;
-    Node2D player;
+    PlayerManageable player;
     /// <summary>
     /// Sets camera restrictions by sending position of top left corner and bottom right corner of current map
     /// </summary>
@@ -35,7 +34,7 @@ public partial class Camera : Camera2D
     public override void _Process(double delta)
     {
         if (player != null)
-            GlobalPosition = player.GlobalPosition;
+            GlobalPosition = player.GetGlobalPos();
     }
 
 

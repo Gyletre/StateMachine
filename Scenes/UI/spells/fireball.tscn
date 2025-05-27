@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://brs7oyie5n60r"]
-
-[ext_resource type="PackedScene" uid="uid://dn04jv1yxg25" path="res://Scenes/UI/spell_entry.tscn" id="1_hsuq6"]
-[ext_resource type="Texture2D" uid="uid://djri7c60hywfb" path="res://project_assets/icons/256/Fire_03_Meteor.png" id="2_opb5i"]
-
-[node name="SpellEntry" instance=ExtResource("1_hsuq6")]
-image = ExtResource("2_opb5i")
-spellName = "Fireball"
-spellIdentity = 1

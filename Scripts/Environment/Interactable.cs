@@ -1,6 +1,8 @@
 using Godot;
 using System;
 
+namespace Game;
+
 public partial class Interactable : Area2D
 {
 	public Action OnInteract;
@@ -13,6 +15,10 @@ public partial class Interactable : Area2D
 		BodyEntered += EnableInteract;
 		BodyExited += DisableInteract;
 		text.Visible = false;
+	}
+	public void SetInteractText(string action)
+	{
+		text.Text = "Press E to " + action;
 		text.Position = new Vector2(-text.Size.X / 2, text.Position.Y);
 	}
 

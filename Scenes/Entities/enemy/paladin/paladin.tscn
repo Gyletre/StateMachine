@@ -25,7 +25,7 @@ height = 39.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_uo3tp"]
 radius = 159.028
 
-[node name="Paladin" type="CharacterBody2D" node_paths=PackedStringArray("hitbox", "detectionArea", "hitBoxManager", "animator", "healthBar") groups=["enemy"]]
+[node name="Paladin" type="CharacterBody2D" node_paths=PackedStringArray("hitbox", "detectionArea", "hitBoxManager", "animator", "healthBar")]
 script = ExtResource("1_2qn2m")
 hitbox = NodePath("HitBox")
 detectionArea = NodePath("DetectorRange")

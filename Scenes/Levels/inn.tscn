@@ -1,9 +1,12 @@
-[gd_scene load_steps=6 format=4 uid="uid://ca0jv6uoj2s8j"]
+[gd_scene load_steps=9 format=4 uid="uid://ca0jv6uoj2s8j"]
 
 [ext_resource type="PackedScene" uid="uid://cvctrotsrikbn" path="res://Scenes/tilemap_layers.tscn" id="1_3puqs"]
+[ext_resource type="Script" uid="uid://bvrl05h37f67w" path="res://Scripts/SceneManagement/Level.cs" id="1_sy7qn"]
 [ext_resource type="PackedScene" uid="uid://c8njvjgtraw0i" path="res://Scenes/UI/map_constrict_camera.tscn" id="2_38nkp"]
 [ext_resource type="PackedScene" uid="uid://ccq4t51ktb14f" path="res://Scenes/Entities/door.tscn" id="3_pj67u"]
 [ext_resource type="Script" uid="uid://bbr64qqoev8kg" path="res://Scripts/SceneManagement/SceneConfig.cs" id="4_7xknv"]
+[ext_resource type="PackedScene" uid="uid://do7hl00dmpsp0" path="res://Scenes/Entities/npc/npc.tscn" id="5_gveqm"]
+[ext_resource type="PackedScene" uid="uid://diwnnjmsiixfr" path="res://Scenes/Entities/npc/quest/quest.tscn" id="6_x3y3x"]
 
 [sub_resource type="Resource" id="Resource_gn85m"]
 script = ExtResource("4_7xknv")
@@ -11,6 +14,8 @@ scene = "res://Scenes/Levels/castle_town.tscn"
 playerPos = Vector2(560, 340)
 
 [node name="Inn" type="Node2D"]
+script = ExtResource("1_sy7qn")
+id = 2
 
 [node name="TilemapLayers" parent="." instance=ExtResource("1_3puqs")]
 
@@ -34,7 +39,16 @@ position = Vector2(560, 496)
 [node name="Door" parent="." instance=ExtResource("3_pj67u")]
 position = Vector2(304, 399)
 toEnter = SubResource("Resource_gn85m")
-action_name = "exit"
+
+[node name="NPC" parent="." node_paths=PackedStringArray("quest") instance=ExtResource("5_gveqm")]
+position = Vector2(113, 239)
+quest = NodePath("Quest")
+
+[node name="Quest" parent="NPC" instance=ExtResource("6_x3y3x")]
+questName = "save castle town"
+spellQuestReward = 2
+goldQuestReward = 69
+questLocation = 1
 
 [editable path="TilemapLayers"]
 [editable path="MapConstrictCamera"]

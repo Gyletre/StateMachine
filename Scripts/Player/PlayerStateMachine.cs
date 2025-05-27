@@ -1,6 +1,4 @@
-using Core;
 using Godot;
-using Scene;
 using System;
 using System.Collections.Generic;
 using Game.UI;
@@ -24,9 +22,14 @@ namespace Game.StateMachine.PlayerState
 		public int damageMultiplier = 1;
 		public int hp;
 		public List<Spell> knownSpells = new();
-		public Spell?[] spellsEquipped = new Spell?[3];
+		public Spell[] spellsEquipped = new Spell[3];
+
+		public event Action OnSpellAdded;
+
 		public override void _Ready()
 		{
+			knownSpells.Add(Spell.Heal);
+			knownSpells.Add(Spell.Buff);
 			hp = maxHP;
 			SceneManager.player = this;
 			healthBar.UpdateMaxHP(hp);
@@ -36,6 +39,11 @@ namespace Game.StateMachine.PlayerState
 		public override void _Process(double delta)
 		{
 			invincibilityTime = Mathf.Max(0, invincibilityTime - delta * slowrate);
+			if (Input.IsActionJustPressed("ui_accept"))
+			{
+				LearnSpell(Spell.Fireball);
+				LearnSpell(Spell.Buff);
+			}
 		}
 
 		public void TakeDamage(int amount)
@@ -67,7 +75,9 @@ namespace Game.StateMachine.PlayerState
 
 		public void LearnSpell(Spell spell)
 		{
+			GD.Print("Learned " + Enum.GetName(spell));
 			knownSpells.Add(spell);
+			OnSpellAdded?.Invoke();
 		}
 
 		public Vector2 GetGlobalPos()
@@ -78,6 +88,11 @@ namespace Game.StateMachine.PlayerState
 		public void SetGlobalPos(Vector2 pos)
 		{
 			GlobalPosition = pos;
+		}
+
+		public Action<int>[] GetAbilityKeys()
+		{
+			return inputReader.abilities;
 		}
 	}
 
@@ -95,5 +110,8 @@ namespace Game
 		public void SetGlobalPos(Vector2 pos);
 		public void LearnSpell(Spell spell);
 		public void SlowDown(float rate);
+		public Action<int>[] GetAbilityKeys();
+		public void EquipSpell(int num, Spell spell);
+		public event Action OnSpellAdded;
 	}
 }

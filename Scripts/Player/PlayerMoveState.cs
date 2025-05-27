@@ -46,9 +46,9 @@ namespace Game.StateMachine.PlayerState
         private void ActivateAbility(int spellNo)
         {
             GD.Print("Ability button pressed");
-            Spell? spell = stateMachine.spellsEquipped[spellNo];
-            if (spell == null) return;
-            stateMachine.SwitchState(new PlayerSpellCastingState(stateMachine, (Spell)spell));
+            Spell spell = stateMachine.spellsEquipped[spellNo];
+            if (spell == Spell.None) return;
+            stateMachine.SwitchState(new PlayerSpellCastingState(stateMachine, spell));
         }
         private void Jump()
         {

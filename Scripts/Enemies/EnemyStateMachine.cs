@@ -1,7 +1,6 @@
 using Godot;
 using Game.Animation;
 using System;
-using Scene;
 using Game.UI;
 
 namespace Game.StateMachine.EnemyState;
