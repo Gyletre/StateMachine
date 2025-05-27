@@ -16,9 +16,9 @@ public partial class HitBoxManager : Area2D
 	public void MoveHitBox(int direction, float duration, Action<Node2D> TargetHit)
 	{
 		collider.Position = hitBox.positions[direction];
-		var thing = (CircleShape2D)collider.Shape;
-		thing.Radius = hitBox.radius;
-		collider.Shape = thing;
+		var hitboxShape = (CircleShape2D)collider.Shape;
+		hitboxShape.Radius = hitBox.radius;
+		collider.Shape = hitboxShape;
 		this.TargetHit = TargetHit;
 		collider.Disabled = false;
 		GetTree().CreateTimer(duration).Timeout += () =>

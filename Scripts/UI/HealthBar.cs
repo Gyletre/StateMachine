@@ -37,7 +37,7 @@ public partial class HealthBar : Node2D
 	{
 		max = maxHP;
 		current = max;
-		Scale = new Vector2(Scale.X * (maxHP / 100), Scale.Y);
+		Scale = new Vector2(Scale.X * (1 + (maxHP - 100) * 0.003f), Scale.Y * (1 + (maxHP - 100) * 0.001f));
 	}
 	public void UpdateHealthBar(int currentHP)
 	{

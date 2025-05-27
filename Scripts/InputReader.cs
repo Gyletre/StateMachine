@@ -2,7 +2,7 @@ using System;
 using System.Dynamic;
 using Godot;
 
-namespace Core
+namespace Game
 {
     public partial class InputReader : Node
     {
@@ -50,6 +50,7 @@ namespace Core
             {
                 abilities[2]?.Invoke(2);
             }
+
             float x, y;
             x = Input.GetActionStrength("right") - Input.GetActionStrength("left");
             y = Input.GetActionStrength("down") - Input.GetActionStrength("up");

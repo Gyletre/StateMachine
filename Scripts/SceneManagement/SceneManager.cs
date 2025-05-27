@@ -1,4 +1,6 @@
+using Game.Quest;
 using Godot;
+using System;
 using System.Collections.Generic;
 
 namespace Game;
@@ -6,21 +8,28 @@ namespace Game;
 public partial class SceneManager : Node2D
 {
 	[Export] Node sceneHolder;
+	static SceneManager instance;
 	public static PlayerManageable player;
 	public static List<Enemy> enemies = new();
+	public static List<Npc> npcs = new();
+	public static Action OnAllEnemiesDefeated;
 	bool paused = false;
 	float enemySpeed = 1f;
 	float playerSpeed = 1f;
-	public void LoadMap(SceneConfig sceneToLoad)
+	public static LevelIdentifier GetCurrentLevelIdentifier()
 	{
-		foreach (Node n in sceneHolder.GetChildren())
+		return instance.sceneHolder.GetChild<Level>(0).id;
+	}
+	public static void LoadMap(SceneConfig sceneToLoad)
+	{
+		foreach (Node n in instance.sceneHolder.GetChildren())
 		{
 			n.QueueFree();
 		}
 
-		sceneHolder.AddChild(ResourceLoader.Load<PackedScene>(sceneToLoad.scene).Instantiate<Node2D>());
+		instance.sceneHolder.AddChild(ResourceLoader.Load<PackedScene>(sceneToLoad.scene).Instantiate<Node2D>());
 		player.SetGlobalPos(sceneToLoad.playerPos);
-		enemiesDefeated = false;
+		instance.enemiesDefeated = false;
 	}
 
 
@@ -65,6 +74,11 @@ public partial class SceneManager : Node2D
 		SlowEnemies(enemySpeed, -1);
 		paused = false;
 	}
+	public override void _Ready()
+	{
+		instance = this;
+	}
+
 	public override void _Process(double delta)
 	{
 		if (Input.IsActionJustPressed("pause"))
@@ -74,16 +88,18 @@ public partial class SceneManager : Node2D
 		}
 		if (enemies.Count == 0)
 		{
-			PrintEnemiesDefeated();
+			EnemiesDefeated();
 		}
 
 	}
+
 	bool enemiesDefeated = false;
-	private void PrintEnemiesDefeated()
+	private void EnemiesDefeated()
 	{
 		if (!enemiesDefeated)
 		{
 			enemiesDefeated = true;
+			OnAllEnemiesDefeated?.Invoke();
 			GD.Print("no more enemies");
 		}
 	}

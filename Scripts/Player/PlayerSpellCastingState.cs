@@ -18,13 +18,14 @@ namespace Game.StateMachine.PlayerState
 
         public override void Enter()
         {
-            GD.Print("casting " + Enum.GetName(currentSpell));
-            /*if (!stateMachine.knownSpells.Contains(currentSpell)) // checks if player knows spell
+            if (currentSpell == Spell.None) return;
+            GD.Print("Casting " + Enum.GetName(currentSpell));
+            if (!stateMachine.knownSpells.Contains(currentSpell)) // checks if player knows spell
             {
                 GD.Print(Enum.GetName(currentSpell) + " spell not known");
                 stateMachine.SwitchState(new PlayerMoveState(stateMachine));
                 return;
-            }*/
+            }
             stateMachine.animator.SwitchAnimation(AnimationType.CastSpell, OnEnd: CastSpell);
 
         }
@@ -115,6 +116,7 @@ namespace Game.StateMachine.PlayerState
 }
 public enum Spell
 {
+    None,
     Heal,
     Fireball,
     Buff

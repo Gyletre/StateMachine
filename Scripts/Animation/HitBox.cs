@@ -1,5 +1,7 @@
 using Godot;
-using Animation;
+
+namespace Game;
+
 [GlobalClass]
 public partial class HitBox : Resource
 {

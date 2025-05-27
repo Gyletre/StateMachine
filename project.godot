@@ -24,10 +24,6 @@ window/stretch/mode="viewport"
 
 project/assembly_name="StateMachines"
 
-[global_group]
-
-enemy=""
-
 [gui]
 
 theme/custom_font="res://project_assets/fonts/FantasyRPGtext (size 8).ttf"

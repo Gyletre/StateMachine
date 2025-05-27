@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://lynjcu4em1e8"]
 
-[ext_resource type="Script" uid="uid://bqun0qobk6m4h" path="res://project_assets/ui/HealthBar.cs" id="1_6i1q8"]
+[ext_resource type="Script" uid="uid://colnlftinm3uk" path="res://Scripts/UI/HealthBar.cs" id="1_6i1q8"]
 [ext_resource type="TileSet" uid="uid://bgb7vxsmbjb54" path="res://project_assets/ui/ui.tres" id="1_j6l8y"]
 
 [node name="HealthBar" type="Node2D" node_paths=PackedStringArray("healthBarFill")]

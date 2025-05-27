@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=4 uid="uid://cxqg1wumgmcui"]
+[gd_scene load_steps=6 format=4 uid="uid://cxqg1wumgmcui"]
 
 [ext_resource type="TileSet" uid="uid://dcrcklyaib8dk" path="res://project_assets/tiles/franuka/full.tres" id="1_8fslv"]
+[ext_resource type="Script" uid="uid://bvrl05h37f67w" path="res://Scripts/SceneManagement/Level.cs" id="1_eoluy"]
 [ext_resource type="PackedScene" uid="uid://ccq4t51ktb14f" path="res://Scenes/Entities/door.tscn" id="2_nov4u"]
 [ext_resource type="Script" uid="uid://bbr64qqoev8kg" path="res://Scripts/SceneManagement/SceneConfig.cs" id="3_eoluy"]
 
@@ -12,6 +13,8 @@ metadata/_custom_type_script = "uid://bbr64qqoev8kg"
 
 [node name="Node2D" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_eoluy")
+id = 2
 
 [node name="BaseLayer" type="TileMapLayer" parent="."]
 z_index = -1
@@ -30,4 +33,3 @@ z_index = 1
 y_sort_enabled = true
 position = Vector2(-211, 90)
 toEnter = SubResource("Resource_dbujx")
-action_name = "exit"

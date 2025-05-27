@@ -1,17 +1,21 @@
 using Godot;
 using System;
 
-public partial class EquipButton : TileMapLayer
+public partial class TileButton : TileMapLayer
 {
     [Export] Vector2I buttonDimensions;
     [Export] Vector2I hoveredOffset;
     [Export] Vector2I pressedOffset;
+
+    public event Action OnPressed;
+
     Area2D clickableArea;
     Action onClick;
     Vector2I[,] baseAtlas;
     Vector2I offset;
 
-    public event Action OnPressed;
+
+
     public override void _Ready()
     {
         clickableArea = GetChild<Area2D>(1);

@@ -86,7 +86,7 @@ animations = Array[Object]([SubResource("Resource_n6u5j"), SubResource("Resource
 
 [node name="HitBox" type="Area2D" parent="."]
 
-[node name="Collision" type="CollisionShape2D" parent="HitBox" groups=["enemy"]]
+[node name="Collision" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource("CircleShape2D_3sl67")
 
 [node name="DetectionArea" type="Area2D" parent="."]
