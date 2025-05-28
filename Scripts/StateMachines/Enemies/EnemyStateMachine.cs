@@ -13,11 +13,12 @@ public partial class EnemyStateMachine : StateMachine, Enemy
 	[Export] public Animator animator;
 	[Export] public int speed = 70;
 	[Export] public double attackCooldown = 1;
-	[Export] public int hp = 50;
+	[Export] public int maxHp = 50;
 	[Export] public HealthBar healthBar;
 	[Export] public int attack = 5;
 	public Action<int> OnDamageTaken;
 	public double attackCooldownTime = 0;
+	public int hp;
 
 	public bool detectedPlayer = false;
 	public Node2D player;
@@ -26,13 +27,13 @@ public partial class EnemyStateMachine : StateMachine, Enemy
 
 	public void TakeDamage(int amount)
 	{
+
+		hp -= amount;
 		if (amount < 1 || invulnerable)
 		{
-			GD.Print("invulnerable");
+			OnDamageTaken?.Invoke(hp);
 			return;
 		}
-		GD.Print("Took " + amount + " damage.");
-		hp -= amount;
 		SwitchState(new EnemyHurtState(this));
 	}
 
@@ -45,7 +46,8 @@ public partial class EnemyStateMachine : StateMachine, Enemy
 	public override void _Ready()
 	{
 		SceneManager.enemies.Add(this);
-		healthBar.UpdateMaxHP(hp);
+		healthBar.UpdateMaxHP(maxHp);
+		hp = maxHp;
 		OnDamageTaken += healthBar.UpdateHealthBar;
 		hitbox.BodyEntered += OnCollideWithPlayer;
 		detectionArea.BodyEntered += HuntPlayer;

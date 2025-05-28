@@ -1,39 +1,41 @@
-using System;
 using Godot;
-using Animation;
 
-namespace StateMachine
+namespace Game.StateMachine.PlayerState
 {
-    namespace StateMachine
+    public class PlayerAttackingState : PlayerBaseState
     {
-        public class PlayerAttackingState : PlayerBaseState
+        public PlayerAttackingState(PlayerStateMachine stateMachine) : base(stateMachine)
         {
+        }
 
-            public PlayerAttackingState(PlayerStateMachine stateMachine) : base(stateMachine)
+        public override void Enter()
+        {
+            stateMachine.animator.SwitchAnimation(AnimationType.MeleeAttack, OnHit, OnAnimationEnded);
+        }
+
+        public override void Tick(double delta) { }
+
+        public override void Exit()
+        {
+            stateMachine.inputReader.IsAttacking();
+        }
+        private void OnHit(int direction, float time)
+        {
+            stateMachine.hitBoxManager.MoveHitBox(direction, time, TargetHit);
+        }
+
+        private void TargetHit(Node2D body)
+        {
+            if (body is Enemy e)
             {
-                this.stateMachine = stateMachine;
+                e.TakeDamage(stateMachine.GetAttack());
             }
-
-            public override void Enter()
-            {
-                GD.Print("Attack");
-                stateMachine.animator.SwitchAnimation(AnimationType.Attack0, OnAnimationEnded);
-            }
-            public override void Tick(double delta)
-            {
-
-            }
-            public override void Exit()
-            {
-                stateMachine.inputReader.IsAttacking();
-            }
-
-            void OnAnimationEnded()
-            {
-                stateMachine.SwitchState(new PlayerMoveState(stateMachine));
-            }
+        }
 
 
-
+        void OnAnimationEnded()
+        {
+            stateMachine.SwitchState(new PlayerMoveState(stateMachine));
         }
     }
+}

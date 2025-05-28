@@ -31,8 +31,6 @@ namespace Game
             if (Input.IsActionJustPressed("dodge"))
             {
                 DodgeEvent?.Invoke();
-                GD.Print("dodge");
-                GD.Print("dodge");
             }
             if (Input.IsActionJustPressed("jump"))
             {

@@ -17,7 +17,6 @@ public partial class Door : Node2D
 
 	private void UseDoor()
 	{
-		GD.Print("DoorTriggered");
 		SceneManager.LoadMap(toEnter);
 	}
 }

@@ -1,48 +1,116 @@
-using Core;
 using Godot;
-using Game.Classes;
 using System;
-using Interface;
+using System.Collections.Generic;
+using Game.UI;
+using Game.Animation;
 
-namespace StateMachine
+namespace Game.StateMachine.PlayerState
 {
-	public partial class PlayerStateMachine : StateMachine
+	public partial class PlayerStateMachine : StateMachine, Player, PlayerManageable
 	{
+		[Export] public InputReader inputReader;
+		[Export] public Animator animator;
+		[Export] public HitBoxManager hitBoxManager;
+		[Export] public HealthBar healthBar;
+		[Export] public float speed { get; private set; } = 50;
+		[Export] public double invincibility = 1;
+		[Export] public int maxHP = 100;
 
-		[Export] public InputReader inputReader = new InputReader();
-		[Export] public AnimationTree animationTree;
-		[Export] public float speed { get; private set; } = 200;
-		public PlayerClassManager classManager { get; private set; } = new PlayerClassManager();
-		public bool canMove = false;
-		public bool attackFinished = false;
+		public Action<int> OnDamageTaken;
+		public double invincibilityTime = 0;
+		public int baseAttack = 5;
+		public int damageMultiplier = 1;
+		public int hp;
+		public List<Spell> knownSpells = new();
+		public Spell[] spellsEquipped = new Spell[3];
 
+		public event Action OnSpellAdded;
 
 		public override void _Ready()
 		{
-
-			classManager.AddClass(ClassList.Warrior);
+			knownSpells.Add(Spell.Heal);
+			hp = maxHP;
+			SceneManager.player = this;
+			healthBar.UpdateMaxHP(hp);
+			OnDamageTaken += healthBar.UpdateHealthBar;
 			SwitchState(new PlayerMoveState(this));
-			GetNode<Area2D>("MeleeHitBox").BodyEntered += OnAttack;
-
-
 		}
-
-		private void OnAttack(Node2D body)
+		public override void _Process(double delta)
 		{
-			if (body is Enemy e)
-			{
-				e.TakeDamage(this, classManager.GetStat(StatType.Attack));
-			}
+			invincibilityTime = Mathf.Max(0, invincibilityTime - delta * slowrate);
+		}
+		public override void _ExitTree()
+		{
+			Camera.Camera.instance.mode = Camera.CameraMode.Cutscene;
 		}
 
-		public override void _PhysicsProcess(double delta)
+
+		public void TakeDamage(int amount)
 		{
-			Velocity = Vector2.Zero;
-			if (canMove)
-			{
-				Velocity = inputReader.moveDirection * speed;
-			}
-			MoveAndSlide();
+			if (invincibilityTime > 0) return;
+			hp -= amount;
+			SwitchState(new PlayerHurtState(this));
+
 		}
+
+		public void SlowDown(float rate)
+		{
+			slowrate = rate;
+			animator.animationSpeed = rate;
+		}
+		public int GetAttack()
+		{
+			return baseAttack * damageMultiplier;
+		}
+		public void EquipSpell(int num, Spell spell)
+		{
+			spellsEquipped[num] = spell;
+		}
+
+		public List<Spell> GetKnownSpells()
+		{
+			return knownSpells;
+		}
+
+		public void LearnSpell(Spell spell)
+		{
+			TextMessageWriter.Print("Learned " + Enum.GetName(spell));
+			knownSpells.Add(spell);
+			OnSpellAdded?.Invoke();
+		}
+
+		public Vector2 GetGlobalPos()
+		{
+			return GlobalPosition;
+		}
+
+		public void SetGlobalPos(Vector2 pos)
+		{
+			GlobalPosition = pos;
+		}
+
+		public Action<int>[] GetAbilityKeys()
+		{
+			return inputReader.abilities;
+		}
+	}
+
+}
+namespace Game
+{
+	public interface Player
+	{
+		public void TakeDamage(int amount);
+	}
+	public interface PlayerManageable
+	{
+		public List<Spell> GetKnownSpells();
+		public Vector2 GetGlobalPos();
+		public void SetGlobalPos(Vector2 pos);
+		public void LearnSpell(Spell spell);
+		public void SlowDown(float rate);
+		public Action<int>[] GetAbilityKeys();
+		public void EquipSpell(int num, Spell spell);
+		public event Action OnSpellAdded;
 	}
 }

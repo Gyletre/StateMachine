@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Dynamic;
+using Game.UI;
 
 namespace Game.Quest;
 
@@ -8,9 +9,9 @@ public partial class Quest : Node
 {
     [Export] public string questName;
     [Export] public QuestType questType;
-    [Export] Spell spellQuestReward;
-    [Export] int goldQuestReward;
-    //[Export] QuestLockedObject questLockedObj;
+    [Export(PropertyHint.MultilineText)] public string questDescription;
+    [Export] public Spell spellQuestReward;
+    [Export] public int goldQuestReward;
     [Export] public LevelIdentifier questLocation;
 
     public bool completed { get; private set; } = false;
@@ -22,9 +23,9 @@ public partial class Quest : Node
         }
         else
         {
-            GD.Print("TYSM, here is your reward");
+            TextMessageWriter.Print("TYSM, here is your reward");
             if (spellQuestReward != Spell.None) SceneManager.player.LearnSpell(spellQuestReward);
-            if (goldQuestReward > 0) GD.Print("Added " + goldQuestReward + " gold");
+            if (goldQuestReward > 0) TextMessageWriter.Print("+ " + goldQuestReward + " gold");
             QueueFree();
         }
 
@@ -33,9 +34,8 @@ public partial class Quest : Node
     {
         if (questLocation == level)
         {
+            TextMessageWriter.Print("completed " + questName + " quest");
             completed = true;
         }
     }
 }
-
-

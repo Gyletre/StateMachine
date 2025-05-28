@@ -1,0 +1,76 @@
+[gd_scene load_steps=8 format=4 uid="uid://sbqq1627caa3"]
+
+[ext_resource type="TileSet" uid="uid://bgb7vxsmbjb54" path="res://project_assets/ui/ui.tres" id="1_7lgwp"]
+[ext_resource type="Script" uid="uid://cwifi4nn8r04y" path="res://Scripts/UI/QuestUI.cs" id="1_jixyw"]
+[ext_resource type="FontFile" uid="uid://5wajti3d44u7" path="res://project_assets/fonts/FantasyRPGtitle (size 11).ttf" id="2_jixyw"]
+[ext_resource type="PackedScene" uid="uid://078rnxrm5g7i" path="res://Scenes/UI/equip_button.tscn" id="3_up3ma"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1o3mg"]
+line_spacing = 0.0
+font = ExtResource("2_jixyw")
+font_size = 22
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qph08"]
+line_spacing = 0.0
+font_color = Color(0, 0, 0, 1)
+shadow_size = 0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jixyw"]
+size = Vector2(92, 34)
+
+[node name="QuestUI" type="Control" node_paths=PackedStringArray("title", "description", "button")]
+layout_mode = 3
+anchor_right = 0.196
+anchor_bottom = 0.344
+offset_left = 482.0
+offset_top = 211.0
+offset_right = 482.208
+offset_bottom = 211.088
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_jixyw")
+title = NodePath("Base/Title")
+description = NodePath("Base/QuestText")
+button = NodePath("Base/AcceptButton")
+
+[node name="Base" type="TileMapLayer" parent="."]
+z_index = 5
+position = Vector2(1, 0)
+tile_map_data = PackedByteArray("AAAAAAAAAAASAAAAAAAAAAEAAAASAAEAAAAAAAIAAAASAAEAAAABAAAAAAATAAAAAAABAAEAAAATAAEAAAABAAIAAAATAAEAAAACAAAAAAATAAAAAAACAAEAAAATAAEAAAACAAIAAAATAAEAAAADAAAAAAATAAAAAAAEAAAAAAATAAAAAAAFAAAAAAATAAAAAAABAAMAAAATAAEAAAABAAQAAAATAAEAAAABAAUAAAATAAEAAAACAAMAAAATAAEAAAACAAQAAAATAAEAAAACAAUAAAATAAEAAAADAAEAAAATAAEAAAADAAIAAAATAAEAAAADAAMAAAATAAEAAAADAAQAAAATAAEAAAADAAUAAAATAAEAAAAEAAEAAAATAAEAAAAEAAIAAAATAAEAAAAEAAMAAAATAAEAAAAEAAQAAAATAAEAAAAEAAUAAAATAAEAAAAFAAEAAAATAAEAAAAFAAIAAAATAAEAAAAFAAMAAAATAAEAAAAFAAQAAAATAAEAAAAFAAUAAAATAAEAAAAAAAMAAAASAAEAAAAAAAQAAAASAAEAAAAAAAUAAAASAAEAAAAAAAYAAAASAAIAAAABAAYAAAATAAIAAAACAAYAAAATAAIAAAADAAYAAAATAAIAAAAEAAYAAAATAAIAAAAFAAYAAAATAAIAAAAGAAYAAAAUAAIAAAAGAAEAAAAUAAEAAAAGAAIAAAAUAAEAAAAGAAMAAAAUAAEAAAAGAAQAAAAUAAEAAAAGAAUAAAAUAAEAAAAGAAAAAAAUAAAAAAA=")
+tile_set = ExtResource("1_7lgwp")
+
+[node name="Title" type="Label" parent="Base"]
+offset_left = 28.0
+offset_top = 33.0
+offset_right = 204.0
+offset_bottom = 56.0
+text = "Quest name"
+label_settings = SubResource("LabelSettings_1o3mg")
+
+[node name="QuestText" type="Label" parent="Base"]
+offset_left = 27.0
+offset_top = 65.0
+offset_right = 201.0
+offset_bottom = 101.0
+text = "The town is threatened. 
+Please save us"
+label_settings = SubResource("LabelSettings_qph08")
+autowrap_mode = 2
+
+[node name="AcceptButton" parent="Base" instance=ExtResource("3_up3ma")]
+position = Vector2(102, 150)
+tile_map_data = PackedByteArray("AAAAAAAAAAAYAAQAAAAAAAEAAAAYAAUAAAABAAAAAAAZAAQAAAABAAEAAAAZAAUAAAACAAAAAAAaAAQAAAACAAEAAAAaAAUAAAA=")
+buttonDimensions = Vector2i(3, 2)
+
+[node name="Label" parent="Base/AcceptButton" index="0"]
+offset_right = 94.0
+text = "Accept"
+
+[node name="CollisionShape2D" parent="Base/AcceptButton/Area2D" index="0"]
+position = Vector2(48, 29)
+shape = SubResource("RectangleShape2D_jixyw")
+
+[editable path="Base/AcceptButton"]

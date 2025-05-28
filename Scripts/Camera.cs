@@ -5,6 +5,7 @@ namespace Game.Camera;
 public partial class Camera : Camera2D
 {
     public static Camera instance;
+    public CameraMode mode;
     PlayerManageable player;
     /// <summary>
     /// Sets camera restrictions by sending position of top left corner and bottom right corner of current map
@@ -18,10 +19,15 @@ public partial class Camera : Camera2D
         LimitRight = BR.X;
         LimitBottom = BR.Y;
     }
+    public void SetCameraMode(CameraMode cameraMode)
+    {
+        mode = cameraMode;
+    }
     public override void _Ready()
     {
         if (instance == null)
         {
+            mode = CameraMode.Player;
             instance = this;
             player = SceneManager.player;
         }
@@ -33,10 +39,19 @@ public partial class Camera : Camera2D
     }
     public override void _Process(double delta)
     {
-        if (player != null)
+        if (mode == CameraMode.Cutscene) return;
+        if (player != null && mode == CameraMode.Player)
             GlobalPosition = player.GetGlobalPos();
+        else if (mode == CameraMode.Spell)
+        {
+            GlobalPosition = player.GetGlobalPos() + (GetGlobalMousePosition() - player.GetGlobalPos()) * 0.2f;
+        }
     }
 
-
-
+}
+public enum CameraMode
+{
+    Player,
+    Spell,
+    Cutscene
 }

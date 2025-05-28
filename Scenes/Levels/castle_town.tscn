@@ -16,7 +16,7 @@ playerPos = Vector2(305, 365)
 
 [sub_resource type="Resource" id="Resource_3sp3p"]
 script = ExtResource("5_0jiyn")
-scene = "res://Scenes/Levels/green_city.tscn"
+scene = "uid://vtw5fq5qkgsm"
 playerPos = Vector2(-46, -276)
 
 [node name="CastleTown" type="Node2D"]
@@ -47,10 +47,12 @@ position = Vector2(761, 52)
 [node name="Door" parent="." instance=ExtResource("4_nmmkn")]
 position = Vector2(559, 299)
 toEnter = SubResource("Resource_2lleb")
+actionName = "enter inn"
 
 [node name="Door2" parent="." instance=ExtResource("4_nmmkn")]
 position = Vector2(305, 768)
 toEnter = SubResource("Resource_3sp3p")
+actionName = "go to forest town"
 
 [node name="MapConstrictCamera" parent="." instance=ExtResource("3_hab46")]
 
@@ -60,7 +62,7 @@ position = Vector2(-254, -229)
 [node name="BR" parent="MapConstrictCamera" index="1"]
 position = Vector2(1468, 805)
 
-[node name="Enemy" parent="." instance=ExtResource("7_uoc4r")]
+[node name="WolfRider" parent="." instance=ExtResource("7_uoc4r")]
 position = Vector2(164, 141)
 
 [node name="Dragon" parent="." instance=ExtResource("8_tnas7")]

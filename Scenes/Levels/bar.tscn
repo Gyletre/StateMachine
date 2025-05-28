@@ -31,5 +31,5 @@ tile_set = ExtResource("1_8fslv")
 [node name="Door" parent="." instance=ExtResource("2_nov4u")]
 z_index = 1
 y_sort_enabled = true
-position = Vector2(-211, 90)
+position = Vector2(-168, 120)
 toEnter = SubResource("Resource_dbujx")
