@@ -46,15 +46,17 @@ tile_set = ExtResource("2_te26m")
 [node name="Door" parent="." instance=ExtResource("6_5drjp")]
 position = Vector2(176, -84)
 toEnter = SubResource("Resource_02l4q")
-
-[node name="Paladin" parent="." instance=ExtResource("6_ptfot")]
-position = Vector2(-369, 56)
-
-[node name="MapConstrictCamera" parent="." instance=ExtResource("8_s4yi8")]
+actionName = "enter house"
 
 [node name="Door2" parent="." instance=ExtResource("6_5drjp")]
 position = Vector2(-46, -276)
 toEnter = SubResource("Resource_l07ov")
+actionName = "go to castle town"
+
+[node name="Paladin" parent="." instance=ExtResource("6_ptfot")]
+position = Vector2(-431, -199)
+
+[node name="MapConstrictCamera" parent="." instance=ExtResource("8_s4yi8")]
 
 [node name="NPC" parent="." node_paths=PackedStringArray("quest") instance=ExtResource("10_02l4q")]
 position = Vector2(-118, -126)
@@ -62,5 +64,7 @@ quest = NodePath("Quest")
 
 [node name="Quest" parent="NPC" instance=ExtResource("11_l68ju")]
 questName = "save forest town"
+questDescription = "A paladin has been spreading chaos in town
+Please put an end to his rampage"
 spellQuestReward = 3
 goldQuestReward = 13

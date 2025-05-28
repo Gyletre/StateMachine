@@ -1,4 +1,4 @@
-using Godot;
+using Game.UI;
 
 namespace Game.StateMachine.PlayerState;
 
@@ -27,7 +27,7 @@ public class PlayerDieState : PlayerBaseState
     }
     private void GameOver()
     {
-        GD.Print("Game over");
+        TextMessageWriter.Print("Game over");
         stateMachine.QueueFree();
     }
 

@@ -46,6 +46,8 @@ quest = NodePath("Quest")
 
 [node name="Quest" parent="NPC" instance=ExtResource("6_x3y3x")]
 questName = "save castle town"
+questDescription = "There are monsters everywhere outside!
+Please get rid of them for me!"
 spellQuestReward = 2
 goldQuestReward = 69
 questLocation = 1

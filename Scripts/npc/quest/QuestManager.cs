@@ -1,12 +1,18 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net.Quic;
+using Game.UI;
 
 namespace Game.Quest;
 
 public partial class QuestManager : Node2D
 {
-    public static List<Quest> quests { get; private set; } = new();
+    [Export(PropertyHint.Dir)] string questWindow;
+    static QuestManager instance;
+    static List<Quest> quests = new();
+    static Quest maybeQuest;
 
     public static void AddQuest(Quest quest)
     {
@@ -17,9 +23,19 @@ public partial class QuestManager : Node2D
                 return;
             }
         }
-        GD.Print("Start " + quest.questName + " quest");
-        quests.Add(quest);
+        QuestUI window = ResourceLoader.Load<PackedScene>(instance.questWindow).Instantiate<QuestUI>();
+        window.SetupQuestUI(quest.questName, quest.questDescription, quest.spellQuestReward, quest.goldQuestReward, ActivateQuest);
+        instance.GetNode("/root/SceneManager/UI").AddChild(window);
+        maybeQuest = quest;
     }
+
+    private static void ActivateQuest()
+    {
+        if (maybeQuest == null) return;
+        quests.Add(maybeQuest);
+        TextMessageWriter.Print("Start " + maybeQuest.questName + " quest");
+    }
+
     /// <summary>
     /// Checks if quest is completed
     /// </summary>
@@ -38,6 +54,7 @@ public partial class QuestManager : Node2D
     }
     public override void _Ready()
     {
+        instance = this;
         SceneManager.OnAllEnemiesDefeated += FinishDefeatEnemyQuest;
     }
 
@@ -47,7 +64,7 @@ public partial class QuestManager : Node2D
         {
             if (q.questType == QuestType.KillAllEnemies)
             {
-                GD.Print("completed " + q.questName + " quest");
+
                 q.CompleteQuest(SceneManager.GetCurrentLevelIdentifier());
             }
         }

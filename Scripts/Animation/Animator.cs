@@ -1,7 +1,7 @@
 using Godot;
 using System;
 using System.Diagnostics;
-
+using Game.UI;
 namespace Game.Animation;
 
 public partial class Animator : Sprite2D
@@ -78,7 +78,7 @@ public partial class Animator : Sprite2D
 				return;
 			}
 		}
-		GD.Print("Animation with tag \"" + Enum.GetName(typeof(AnimationType), type) + "\" not found");
+		TextMessageWriter.Print("Animation with tag \"" + Enum.GetName(typeof(AnimationType), type) + "\" not found");
 	}
 
 	/// <summary>

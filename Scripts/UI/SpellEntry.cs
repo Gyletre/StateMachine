@@ -22,7 +22,7 @@ public partial class SpellEntry : Node2D
 
 	private void EquipSpellOnSlot()
 	{
-		GD.Print("Press 1, 2 or 3 to equip spell on that button");
+		TextMessageWriter.Print("Press 1, 2 or 3 to equip spell on that button");
 		Action<int>[] events = SceneManager.player.GetAbilityKeys();
 		for (int i = 0; i < events.Length; i++)
 		{

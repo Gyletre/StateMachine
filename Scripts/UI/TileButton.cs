@@ -1,6 +1,8 @@
 using Godot;
 using System;
 
+namespace Game.UI;
+
 public partial class TileButton : TileMapLayer
 {
     [Export] Vector2I buttonDimensions;
@@ -65,7 +67,7 @@ public partial class TileButton : TileMapLayer
     private void PressButton()
     {
         ChangeButtonColor(pressedOffset);
-        GD.Print("pressed!");
+        TextMessageWriter.Print("pressed!");
         OnPressed?.Invoke();
         GetTree().CreateTimer(0.1f).Timeout += () =>
         {

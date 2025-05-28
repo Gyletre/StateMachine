@@ -9,11 +9,11 @@ namespace Game.StateMachine.PlayerState
 	public partial class PlayerStateMachine : StateMachine, Player, PlayerManageable
 	{
 		[Export] public InputReader inputReader;
-		[Export] public float speed { get; private set; } = 50;
 		[Export] public Animator animator;
 		[Export] public HitBoxManager hitBoxManager;
-		[Export] public double invincibility = 1;
 		[Export] public HealthBar healthBar;
+		[Export] public float speed { get; private set; } = 50;
+		[Export] public double invincibility = 1;
 		[Export] public int maxHP = 100;
 
 		public Action<int> OnDamageTaken;
@@ -29,7 +29,6 @@ namespace Game.StateMachine.PlayerState
 		public override void _Ready()
 		{
 			knownSpells.Add(Spell.Heal);
-			knownSpells.Add(Spell.Buff);
 			hp = maxHP;
 			SceneManager.player = this;
 			healthBar.UpdateMaxHP(hp);
@@ -39,12 +38,12 @@ namespace Game.StateMachine.PlayerState
 		public override void _Process(double delta)
 		{
 			invincibilityTime = Mathf.Max(0, invincibilityTime - delta * slowrate);
-			if (Input.IsActionJustPressed("ui_accept"))
-			{
-				LearnSpell(Spell.Fireball);
-				LearnSpell(Spell.Buff);
-			}
 		}
+		public override void _ExitTree()
+		{
+			Camera.Camera.instance.mode = Camera.CameraMode.Cutscene;
+		}
+
 
 		public void TakeDamage(int amount)
 		{
@@ -75,7 +74,7 @@ namespace Game.StateMachine.PlayerState
 
 		public void LearnSpell(Spell spell)
 		{
-			GD.Print("Learned " + Enum.GetName(spell));
+			TextMessageWriter.Print("Learned " + Enum.GetName(spell));
 			knownSpells.Add(spell);
 			OnSpellAdded?.Invoke();
 		}

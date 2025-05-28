@@ -1,6 +1,6 @@
 using Godot;
-using System.Collections.Generic;
 using System;
+using Game.UI;
 
 namespace Game.StateMachine.PlayerState
 {
@@ -18,11 +18,10 @@ namespace Game.StateMachine.PlayerState
 
         public override void Enter()
         {
-            if (currentSpell == Spell.None) return;
-            GD.Print("Casting " + Enum.GetName(currentSpell));
+            TextMessageWriter.Print("Casting " + Enum.GetName(currentSpell));
             if (!stateMachine.knownSpells.Contains(currentSpell)) // checks if player knows spell
             {
-                GD.Print(Enum.GetName(currentSpell) + " spell not known");
+                TextMessageWriter.Print(Enum.GetName(currentSpell) + " spell not known");
                 stateMachine.SwitchState(new PlayerMoveState(stateMachine));
                 return;
             }
@@ -54,58 +53,46 @@ namespace Game.StateMachine.PlayerState
             switch (currentSpell)
             {
                 case Spell.Fireball:
-                    StartFireball();
+                    StartSpell(0.5, Fireball);
                     break;
                 case Spell.Heal:
-                    StartHeal();
+                    StartSpell(0.75, Heal);
                     break;
                 case Spell.Buff:
-                    StartBuff();
+                    StartSpell(0.5, Buff);
                     break;
                 default:
                     break;
             }
             isCasting = true;
         }
-        private void StartFireball()
+        private void StartSpell(double windup, Action spell)
         {
-            timer = 0.75;
-            spellEffect += Fireball;
-
-        }
-        private void StartBuff()
-        {
-            timer = 0.5;
-            spellEffect += Buff;
-        }
-
-        private void StartHeal()
-        {
-            timer = 0.5;
-            spellEffect += Heal;
+            timer = windup;
+            spellEffect += spell;
         }
 
         private void Heal()
         {
             stateMachine.hp = Mathf.Min(stateMachine.maxHP, stateMachine.hp + 30);
             stateMachine.healthBar.UpdateHealthBar(stateMachine.hp);
-            GD.Print("heal");
+            TextMessageWriter.Print("heal");
             //spawn particle effect
             stateMachine.SwitchState(new PlayerMoveState(stateMachine));
         }
 
         private void Fireball()
         {
-            GD.Print("FIREBALL!");
+            TextMessageWriter.Print("FIREBALL!");
             stateMachine.SwitchState(new PlayerMoveState(stateMachine));
         }
         private void Buff()
         {
-            GD.Print("Buff activated");
+            TextMessageWriter.Print("Buff activated");
             stateMachine.damageMultiplier++;
             stateMachine.GetTree().CreateTimer(buffDuration).Timeout += () =>
             {
-                GD.Print("Buff no longer active");
+                TextMessageWriter.Print("Buff no longer active");
                 stateMachine.damageMultiplier--;
             };
             stateMachine.SwitchState(new PlayerMoveState(stateMachine));

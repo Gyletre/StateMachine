@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://plkgayikbpve"]
+
+[ext_resource type="Script" uid="uid://bbvi204f7vjsd" path="res://Scripts/UI/TextMessageWriter.cs" id="1_ykrac"]
+
+[node name="TextMessageWriter" type="Node2D"]
+z_index = 10
+script = ExtResource("1_ykrac")

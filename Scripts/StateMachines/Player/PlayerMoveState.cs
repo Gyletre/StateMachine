@@ -22,13 +22,7 @@ namespace Game.StateMachine.PlayerState
         }
         public override void Tick(double delta)
         {
-            stateMachine.animator.SwitchDirection(stateMachine.inputReader.moveDirection);
-
-            stateMachine.Velocity = Vector2.Zero;
-            stateMachine.Velocity = stateMachine.inputReader.moveDirection * stateMachine.speed * (float)delta * 100;
-            if (stateMachine.Velocity != Vector2.Zero) stateMachine.animator.SwitchAnimation(AnimationType.Walking);
-            else stateMachine.animator.SwitchAnimation(AnimationType.Idle);
-            stateMachine.MoveAndSlide();
+            Move(delta);
             if (stateMachine.inputReader.IsAttacking())
             {
                 stateMachine.SwitchState(new PlayerAttackingState(stateMachine));
@@ -45,16 +39,14 @@ namespace Game.StateMachine.PlayerState
         }
         private void ActivateAbility(int spellNo)
         {
-            GD.Print("Ability button pressed");
             Spell spell = stateMachine.spellsEquipped[spellNo];
             if (spell == Spell.None) return;
             stateMachine.SwitchState(new PlayerSpellCastingState(stateMachine, spell));
         }
         private void Jump()
         {
-            GD.Print("Jump!");
+            stateMachine.SwitchState(new PlayerJumpingState(stateMachine));
         }
-
 
     }
 }

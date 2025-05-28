@@ -13,6 +13,7 @@ public partial class SceneManager : Node2D
 	public static List<Enemy> enemies = new();
 	public static List<Npc> npcs = new();
 	public static Action OnAllEnemiesDefeated;
+	public static Action OnSceneChanged;
 	bool paused = false;
 	float enemySpeed = 1f;
 	float playerSpeed = 1f;
@@ -100,7 +101,6 @@ public partial class SceneManager : Node2D
 		{
 			enemiesDefeated = true;
 			OnAllEnemiesDefeated?.Invoke();
-			GD.Print("no more enemies");
 		}
 	}
 }

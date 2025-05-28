@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://bmy8ijrdfe0t8"]
 
-[ext_resource type="Script" uid="uid://wo26qu38n8ir" path="res://Scripts/Enemies/EnemyStateMachine.cs" id="1_t5ks0"]
+[ext_resource type="Script" uid="uid://wo26qu38n8ir" path="res://Scripts/StateMachines/Enemies/EnemyStateMachine.cs" id="1_t5ks0"]
 [ext_resource type="Texture2D" uid="uid://dr8q78j6jlb2d" path="res://project_assets/monsters/dragons/red_dragon/AdultRedDragon_idle.png" id="2_u7hq0"]
 [ext_resource type="Script" uid="uid://i7831e0an6g8" path="res://Scripts/Animation/Animator.cs" id="3_0x8cv"]
 [ext_resource type="Resource" uid="uid://421d65p7qwwd" path="res://Scenes/Entities/enemy/red_dragon/dragon_idle.tres" id="4_176vx"]

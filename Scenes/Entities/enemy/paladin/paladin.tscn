@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://drdj13csn6sv2"]
 
-[ext_resource type="Script" uid="uid://wo26qu38n8ir" path="res://Scripts/Enemies/EnemyStateMachine.cs" id="1_2qn2m"]
+[ext_resource type="Script" uid="uid://wo26qu38n8ir" path="res://Scripts/StateMachines/Enemies/EnemyStateMachine.cs" id="1_2qn2m"]
 [ext_resource type="Texture2D" uid="uid://c0efuvxf503n" path="res://project_assets/monsters/human/paladin/Paladin_idle.png" id="2_jop48"]
 [ext_resource type="Script" uid="uid://i7831e0an6g8" path="res://Scripts/Animation/Animator.cs" id="3_tgb5t"]
 [ext_resource type="Resource" uid="uid://b6vl27ah7qxed" path="res://Scenes/Entities/enemy/paladin/paladin_idle.tres" id="4_81c71"]

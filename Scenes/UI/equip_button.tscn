@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://078rnxrm5g7i"]
+
+[ext_resource type="TileSet" uid="uid://bgb7vxsmbjb54" path="res://project_assets/ui/ui.tres" id="1_wo5h3"]
+[ext_resource type="Script" uid="uid://b7le82gx44nhe" path="res://Scripts/UI/TileButton.cs" id="2_nhn2e"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_smvyq"]
+font_color = Color(0.239216, 0.160784, 0.211765, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_smvyq"]
+size = Vector2(60, 34)
+
+[node name="EquipButton" type="TileMapLayer"]
+tile_map_data = PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 24, 0, 4, 0, 0, 0, 0, 0, 1, 0, 0, 0, 24, 0, 5, 0, 0, 0, 1, 0, 0, 0, 0, 0, 26, 0, 4, 0, 0, 0, 1, 0, 1, 0, 0, 0, 26, 0, 5, 0, 0, 0)
+tile_set = ExtResource("1_wo5h3")
+script = ExtResource("2_nhn2e")
+buttonDimensions = Vector2i(2, 2)
+hoveredOffset = Vector2i(-6, 0)
+pressedOffset = Vector2i(-3, 0)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 2.0
+offset_top = 12.0
+offset_right = 62.0
+offset_bottom = 46.0
+text = "Equip"
+label_settings = SubResource("LabelSettings_smvyq")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(32, 29)
+shape = SubResource("RectangleShape2D_smvyq")

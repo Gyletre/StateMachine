@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://ldpvr4fmttm3"]
+[gd_scene load_steps=8 format=3 uid="uid://ldpvr4fmttm3"]
 
 [ext_resource type="Script" uid="uid://3f2q2us7c66g" path="res://Scripts/SceneManagement/SceneManager.cs" id="1_ak3r1"]
-[ext_resource type="PackedScene" uid="uid://vtw5fq5qkgsm" path="res://Scenes/Levels/green_city.tscn" id="1_gukrn"]
+[ext_resource type="PackedScene" uid="uid://vtw5fq5qkgsm" path="res://Scenes/Levels/green_town.tscn" id="1_gukrn"]
 [ext_resource type="PackedScene" uid="uid://cpmtxtugd5fmr" path="res://Scenes/Entities/player/player.tscn" id="2_2lire"]
 [ext_resource type="PackedScene" uid="uid://b8144pyhpi88k" path="res://Scenes/Entities/npc/quest/quest_manager.tscn" id="3_t7rfq"]
 [ext_resource type="Script" uid="uid://qdyx26nqcc30" path="res://Scripts/Camera.cs" id="4_8j8h1"]
-[ext_resource type="PackedScene" uid="uid://bjl06syux4xup" path="res://Scenes/UI/spell_menu.tscn" id="5_py5r8"]
+[ext_resource type="PackedScene" uid="uid://ds8jlqxdu3i4a" path="res://Scenes/UI/ui.tscn" id="6_t7rfq"]
+[ext_resource type="Script" uid="uid://6rl613717pd7" path="res://Scripts/Saving/SavingSystem.cs" id="7_thx0b"]
 
 [node name="SceneManager" type="Node2D" node_paths=PackedStringArray("sceneHolder")]
 y_sort_enabled = true
@@ -16,20 +17,19 @@ sceneHolder = NodePath("SceneHolder")
 position = Vector2(-26, -119)
 
 [node name="QuestManager" parent="." instance=ExtResource("3_t7rfq")]
+questWindow = "uid://sbqq1627caa3"
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(2, -51)
+position = Vector2(-27, -121)
 zoom = Vector2(2, 2)
 script = ExtResource("4_8j8h1")
-
-[node name="Spell Menu" parent="Camera2D" instance=ExtResource("5_py5r8")]
-offset_left = -288.0
-offset_top = -157.0
-offset_right = -288.0
-offset_bottom = -157.0
-scale = Vector2(0.5, 0.5)
 
 [node name="SceneHolder" type="Node2D" parent="."]
 y_sort_enabled = true
 
 [node name="GreenCity" parent="SceneHolder" instance=ExtResource("1_gukrn")]
+
+[node name="UI" parent="." instance=ExtResource("6_t7rfq")]
+
+[node name="SavingSystem" type="Node" parent="."]
+script = ExtResource("7_thx0b")

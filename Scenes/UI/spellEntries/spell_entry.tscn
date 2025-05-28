@@ -1,17 +1,11 @@
-[gd_scene load_steps=9 format=4 uid="uid://dn04jv1yxg25"]
+[gd_scene load_steps=7 format=4 uid="uid://dn04jv1yxg25"]
 
 [ext_resource type="Script" uid="uid://de4os1ehvtqve" path="res://Scripts/UI/SpellEntry.cs" id="1_aylye"]
 [ext_resource type="LabelSettings" uid="uid://do5bodjuqq72j" path="res://project_assets/fonts/title text.tres" id="1_k35o3"]
 [ext_resource type="TileSet" uid="uid://bgb7vxsmbjb54" path="res://project_assets/ui/ui.tres" id="1_u7pr4"]
 [ext_resource type="Texture2D" uid="uid://bjt3j3gke4y3i" path="res://project_assets/icons/256/Blood_010_Aura_Of_Draining.png" id="2_smvyq"]
 [ext_resource type="Texture2D" uid="uid://bedqubpr8s3wa" path="res://project_assets/icons/256/Air_01_Missile.png" id="4_bjxy4"]
-[ext_resource type="Script" uid="uid://b7le82gx44nhe" path="res://Scripts/UI/TileButton.cs" id="5_ukh1n"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_smvyq"]
-font_color = Color(0.239216, 0.160784, 0.211765, 1)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_smvyq"]
-size = Vector2(60, 34)
+[ext_resource type="PackedScene" uid="uid://078rnxrm5g7i" path="res://Scenes/UI/equip_button.tscn" id="6_ilh6r"]
 
 [node name="SpellEntry" type="Node2D"]
 scale = Vector2(0.5, 0.5)
@@ -46,27 +40,5 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="EquipButton" type="TileMapLayer" parent="."]
+[node name="EquipButton" parent="." instance=ExtResource("6_ilh6r")]
 position = Vector2(226, 21)
-tile_map_data = PackedByteArray("AAAAAAAAAAAYAAQAAAAAAAEAAAAYAAUAAAABAAAAAAAaAAQAAAABAAEAAAAaAAUAAAA=")
-tile_set = ExtResource("1_u7pr4")
-script = ExtResource("5_ukh1n")
-buttonDimensions = Vector2i(2, 2)
-hoveredOffset = Vector2i(-6, 0)
-pressedOffset = Vector2i(-3, 0)
-
-[node name="Label" type="Label" parent="EquipButton"]
-offset_left = 2.0
-offset_top = 12.0
-offset_right = 62.0
-offset_bottom = 46.0
-text = "Equip"
-label_settings = SubResource("LabelSettings_smvyq")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Area2D" type="Area2D" parent="EquipButton"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EquipButton/Area2D"]
-position = Vector2(32, 29)
-shape = SubResource("RectangleShape2D_smvyq")

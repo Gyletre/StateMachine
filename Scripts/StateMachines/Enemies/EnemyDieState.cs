@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using Game.UI;
 
 namespace Game.StateMachine.EnemyState;
 
@@ -22,7 +23,7 @@ public class EnemyDieState : EnemyBaseState
 
     private void Die()
     {
-        GD.Print(stateMachine.Name + " is dead");
+        TextMessageWriter.Print(stateMachine.Name + " is dead");
         stateMachine.QueueFree();
     }
 }

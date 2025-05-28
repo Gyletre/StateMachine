@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://cnlfl3bhxo4u0"]
 
-[ext_resource type="Script" uid="uid://wo26qu38n8ir" path="res://Scripts/Enemies/EnemyStateMachine.cs" id="1_5g3f7"]
+[ext_resource type="Script" uid="uid://wo26qu38n8ir" path="res://Scripts/StateMachines/Enemies/EnemyStateMachine.cs" id="1_5g3f7"]
 [ext_resource type="Script" uid="uid://i7831e0an6g8" path="res://Scripts/Animation/Animator.cs" id="2_8tdg0"]
 [ext_resource type="Script" uid="uid://ck2qlx5qlwci7" path="res://Scripts/Animation/DirectionalAnimation.cs" id="3_3g3ot"]
 [ext_resource type="Script" uid="uid://oadva4h6awjf" path="res://Scripts/Animation/HitBoxManager.cs" id="3_n8ndu"]
