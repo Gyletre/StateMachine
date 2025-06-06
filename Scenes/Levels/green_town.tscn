@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://vtw5fq5qkgsm"]
+[gd_scene load_steps=15 format=4 uid="uid://vtw5fq5qkgsm"]
 
 [ext_resource type="Script" uid="uid://bvrl05h37f67w" path="res://Scripts/SceneManagement/Level.cs" id="1_xucae"]
 [ext_resource type="TileSet" uid="uid://d1135588x1rok" path="res://project_assets/tiles/franuka/cities/green_city/green_city.tres" id="2_1lbkn"]
@@ -7,9 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://ccq4t51ktb14f" path="res://Scenes/Entities/door.tscn" id="6_5drjp"]
 [ext_resource type="PackedScene" uid="uid://drdj13csn6sv2" path="res://Scenes/Entities/enemy/paladin/paladin.tscn" id="6_ptfot"]
 [ext_resource type="Script" uid="uid://bbr64qqoev8kg" path="res://Scripts/SceneManagement/SceneConfig.cs" id="6_xucae"]
+[ext_resource type="PackedScene" uid="uid://ctyxv3gne8v57" path="res://Scenes/Saving/saveable_entity.tscn" id="8_88iaa"]
 [ext_resource type="PackedScene" uid="uid://c8njvjgtraw0i" path="res://Scenes/UI/map_constrict_camera.tscn" id="8_s4yi8"]
 [ext_resource type="PackedScene" uid="uid://do7hl00dmpsp0" path="res://Scenes/Entities/npc/npc.tscn" id="10_02l4q"]
 [ext_resource type="PackedScene" uid="uid://diwnnjmsiixfr" path="res://Scenes/Entities/npc/quest/quest.tscn" id="11_l68ju"]
+[ext_resource type="PackedScene" uid="uid://fexywfr8l07h" path="res://Scenes/Entities/scene_loading_area.tscn" id="11_ufqj6"]
 
 [sub_resource type="Resource" id="Resource_02l4q"]
 script = ExtResource("6_xucae")
@@ -17,10 +19,11 @@ scene = "uid://cxqg1wumgmcui"
 playerPos = Vector2(-162, 90)
 metadata/_custom_type_script = "uid://bbr64qqoev8kg"
 
-[sub_resource type="Resource" id="Resource_l07ov"]
+[sub_resource type="Resource" id="Resource_88iaa"]
 script = ExtResource("6_xucae")
-scene = "res://Scenes/Levels/castle_town.tscn"
-playerPos = Vector2(300, 765)
+scene = "uid://p8dpc805nkfb"
+playerPos = Vector2(1510, 825)
+metadata/_custom_type_script = "uid://bbr64qqoev8kg"
 
 [node name="GreenTown" type="Node2D"]
 y_sort_enabled = true
@@ -48,15 +51,14 @@ position = Vector2(176, -84)
 toEnter = SubResource("Resource_02l4q")
 actionName = "enter house"
 
-[node name="Door2" parent="." instance=ExtResource("6_5drjp")]
-position = Vector2(-46, -276)
-toEnter = SubResource("Resource_l07ov")
-actionName = "go to castle town"
-
 [node name="Paladin" parent="." instance=ExtResource("6_ptfot")]
 position = Vector2(-431, -199)
 
+[node name="SaveableEntity" parent="Paladin" instance=ExtResource("8_88iaa")]
+uniqueIdentifier = "21bd95c1-05a0-4f81-a2e9-f9c4ac77eb07"
+
 [node name="MapConstrictCamera" parent="." instance=ExtResource("8_s4yi8")]
+activeRestrict = true
 
 [node name="NPC" parent="." node_paths=PackedStringArray("quest") instance=ExtResource("10_02l4q")]
 position = Vector2(-118, -126)
@@ -68,3 +70,12 @@ questDescription = "A paladin has been spreading chaos in town
 Please put an end to his rampage"
 spellQuestReward = 3
 goldQuestReward = 13
+
+[node name="SaveableEntity" parent="NPC/Quest" instance=ExtResource("8_88iaa")]
+uniqueIdentifier = "61afa979-a4a1-4633-a6ca-1049e79ea1ef"
+
+[node name="SceneLoadingArea" parent="." instance=ExtResource("11_ufqj6")]
+position = Vector2(-49, -330)
+sceneToLoad = SubResource("Resource_88iaa")
+
+[editable path="MapConstrictCamera"]

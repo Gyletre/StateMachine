@@ -1,12 +1,14 @@
-[gd_scene load_steps=11 format=4 uid="uid://2yxpqhm7cfqb"]
+[gd_scene load_steps=13 format=4 uid="uid://2yxpqhm7cfqb"]
 
 [ext_resource type="PackedScene" uid="uid://cvctrotsrikbn" path="res://Scenes/tilemap_layers.tscn" id="1_ikq8h"]
 [ext_resource type="Script" uid="uid://bvrl05h37f67w" path="res://Scripts/SceneManagement/Level.cs" id="1_tnas7"]
 [ext_resource type="PackedScene" uid="uid://c8njvjgtraw0i" path="res://Scenes/UI/map_constrict_camera.tscn" id="3_hab46"]
 [ext_resource type="PackedScene" uid="uid://ccq4t51ktb14f" path="res://Scenes/Entities/door.tscn" id="4_nmmkn"]
 [ext_resource type="Script" uid="uid://bbr64qqoev8kg" path="res://Scripts/SceneManagement/SceneConfig.cs" id="5_0jiyn"]
+[ext_resource type="PackedScene" uid="uid://fexywfr8l07h" path="res://Scenes/Entities/scene_loading_area.tscn" id="5_q86lb"]
 [ext_resource type="PackedScene" uid="uid://byw5m3tp6cyha" path="res://Scenes/Entities/enemy/ogre/ogre.tscn" id="6_cymsr"]
 [ext_resource type="PackedScene" uid="uid://dve615jb2262w" path="res://Scenes/Entities/enemy/wolf_rider/wolf_rider.tscn" id="7_uoc4r"]
+[ext_resource type="PackedScene" uid="uid://ctyxv3gne8v57" path="res://Scenes/Saving/saveable_entity.tscn" id="8_6yae6"]
 [ext_resource type="PackedScene" uid="uid://bmy8ijrdfe0t8" path="res://Scenes/Entities/enemy/red_dragon/dragon.tscn" id="8_tnas7"]
 
 [sub_resource type="Resource" id="Resource_2lleb"]
@@ -14,10 +16,11 @@ script = ExtResource("5_0jiyn")
 scene = "res://Scenes/Levels/inn.tscn"
 playerPos = Vector2(305, 365)
 
-[sub_resource type="Resource" id="Resource_3sp3p"]
+[sub_resource type="Resource" id="Resource_6yae6"]
 script = ExtResource("5_0jiyn")
-scene = "uid://vtw5fq5qkgsm"
-playerPos = Vector2(-46, -276)
+scene = "uid://p8dpc805nkfb"
+playerPos = Vector2(250, 0)
+metadata/_custom_type_script = "uid://bbr64qqoev8kg"
 
 [node name="CastleTown" type="Node2D"]
 y_sort_enabled = true
@@ -41,20 +44,17 @@ tile_map_data = PackedByteArray("AAD4//j/AAABAAMAAAD4//n/AAABAAcAAAD4//r/AAABAAg
 [node name="Decor" parent="TilemapLayers/Structures" index="0"]
 tile_map_data = PackedByteArray("AAD//xcAAAAMAA4AAAABAAIAAAANAA4AAAABABcAAAAMAA4AAAADAAIAAAANAA4AAAADABcAAAAMAA4AAAAPAPz/AAALAAkAAAAPABcAAAAMAA4AAAAQAAcAAAAQAA4AAAARAPz/AAALAAkAAAARAAcAAgAQABcAAAARABcAAAAMAA4AAAASAAcAAAAQAA4AAAATABcAAAAMAA4AAAAUAP3/AAAMAA4AAAAYAP3/AAAMAA4AAAAgAAkAAgANABcAAAA=")
 
-[node name="Ogre" parent="." instance=ExtResource("6_cymsr")]
-position = Vector2(761, 52)
-
 [node name="Door" parent="." instance=ExtResource("4_nmmkn")]
 position = Vector2(559, 299)
 toEnter = SubResource("Resource_2lleb")
 actionName = "enter inn"
 
-[node name="Door2" parent="." instance=ExtResource("4_nmmkn")]
-position = Vector2(305, 768)
-toEnter = SubResource("Resource_3sp3p")
-actionName = "go to forest town"
+[node name="SceneLoadingArea" parent="." instance=ExtResource("5_q86lb")]
+position = Vector2(305, 834)
+sceneToLoad = SubResource("Resource_6yae6")
 
 [node name="MapConstrictCamera" parent="." instance=ExtResource("3_hab46")]
+activeRestrict = true
 
 [node name="TL" parent="MapConstrictCamera" index="0"]
 position = Vector2(-254, -229)
@@ -62,11 +62,23 @@ position = Vector2(-254, -229)
 [node name="BR" parent="MapConstrictCamera" index="1"]
 position = Vector2(1468, 805)
 
+[node name="Ogre" parent="." instance=ExtResource("6_cymsr")]
+position = Vector2(761, 52)
+
+[node name="SaveableEntity" parent="Ogre" instance=ExtResource("8_6yae6")]
+uniqueIdentifier = "3d916b98-9b35-4963-ad69-fd282a7f1f56"
+
 [node name="WolfRider" parent="." instance=ExtResource("7_uoc4r")]
 position = Vector2(164, 141)
 
+[node name="SaveableEntity" parent="WolfRider" instance=ExtResource("8_6yae6")]
+uniqueIdentifier = "1ada8d2d-45fa-4515-bd89-cc188e0cae49"
+
 [node name="Dragon" parent="." instance=ExtResource("8_tnas7")]
 position = Vector2(1010, 406)
+
+[node name="SaveableEntity" parent="Dragon" instance=ExtResource("8_6yae6")]
+uniqueIdentifier = "4099e7df-69bd-4519-a17a-937d614fc476"
 
 [editable path="TilemapLayers"]
 [editable path="MapConstrictCamera"]

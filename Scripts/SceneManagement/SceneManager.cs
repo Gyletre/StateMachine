@@ -1,38 +1,50 @@
-using Game.Quest;
 using Godot;
 using System;
 using System.Collections.Generic;
+using Game.Saving;
 
-namespace Game;
+namespace Game.SceneManagement;
 
-public partial class SceneManager : Node2D
+public partial class SceneManager : Node2D, SaveableManager
 {
 	[Export] Node sceneHolder;
 	static SceneManager instance;
+	public static Fader fader;
 	public static PlayerManageable player;
 	public static List<Enemy> enemies = new();
-	public static List<Npc> npcs = new();
 	public static Action OnAllEnemiesDefeated;
 	public static Action OnSceneChanged;
+
+	private static List<SaveableEntity> saveables = new();
+	private static SavingSystem savingSystem;
+	private static SceneConfig sceneToLoad;
 	bool paused = false;
 	float enemySpeed = 1f;
 	float playerSpeed = 1f;
+	bool enemiesDefeated = false;
+
 	public static LevelIdentifier GetCurrentLevelIdentifier()
 	{
 		return instance.sceneHolder.GetChild<Level>(0).id;
 	}
 	public static void LoadMap(SceneConfig sceneToLoad)
 	{
-		foreach (Node n in instance.sceneHolder.GetChildren())
-		{
-			n.QueueFree();
-		}
-
-		instance.sceneHolder.AddChild(ResourceLoader.Load<PackedScene>(sceneToLoad.scene).Instantiate<Node2D>());
-		player.SetGlobalPos(sceneToLoad.playerPos);
-		instance.enemiesDefeated = false;
+		SceneManager.sceneToLoad = sceneToLoad;
+		fader.FadeOut(ChangeScene);
 	}
 
+	private static void ChangeScene()
+	{
+		savingSystem.Save();
+		instance.sceneHolder.GetChild(0).Free();
+		var scene = ResourceLoader.Load<PackedScene>(sceneToLoad.scene).Instantiate();
+		instance.sceneHolder.AddChild(scene);
+		instance.enemiesDefeated = false;
+		savingSystem.Load();
+		player.SetGlobalPos(sceneToLoad.playerPos);
+		savingSystem.Save();
+		fader.FadeIn();
+	}
 
 	public void SlowEnemies(float rate, float duration)
 	{
@@ -77,6 +89,7 @@ public partial class SceneManager : Node2D
 	}
 	public override void _Ready()
 	{
+		savingSystem = SavingSystem.instance;
 		instance = this;
 	}
 
@@ -94,7 +107,7 @@ public partial class SceneManager : Node2D
 
 	}
 
-	bool enemiesDefeated = false;
+
 	private void EnemiesDefeated()
 	{
 		if (!enemiesDefeated)
@@ -102,5 +115,20 @@ public partial class SceneManager : Node2D
 			enemiesDefeated = true;
 			OnAllEnemiesDefeated?.Invoke();
 		}
+	}
+
+	public List<SaveableEntity> GetSaveables()
+	{
+		return saveables;
+	}
+
+	public void AddSaveable(SaveableEntity entity)
+	{
+		saveables.Add(entity);
+	}
+
+	public void RemoveSaveable(SaveableEntity entity)
+	{
+		saveables.Remove(entity);
 	}
 }

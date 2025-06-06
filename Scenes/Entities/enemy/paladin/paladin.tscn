@@ -31,9 +31,6 @@ hitbox = NodePath("HitBox")
 detectionArea = NodePath("DetectorRange")
 hitBoxManager = NodePath("HitBoxHandler")
 animator = NodePath("AnimatedSprite")
-speed = 65
-attackCooldown = 1.5
-hp = 55
 healthBar = NodePath("HealthBar")
 
 [node name="Collision" type="CollisionShape2D" parent="."]

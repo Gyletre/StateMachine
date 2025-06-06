@@ -2,10 +2,11 @@ using Godot;
 using System;
 using System.Dynamic;
 using Game.UI;
+using Game.SceneManagement;
 
 namespace Game.Quest;
 
-public partial class Quest : Node
+public partial class Quest : Node, ISaveable
 {
     [Export] public string questName;
     [Export] public QuestType questType;
@@ -15,8 +16,12 @@ public partial class Quest : Node
     [Export] public LevelIdentifier questLocation;
 
     public bool completed { get; private set; } = false;
+
+    private bool rewardReceived = false;
+
     public void StartQuest()
     {
+        if (rewardReceived) return;
         if (!QuestManager.CheckForCompletedQuest(this))
         {
             QuestManager.AddQuest(this);
@@ -26,7 +31,7 @@ public partial class Quest : Node
             TextMessageWriter.Print("TYSM, here is your reward");
             if (spellQuestReward != Spell.None) SceneManager.player.LearnSpell(spellQuestReward);
             if (goldQuestReward > 0) TextMessageWriter.Print("+ " + goldQuestReward + " gold");
-            QueueFree();
+            rewardReceived = true;
         }
 
     }
@@ -38,4 +43,23 @@ public partial class Quest : Node
             completed = true;
         }
     }
+
+    public ISaveData SaveState()
+    {
+        QuestData data = new();
+        data.rewardReceived = rewardReceived;
+        return data;
+    }
+
+    public void LoadState(ISaveData state)
+    {
+        if (state is QuestData data)
+            rewardReceived = data.rewardReceived;
+    }
+
+}
+[Serializable]
+public class QuestData : ISaveData
+{
+    public bool rewardReceived { get; set; }
 }

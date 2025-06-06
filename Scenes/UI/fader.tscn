@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0ry7pcfaqb3d"]
+
+[ext_resource type="Script" uid="uid://bmt2dyb70dqtb" path="res://Scripts/UI/Fader.cs" id="1_i63tc"]
+
+[sub_resource type="Gradient" id="Gradient_m3v20"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_i63tc"]
+gradient = SubResource("Gradient_m3v20")
+
+[node name="Fader" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i63tc")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -265.0
+offset_top = -140.0
+offset_right = 1441.0
+offset_bottom = 841.0
+texture = SubResource("GradientTexture1D_i63tc")

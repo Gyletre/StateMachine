@@ -1,8 +1,9 @@
 using Godot;
 using System;
 
+using Game;
 public interface ISaveable
 {
-    public object[] SaveState();
-    public void LoadState(object[] state);
+    public ISaveData SaveState();
+    public void LoadState(ISaveData state);
 }
