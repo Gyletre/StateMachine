@@ -29,6 +29,7 @@ tile_map_data = PackedByteArray("AAADAAgABAAiACEAAAAEAAgABAAjACEAAAAEAAcABAAlAB8
 tile_map_data = PackedByteArray("AAAJAAUABAAZACAAAAAJAAYABAAnABoAAAAJAAcABAAnABsAAAAEAAIABAAeABkAAAAJAAIABAAVABUAAAAJAAMABQAAAAAAAAACAAkABAAhACIAAAADAAkABAAiACIAAAAEAAkABAAjACIAAAA=")
 
 [node name="MapConstrictCamera" parent="." instance=ExtResource("2_38nkp")]
+activeRestrict = true
 
 [node name="TL" parent="MapConstrictCamera" index="0"]
 position = Vector2(-112, -110)

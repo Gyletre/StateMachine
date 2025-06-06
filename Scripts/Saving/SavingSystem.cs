@@ -29,7 +29,7 @@ namespace Game.Saving
                 }
                 else GD.Print(data.ToString());
                 Type dataType = data.GetType();
-                state[Enum.GetName(SceneManagement.SceneManager.GetCurrentLevelIdentifier()) + saveable.GetUniqueIdentifier()] = new SaveWrapper
+                state[saveable.GetUniqueIdentifier()] = new SaveWrapper
                 {
                     Type = dataType.AssemblyQualifiedName,
                     Data = JsonSerializer.SerializeToElement(data, dataType, new JsonSerializerOptions { WriteIndented = true })
@@ -77,7 +77,7 @@ namespace Game.Saving
         {
             foreach (SaveableEntity saveable in manager.GetSaveables())
             {
-                string id = Enum.GetName(SceneManagement.SceneManager.GetCurrentLevelIdentifier()) + saveable.GetUniqueIdentifier();
+                string id = saveable.GetUniqueIdentifier();
                 if (state.ContainsKey(id))
                 {
                     SaveWrapper wrapper = state[id];
@@ -116,15 +116,9 @@ namespace Game.Saving
 
         public override void _Process(double delta)
         {
-            if (Input.IsActionJustPressed("ui_page_up"))
-            {
-                Load();
-            }
-            if (Input.IsActionJustPressed("ui_page_down"))
-            {
-                Save();
-            }
-            if (Input.IsActionJustPressed("ui_text_delete")) Delete();
+            if (Input.IsActionJustPressed("ui_page_up")) { Load(); }
+            if (Input.IsActionJustPressed("ui_page_down")) { Save(); }
+            if (Input.IsActionJustPressed("ui_text_delete")) { Delete(); }
         }
     }
     [Serializable]

@@ -102,7 +102,7 @@ namespace Game.StateMachine.PlayerState
 				knownSpells = knownSpells,
 				hp = hp
 			};
-			playerSaveData.SetPos(GlobalPosition);
+			playerSaveData.SetPos(SceneManager.GetCurrentLevelIdentifier(), GlobalPosition);
 			GD.Print(playerSaveData.knownSpells + " " + playerSaveData.hp);
 			return playerSaveData;
 
@@ -114,7 +114,7 @@ namespace Game.StateMachine.PlayerState
 			{
 				knownSpells = playerSaveData.knownSpells;
 				hp = playerSaveData.hp;
-				GlobalPosition = playerSaveData.GetPos();
+				GlobalPosition = playerSaveData.GetPos(SceneManager.GetCurrentLevelIdentifier());
 			}
 		}
 	}
@@ -122,16 +122,16 @@ namespace Game.StateMachine.PlayerState
 	{
 		public List<Spell> knownSpells { get; set; }
 		public int hp { get; set; }
-		public float PosX { get; set; }
-		public float PosY { get; set; }
-		public Vector2 GetPos()
+		public Dictionary<string, float[]> scenePositions = new();
+		public Vector2 GetPos(LevelIdentifier levelIdentifier)
 		{
-			return new Vector2(PosX, PosY);
+			string key = Enum.GetName(levelIdentifier);
+			return new Vector2(scenePositions[key][0], scenePositions[key][1]);
 		}
-		public void SetPos(Vector2 pos)
+		public void SetPos(LevelIdentifier levelIdentifier, Vector2 pos)
 		{
-			PosX = pos.X;
-			PosY = pos.Y;
+			string key = Enum.GetName(levelIdentifier);
+			scenePositions[key] = [pos.X, pos.Y];
 		}
 	}
 }
