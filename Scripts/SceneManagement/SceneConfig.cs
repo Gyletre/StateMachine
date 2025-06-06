@@ -1,7 +1,7 @@
 
 using Godot;
 
-namespace Game;
+namespace Game.SceneManagement;
 
 [GlobalClass]
 public partial class SceneConfig : Resource

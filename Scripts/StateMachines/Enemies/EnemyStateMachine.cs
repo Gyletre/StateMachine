@@ -2,10 +2,11 @@ using Godot;
 using Game.Animation;
 using System;
 using Game.UI;
+using Game.SceneManagement;
 
 namespace Game.StateMachine.EnemyState;
 
-public partial class EnemyStateMachine : StateMachine, Enemy
+public partial class EnemyStateMachine : StateMachine, Enemy, ISaveable
 {
 	[Export] public Area2D hitbox;
 	[Export] public Area2D detectionArea;
@@ -27,7 +28,6 @@ public partial class EnemyStateMachine : StateMachine, Enemy
 
 	public void TakeDamage(int amount)
 	{
-
 		hp -= amount;
 		if (amount < 1 || invulnerable)
 		{
@@ -49,6 +49,7 @@ public partial class EnemyStateMachine : StateMachine, Enemy
 		healthBar.UpdateMaxHP(maxHp);
 		hp = maxHp;
 		OnDamageTaken += healthBar.UpdateHealthBar;
+
 		hitbox.BodyEntered += OnCollideWithPlayer;
 		detectionArea.BodyEntered += HuntPlayer;
 		detectionArea.BodyExited += StopHuntingPlayer;
@@ -57,10 +58,6 @@ public partial class EnemyStateMachine : StateMachine, Enemy
 	public override void _Process(double delta)
 	{
 		attackCooldownTime = Mathf.Max(0, attackCooldownTime - (delta * slowrate));
-	}
-	public override void _ExitTree()
-	{
-		SceneManager.enemies.Remove(this);
 	}
 
 	private void HuntPlayer(Node2D body)
@@ -87,4 +84,30 @@ public partial class EnemyStateMachine : StateMachine, Enemy
 		}
 	}
 
+	public ISaveData SaveState()
+	{
+		EnemyData data = new();
+		data.hp = hp;
+		return data;
+	}
+
+	public void LoadState(ISaveData state)
+	{
+		if (state is EnemyData data)
+		{
+			hp = data.hp;
+			if (hp <= 0)
+			{
+				SwitchState(new EnemyDieState(this));
+				Visible = false;
+			}
+		}
+
+
+	}
+}
+[Serializable]
+public class EnemyData : ISaveData
+{
+	public int hp { get; set; }
 }

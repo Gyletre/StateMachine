@@ -1,7 +1,8 @@
 using Godot;
 using System;
+using Game.SceneManagement;
 
-namespace Game;
+namespace Game.SceneLoader;
 
 public partial class Door : Node2D
 {

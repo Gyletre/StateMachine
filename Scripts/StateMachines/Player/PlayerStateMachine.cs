@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using Game.UI;
 using Game.Animation;
+using Game.SceneManagement;
 
 namespace Game.StateMachine.PlayerState
 {
-	public partial class PlayerStateMachine : StateMachine, Player, PlayerManageable
+	public partial class PlayerStateMachine : StateMachine, Player, PlayerManageable, ISaveable
 	{
 		[Export] public InputReader inputReader;
 		[Export] public Animator animator;
@@ -31,7 +32,7 @@ namespace Game.StateMachine.PlayerState
 			knownSpells.Add(Spell.Heal);
 			hp = maxHP;
 			SceneManager.player = this;
-			healthBar.UpdateMaxHP(hp);
+			healthBar.UpdateMaxHP(maxHP);
 			OnDamageTaken += healthBar.UpdateHealthBar;
 			SwitchState(new PlayerMoveState(this));
 		}
@@ -93,9 +94,48 @@ namespace Game.StateMachine.PlayerState
 		{
 			return inputReader.abilities;
 		}
-	}
 
+		public ISaveData SaveState()
+		{
+			PlayerData playerSaveData = new()
+			{
+				knownSpells = knownSpells,
+				hp = hp
+			};
+			playerSaveData.SetPos(GlobalPosition);
+			GD.Print(playerSaveData.knownSpells + " " + playerSaveData.hp);
+			return playerSaveData;
+
+		}
+
+		public void LoadState(ISaveData state)
+		{
+			if (state is PlayerData playerSaveData)
+			{
+				knownSpells = playerSaveData.knownSpells;
+				hp = playerSaveData.hp;
+				GlobalPosition = playerSaveData.GetPos();
+			}
+		}
+	}
+	public class PlayerData : ISaveData
+	{
+		public List<Spell> knownSpells { get; set; }
+		public int hp { get; set; }
+		public float PosX { get; set; }
+		public float PosY { get; set; }
+		public Vector2 GetPos()
+		{
+			return new Vector2(PosX, PosY);
+		}
+		public void SetPos(Vector2 pos)
+		{
+			PosX = pos.X;
+			PosY = pos.Y;
+		}
+	}
 }
+
 namespace Game
 {
 	public interface Player
@@ -104,11 +144,11 @@ namespace Game
 	}
 	public interface PlayerManageable
 	{
-		public List<Spell> GetKnownSpells();
 		public Vector2 GetGlobalPos();
 		public void SetGlobalPos(Vector2 pos);
-		public void LearnSpell(Spell spell);
 		public void SlowDown(float rate);
+		public List<Spell> GetKnownSpells();
+		public void LearnSpell(Spell spell);
 		public Action<int>[] GetAbilityKeys();
 		public void EquipSpell(int num, Spell spell);
 		public event Action OnSpellAdded;

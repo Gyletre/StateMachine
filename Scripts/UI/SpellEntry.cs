@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Game.SceneManagement;
 
 namespace Game.UI;
 

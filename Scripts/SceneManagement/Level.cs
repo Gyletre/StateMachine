@@ -11,5 +11,10 @@ public enum LevelIdentifier
 {
     ForestTown,
     CastleTown,
-    Other,
+    Plains,
+    Desert,
+    DesertTown,
+    Castle,
+    Inn,
+    Shop,
 }

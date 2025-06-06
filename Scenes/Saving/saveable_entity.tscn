@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctyxv3gne8v57"]
+
+[ext_resource type="Script" uid="uid://cc6hvdikv4bjl" path="res://Scripts/Saving/SaveableEntity.cs" id="1_0f11f"]
+
+[node name="SaveableEntity" type="Node"]
+script = ExtResource("1_0f11f")

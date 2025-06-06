@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Quic;
 using Game.UI;
+using Game.SceneManagement;
 
 namespace Game.Quest;
 
 public partial class QuestManager : Node2D
 {
-    [Export(PropertyHint.Dir)] string questWindow;
+    [Export(PropertyHint.File)] string questWindow;
     static QuestManager instance;
     static List<Quest> quests = new();
     static Quest maybeQuest;
