@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckrhl4dxhq71n"]
+
+[ext_resource type="Script" uid="uid://oadva4h6awjf" path="res://Scripts/Animation/HitBoxManager.cs" id="1_y803k"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mjrfy"]
+
+[node name="HitboxManager" type="Area2D" node_paths=PackedStringArray("collider")]
+script = ExtResource("1_y803k")
+collider = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_mjrfy")

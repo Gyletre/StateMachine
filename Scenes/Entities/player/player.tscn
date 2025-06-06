@@ -1,0 +1,139 @@
+[gd_scene load_steps=25 format=3 uid="uid://cpmtxtugd5fmr"]
+
+[ext_resource type="Script" uid="uid://dsk3uwixhfs22" path="res://Scripts/StateMachines/Player/PlayerStateMachine.cs" id="1_l5wed"]
+[ext_resource type="Script" uid="uid://1q26hmymm07e" path="res://Scripts/InputReader.cs" id="2_qlsqw"]
+[ext_resource type="Texture2D" uid="uid://to32bfocgim1" path="res://project_assets/hero/Hero_melee.png" id="3_6b4lp"]
+[ext_resource type="Script" uid="uid://i7831e0an6g8" path="res://Scripts/Animation/Animator.cs" id="4_alk63"]
+[ext_resource type="Script" uid="uid://ck2qlx5qlwci7" path="res://Scripts/Animation/DirectionalAnimation.cs" id="5_d7d75"]
+[ext_resource type="Texture2D" uid="uid://c6ngkv5hbyblh" path="res://project_assets/hero/Hero_idle.png" id="6_8wki5"]
+[ext_resource type="Texture2D" uid="uid://buk0xna0r8qcc" path="res://project_assets/hero/Hero_walk.png" id="7_qutje"]
+[ext_resource type="Texture2D" uid="uid://cw0hymglvr6fs" path="res://project_assets/hero/Hero_hit.png" id="8_w7em6"]
+[ext_resource type="Texture2D" uid="uid://bxmmclse5spja" path="res://project_assets/hero/Hero_die.png" id="9_h2gvh"]
+[ext_resource type="Texture2D" uid="uid://vp5y3po2b80p" path="res://project_assets/hero/Hero_cast.png" id="10_en4d4"]
+[ext_resource type="Script" uid="uid://oadva4h6awjf" path="res://Scripts/Animation/HitBoxManager.cs" id="10_u8phf"]
+[ext_resource type="Script" uid="uid://0ajawvxewg7j" path="res://Scripts/Animation/HitBox.cs" id="11_5arc8"]
+[ext_resource type="Texture2D" uid="uid://dv1cfjx2qfdm8" path="res://project_assets/hero/Hero_jump.png" id="11_yicnn"]
+[ext_resource type="PackedScene" uid="uid://lynjcu4em1e8" path="res://Scenes/UI/health_bar.tscn" id="12_70ban"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6chwa"]
+radius = 14.0
+height = 34.0
+
+[sub_resource type="Resource" id="Resource_k5sfr"]
+script = ExtResource("5_d7d75")
+type = 0
+looping = true
+texture = ExtResource("6_8wki5")
+YOffset = 0
+length = 4
+times = PackedFloat32Array(0.5, 0.5, 0.5, 0.5)
+hitFrame = -1
+
+[sub_resource type="Resource" id="Resource_b7chc"]
+script = ExtResource("5_d7d75")
+type = 1
+looping = true
+texture = ExtResource("7_qutje")
+YOffset = 0
+length = 4
+times = PackedFloat32Array(0.25, 0.25, 0.25, 0.25)
+hitFrame = -1
+
+[sub_resource type="Resource" id="Resource_cirw3"]
+script = ExtResource("5_d7d75")
+type = 5
+looping = false
+texture = ExtResource("3_6b4lp")
+YOffset = 0
+length = 4
+times = PackedFloat32Array(0.1, 0.1, 0.1, 0.1)
+hitFrame = 0
+
+[sub_resource type="Resource" id="Resource_4h0yc"]
+script = ExtResource("5_d7d75")
+type = 2
+looping = false
+texture = ExtResource("8_w7em6")
+YOffset = 0
+length = 2
+times = PackedFloat32Array(0.4, 0.2)
+hitFrame = -1
+
+[sub_resource type="Resource" id="Resource_hksvg"]
+script = ExtResource("5_d7d75")
+type = 3
+looping = false
+texture = ExtResource("9_h2gvh")
+YOffset = 0
+length = 1
+times = PackedFloat32Array(1)
+hitFrame = -1
+
+[sub_resource type="Resource" id="Resource_yicnn"]
+script = ExtResource("5_d7d75")
+type = 6
+looping = false
+texture = ExtResource("10_en4d4")
+YOffset = 0
+length = 1
+times = PackedFloat32Array(0.1)
+hitFrame = -1
+metadata/_custom_type_script = "uid://ck2qlx5qlwci7"
+
+[sub_resource type="Resource" id="Resource_y87ki"]
+script = ExtResource("5_d7d75")
+type = 15
+looping = false
+texture = ExtResource("11_yicnn")
+YOffset = -32
+length = 1
+times = PackedFloat32Array(0.75)
+hitFrame = -1
+metadata/_custom_type_script = "uid://ck2qlx5qlwci7"
+
+[sub_resource type="Resource" id="Resource_jvrqy"]
+script = ExtResource("11_5arc8")
+positions = PackedVector2Array(5, 27, -23, 0, 23, 0, -5, -19)
+radius = 25.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a367b"]
+radius = 25.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("inputReader", "animator", "hitBoxManager", "healthBar")]
+y_sort_enabled = true
+script = ExtResource("1_l5wed")
+inputReader = NodePath("InputReader")
+animator = NodePath("AnimatedSprite")
+hitBoxManager = NodePath("AttackHitBoxManager")
+healthBar = NodePath("HealthBar")
+speed = 100.0
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_6chwa")
+
+[node name="InputReader" type="Node" parent="."]
+script = ExtResource("2_qlsqw")
+
+[node name="AnimatedSprite" type="Sprite2D" parent="."]
+y_sort_enabled = true
+position = Vector2(0, 11)
+texture = ExtResource("6_8wki5")
+offset = Vector2(0, -8)
+hframes = 4
+vframes = 4
+script = ExtResource("4_alk63")
+animations = Array[Object]([SubResource("Resource_k5sfr"), SubResource("Resource_b7chc"), SubResource("Resource_cirw3"), SubResource("Resource_4h0yc"), SubResource("Resource_hksvg"), SubResource("Resource_yicnn"), SubResource("Resource_y87ki")])
+baseYOffset = -8.0
+
+[node name="AttackHitBoxManager" type="Area2D" parent="." node_paths=PackedStringArray("collider")]
+script = ExtResource("10_u8phf")
+collider = NodePath("AttackHitBox")
+hitBox = SubResource("Resource_jvrqy")
+
+[node name="AttackHitBox" type="CollisionShape2D" parent="AttackHitBoxManager"]
+position = Vector2(5, 27)
+shape = SubResource("CircleShape2D_a367b")
+disabled = true
+
+[node name="HealthBar" parent="." instance=ExtResource("12_70ban")]
+position = Vector2(0, -28)

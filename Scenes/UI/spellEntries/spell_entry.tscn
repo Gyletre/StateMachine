@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=4 uid="uid://dn04jv1yxg25"]
+
+[ext_resource type="Script" uid="uid://de4os1ehvtqve" path="res://Scripts/UI/SpellEntry.cs" id="1_aylye"]
+[ext_resource type="LabelSettings" uid="uid://do5bodjuqq72j" path="res://project_assets/fonts/title text.tres" id="1_k35o3"]
+[ext_resource type="TileSet" uid="uid://bgb7vxsmbjb54" path="res://project_assets/ui/ui.tres" id="1_u7pr4"]
+[ext_resource type="Texture2D" uid="uid://bjt3j3gke4y3i" path="res://project_assets/icons/256/Blood_010_Aura_Of_Draining.png" id="2_smvyq"]
+[ext_resource type="Texture2D" uid="uid://bedqubpr8s3wa" path="res://project_assets/icons/256/Air_01_Missile.png" id="4_bjxy4"]
+[ext_resource type="PackedScene" uid="uid://078rnxrm5g7i" path="res://Scenes/UI/equip_button.tscn" id="6_ilh6r"]
+
+[node name="SpellEntry" type="Node2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_aylye")
+image = ExtResource("2_smvyq")
+spellName = "fidget spinner of death"
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+position = Vector2(0, -14)
+tile_map_data = PackedByteArray("AAACAAAAAAAJAAQAAAACAAEAAAAJAAUAAAADAAAAAAAKAAQAAAADAAEAAAAKAAUAAAAEAAAAAAAKAAQAAAAEAAEAAAAKAAUAAAAFAAAAAAAKAAQAAAAFAAEAAAAKAAUAAAAGAAAAAAALAAQAAAAGAAEAAAALAAUAAAA=")
+tile_set = ExtResource("1_u7pr4")
+
+[node name="Clickables" type="TileMapLayer" parent="."]
+position = Vector2(0, -23)
+tile_map_data = PackedByteArray("AAADAAIAAAABAAcAAAAEAAIAAAABAAcAAAAFAAIAAAABAAcAAAAGAAIAAAABAAcAAAACAAIAAAABAAcAAAA=")
+tile_set = ExtResource("1_u7pr4")
+
+[node name="SpellIcon" type="Sprite2D" parent="."]
+position = Vector2(2, 7)
+scale = Vector2(0.235429, 0.235429)
+texture = ExtResource("4_bjxy4")
+centered = false
+
+[node name="SpellTitle" type="Label" parent="."]
+offset_left = 78.0
+offset_top = 4.0
+offset_right = 210.0
+offset_bottom = 22.0
+text = "attack spell"
+label_settings = ExtResource("1_k35o3")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="EquipButton" parent="." instance=ExtResource("6_ilh6r")]
+position = Vector2(226, 21)

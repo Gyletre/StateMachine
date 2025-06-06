@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="DirectionalAnimation" load_steps=3 format=3 uid="uid://bkm11wscrvmfc"]
+
+[ext_resource type="Script" uid="uid://ck2qlx5qlwci7" path="res://Scripts/Animation/DirectionalAnimation.cs" id="1_lts80"]
+[ext_resource type="Texture2D" uid="uid://wvmlaej1lifr" path="res://project_assets/monsters/human/paladin/Paladin_walk.png" id="2_dx6c4"]
+
+[resource]
+script = ExtResource("1_lts80")
+type = 1
+looping = true
+texture = ExtResource("2_dx6c4")
+YOffset = -16
+length = 4
+times = PackedFloat32Array(0.25, 0.25, 0.25, 0.25)
+hitFrame = -1

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dh3il2busqk7f"]
+
+[ext_resource type="PackedScene" uid="uid://dn04jv1yxg25" path="res://Scenes/UI/spellEntries/spell_entry.tscn" id="1_2v33x"]
+[ext_resource type="Texture2D" uid="uid://dlcv3nbexndnk" path="res://project_assets/icons/256/General_02_Heal.png" id="2_48735"]
+
+[node name="Heal" instance=ExtResource("1_2v33x")]
+image = ExtResource("2_48735")
+spellName = "Heal"
+spellIdentity = 1

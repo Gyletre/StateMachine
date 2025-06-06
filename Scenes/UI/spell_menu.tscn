@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://bjl06syux4xup"]
+
+[ext_resource type="Script" uid="uid://bxfexilo1874t" path="res://Scripts/UI/SpellMenu.cs" id="1_oqvyk"]
+[ext_resource type="TileSet" uid="uid://bgb7vxsmbjb54" path="res://project_assets/ui/ui.tres" id="1_qt54f"]
+[ext_resource type="PackedScene" uid="uid://brs7oyie5n60r" path="res://Scenes/UI/spellEntries/fireball.tscn" id="2_2vjjh"]
+[ext_resource type="PackedScene" uid="uid://dh3il2busqk7f" path="res://Scenes/UI/spellEntries/heal.tscn" id="3_4c8f7"]
+[ext_resource type="PackedScene" uid="uid://cpyvgch036k8t" path="res://Scenes/UI/spellEntries/buff.tscn" id="4_oqvyk"]
+
+[node name="Spell Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_oqvyk")
+spellScenes = Array[PackedScene]([ExtResource("4_oqvyk"), ExtResource("2_2vjjh"), ExtResource("3_4c8f7")])
+
+[node name="BaseLayer" type="TileMapLayer" parent="."]
+z_index = 5
+position = Vector2(29, -34)
+scale = Vector2(2, 2)
+tile_map_data = PackedByteArray(0, 0, 8, 0, 5, 0, 0, 0, 0, 0, 50, 0, 0, 0)
+tile_set = ExtResource("1_qt54f")

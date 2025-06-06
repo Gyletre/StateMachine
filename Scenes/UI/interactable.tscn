@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwwfx4r28nnm3"]
+
+[ext_resource type="Script" uid="uid://u4dpwb8nhqr1" path="res://Scripts/Environment/Interactable.cs" id="1_2pfmx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rgian"]
+radius = 48.0
+
+[node name="Interactable" type="Area2D" node_paths=PackedStringArray("text")]
+z_index = 1
+script = ExtResource("1_2pfmx")
+text = NodePath("Label")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rgian")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -145.0
+offset_top = -48.0
+offset_right = 145.0
+offset_bottom = -9.0
+text = "Press E to interact
+"
+horizontal_alignment = 1

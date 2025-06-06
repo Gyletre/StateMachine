@@ -1,0 +1,107 @@
+[gd_scene load_steps=17 format=3 uid="uid://cnlfl3bhxo4u0"]
+
+[ext_resource type="Script" uid="uid://wo26qu38n8ir" path="res://Scripts/StateMachines/Enemies/EnemyStateMachine.cs" id="1_5g3f7"]
+[ext_resource type="Script" uid="uid://i7831e0an6g8" path="res://Scripts/Animation/Animator.cs" id="2_8tdg0"]
+[ext_resource type="Script" uid="uid://ck2qlx5qlwci7" path="res://Scripts/Animation/DirectionalAnimation.cs" id="3_3g3ot"]
+[ext_resource type="Script" uid="uid://oadva4h6awjf" path="res://Scripts/Animation/HitBoxManager.cs" id="3_n8ndu"]
+[ext_resource type="PackedScene" uid="uid://lynjcu4em1e8" path="res://Scenes/UI/health_bar.tscn" id="4_tsggr"]
+[ext_resource type="Script" uid="uid://0ajawvxewg7j" path="res://Scripts/Animation/HitBox.cs" id="5_g1dg7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7lpfc"]
+radius = 20.0998
+
+[sub_resource type="Resource" id="Resource_n6u5j"]
+script = ExtResource("3_3g3ot")
+type = 0
+looping = true
+YOffset = 0
+length = 4
+times = PackedFloat32Array(0.5, 0.5, 0.5, 0.5)
+hitFrame = -1
+
+[sub_resource type="Resource" id="Resource_lrwh1"]
+script = ExtResource("3_3g3ot")
+type = 1
+looping = true
+YOffset = 0
+length = 4
+times = PackedFloat32Array(0.25, 0.25, 0.25, 0.25)
+hitFrame = -1
+
+[sub_resource type="Resource" id="Resource_a7rfe"]
+script = ExtResource("3_3g3ot")
+type = 2
+looping = false
+YOffset = 0
+length = 2
+times = PackedFloat32Array(0.4, 0.2)
+hitFrame = -1
+
+[sub_resource type="Resource" id="Resource_bp7nd"]
+script = ExtResource("3_3g3ot")
+type = 3
+looping = false
+YOffset = 0
+length = 1
+times = PackedFloat32Array(1)
+hitFrame = -1
+
+[sub_resource type="Resource" id="Resource_w7ltb"]
+script = ExtResource("3_3g3ot")
+type = 4
+looping = false
+YOffset = 0
+length = 5
+times = PackedFloat32Array(0.6, 0.2, 0.2, 0.2, 0.2)
+hitFrame = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3sl67"]
+radius = 21.0238
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ruryc"]
+radius = 155.261
+
+[sub_resource type="Resource" id="Resource_t4v1a"]
+script = ExtResource("5_g1dg7")
+positions = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
+radius = 10.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x34na"]
+radius = 24.0832
+
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("hitbox", "detectionArea", "hitBoxManager", "animator", "healthBar")]
+script = ExtResource("1_5g3f7")
+hitbox = NodePath("HitBox")
+detectionArea = NodePath("DetectionArea")
+hitBoxManager = NodePath("AttackHitBox")
+animator = NodePath("Sprite2D")
+healthBar = NodePath("HealthBar")
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7lpfc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+script = ExtResource("2_8tdg0")
+animations = Array[Object]([SubResource("Resource_n6u5j"), SubResource("Resource_lrwh1"), SubResource("Resource_a7rfe"), SubResource("Resource_bp7nd"), SubResource("Resource_w7ltb")])
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("CircleShape2D_3sl67")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+
+[node name="Collision" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_ruryc")
+
+[node name="AttackHitBox" type="Area2D" parent="." node_paths=PackedStringArray("collider")]
+script = ExtResource("3_n8ndu")
+collider = NodePath("Collision")
+hitBox = SubResource("Resource_t4v1a")
+
+[node name="Collision" type="CollisionShape2D" parent="AttackHitBox"]
+shape = SubResource("CircleShape2D_x34na")
+disabled = true
+
+[node name="HealthBar" parent="." instance=ExtResource("4_tsggr")]
+position = Vector2(0, -50)

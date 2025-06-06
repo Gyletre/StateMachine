@@ -1,4 +1,4 @@
-namespace StateMachine
+namespace Game.StateMachine
 {
     public abstract class State
     {

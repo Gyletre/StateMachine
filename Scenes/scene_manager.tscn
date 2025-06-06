@@ -1,0 +1,41 @@
+[gd_scene load_steps=10 format=3 uid="uid://ldpvr4fmttm3"]
+
+[ext_resource type="Script" uid="uid://3f2q2us7c66g" path="res://Scripts/SceneManagement/SceneManager.cs" id="1_ak3r1"]
+[ext_resource type="PackedScene" uid="uid://vtw5fq5qkgsm" path="res://Scenes/Levels/green_town.tscn" id="1_gukrn"]
+[ext_resource type="PackedScene" uid="uid://cpmtxtugd5fmr" path="res://Scenes/Entities/player/player.tscn" id="2_2lire"]
+[ext_resource type="PackedScene" uid="uid://ctyxv3gne8v57" path="res://Scenes/Saving/saveable_entity.tscn" id="3_fhdvy"]
+[ext_resource type="PackedScene" uid="uid://b8144pyhpi88k" path="res://Scenes/Entities/npc/quest/quest_manager.tscn" id="3_t7rfq"]
+[ext_resource type="Script" uid="uid://qdyx26nqcc30" path="res://Scripts/Camera.cs" id="4_8j8h1"]
+[ext_resource type="PackedScene" uid="uid://ds8jlqxdu3i4a" path="res://Scenes/UI/ui.tscn" id="6_t7rfq"]
+[ext_resource type="Script" uid="uid://6rl613717pd7" path="res://Scripts/Saving/SavingSystem.cs" id="7_thx0b"]
+[ext_resource type="PackedScene" uid="uid://b0ry7pcfaqb3d" path="res://Scenes/UI/fader.tscn" id="7_ye2ax"]
+
+[node name="SceneManager" type="Node2D" node_paths=PackedStringArray("sceneHolder")]
+y_sort_enabled = true
+script = ExtResource("1_ak3r1")
+sceneHolder = NodePath("SceneHolder")
+
+[node name="SavingSystem" type="Node" parent="."]
+script = ExtResource("7_thx0b")
+
+[node name="Player" parent="." instance=ExtResource("2_2lire")]
+
+[node name="SaveableEntity" parent="Player" instance=ExtResource("3_fhdvy")]
+uniqueIdentifier = "41a89e25-a4a7-4482-aa35-638d70273aa8"
+
+[node name="QuestManager" parent="." instance=ExtResource("3_t7rfq")]
+questWindow = "uid://sbqq1627caa3"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+script = ExtResource("4_8j8h1")
+
+[node name="SceneHolder" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="GreenCity" parent="SceneHolder" instance=ExtResource("1_gukrn")]
+
+[node name="UI" parent="." instance=ExtResource("6_t7rfq")]
+
+[node name="Fader" parent="UI" instance=ExtResource("7_ye2ax")]
+mouse_filter = 2
