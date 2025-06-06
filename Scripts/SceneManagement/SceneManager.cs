@@ -5,7 +5,7 @@ using Game.Saving;
 
 namespace Game.SceneManagement;
 
-public partial class SceneManager : Node2D, SaveableManager
+public partial class SceneManager : Node2D, SaveableManager, ISaveable
 {
 	[Export] Node sceneHolder;
 	static SceneManager instance;
@@ -14,10 +14,12 @@ public partial class SceneManager : Node2D, SaveableManager
 	public static List<Enemy> enemies = new();
 	public static Action OnAllEnemiesDefeated;
 	public static Action OnSceneChanged;
-
+	public static Dictionary<LevelIdentifier, bool> enemiesDefeatedInScene = new();
 	private static List<SaveableEntity> saveables = new();
 	private static SavingSystem savingSystem;
 	private static SceneConfig sceneToLoad;
+
+	private string lastScenePath;
 	bool paused = false;
 	float enemySpeed = 1f;
 	float playerSpeed = 1f;
@@ -39,7 +41,7 @@ public partial class SceneManager : Node2D, SaveableManager
 		instance.sceneHolder.GetChild(0).Free();
 		var scene = ResourceLoader.Load<PackedScene>(sceneToLoad.scene).Instantiate();
 		instance.sceneHolder.AddChild(scene);
-		instance.enemiesDefeated = false;
+		instance.lastScenePath = sceneToLoad.scene;
 		savingSystem.Load();
 		player.SetGlobalPos(sceneToLoad.playerPos);
 		savingSystem.Save();
@@ -91,6 +93,7 @@ public partial class SceneManager : Node2D, SaveableManager
 	{
 		savingSystem = SavingSystem.instance;
 		instance = this;
+		savingSystem.Load();
 	}
 
 	public override void _Process(double delta)
@@ -110,9 +113,9 @@ public partial class SceneManager : Node2D, SaveableManager
 
 	private void EnemiesDefeated()
 	{
-		if (!enemiesDefeated)
+		if (!enemiesDefeatedInScene.ContainsKey(GetCurrentLevelIdentifier()))
 		{
-			enemiesDefeated = true;
+			enemiesDefeatedInScene[GetCurrentLevelIdentifier()] = true;
 			OnAllEnemiesDefeated?.Invoke();
 		}
 	}
@@ -131,4 +134,27 @@ public partial class SceneManager : Node2D, SaveableManager
 	{
 		saveables.Remove(entity);
 	}
+
+	public ISaveData SaveState()
+	{
+		var data = new SceneData();
+		data.lastScene = lastScenePath;
+		data.enemiesDefeatedInScene = enemiesDefeatedInScene;
+		return data;
+	}
+
+	public void LoadState(ISaveData state)
+	{
+		if (state is SceneData data)
+		{
+			enemiesDefeatedInScene = data.enemiesDefeatedInScene;
+		}
+	}
+
+}
+
+public class SceneData : ISaveData
+{
+	public string lastScene { get; set; }
+	public Dictionary<LevelIdentifier, bool> enemiesDefeatedInScene { get; set; }
 }

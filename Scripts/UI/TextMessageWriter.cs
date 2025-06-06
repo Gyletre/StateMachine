@@ -5,7 +5,7 @@ namespace Game.UI
 {
     public partial class TextMessageWriter : Node2D
     {
-        [Export] float fadeTime = 2f;
+        [Export] float fadeTime = 3f;
         static List<Label> messages = new();
         static TextMessageWriter instance;
         static int offset = 20;
@@ -26,7 +26,7 @@ namespace Game.UI
             for (int i = 0; i < messages.Count; i++)
             {
                 var color = messages[i].Modulate;
-                color.A -= (float)delta / (fadeTime * messages[i].Text.Length / 10);
+                color.A -= (float)delta / fadeTime;
                 if (color.A <= 0)
                 {
                     messages[i].QueueFree();
@@ -38,7 +38,7 @@ namespace Game.UI
                 else messages[i].Modulate = color;
                 if (messages[i].Position.Y < -offset * i)
                 {
-                    messages[i].Position = new Vector2(0, messages[i].Position.Y + 1);
+                    messages[i].Position = new Vector2(-messages[i].Size.X / 2, messages[i].Position.Y + 1);
                 }
 
             }

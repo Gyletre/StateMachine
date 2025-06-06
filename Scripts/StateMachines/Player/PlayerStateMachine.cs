@@ -114,7 +114,8 @@ namespace Game.StateMachine.PlayerState
 			{
 				knownSpells = playerSaveData.knownSpells;
 				hp = playerSaveData.hp;
-				GlobalPosition = playerSaveData.GetPos(SceneManager.GetCurrentLevelIdentifier());
+				var pos = playerSaveData.GetPos(SceneManager.GetCurrentLevelIdentifier());
+				GlobalPosition = pos != null ? pos.Value : GlobalPosition;
 			}
 		}
 	}
@@ -122,10 +123,11 @@ namespace Game.StateMachine.PlayerState
 	{
 		public List<Spell> knownSpells { get; set; }
 		public int hp { get; set; }
-		public Dictionary<string, float[]> scenePositions = new();
-		public Vector2 GetPos(LevelIdentifier levelIdentifier)
+		public Dictionary<string, float[]> scenePositions { get; set; } = new();
+		public Vector2? GetPos(LevelIdentifier levelIdentifier)
 		{
 			string key = Enum.GetName(levelIdentifier);
+			if (!scenePositions.ContainsKey(key)) return null;
 			return new Vector2(scenePositions[key][0], scenePositions[key][1]);
 		}
 		public void SetPos(LevelIdentifier levelIdentifier, Vector2 pos)

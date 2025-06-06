@@ -17,7 +17,15 @@ public class EnemyDieState : EnemyBaseState
     {
         stateMachine.animator.SwitchAnimation(AnimationType.Death, OnEnd: Die);
         stateMachine.invulnerable = true;
+        foreach (Enemy enemy in SceneManager.enemies)
+        {
+            if (enemy is Node2D n)
+            {
+                GD.Print(n.Name);
+            }
+        }
         SceneManager.enemies.Remove(stateMachine);
+
         foreach (Node child in stateMachine.GetChildren())
         {
             if (child is SaveableEntity || child is Animator) continue;

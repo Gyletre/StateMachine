@@ -8,21 +8,18 @@ using Game.SceneManagement;
 
 namespace Game.Quest;
 
-public partial class QuestManager : Node2D
+public partial class QuestManager : Node2D, ISaveable
 {
     [Export(PropertyHint.File)] string questWindow;
     static QuestManager instance;
-    static List<Quest> quests = new();
+    static Dictionary<string, QuestProgression> quests = new();
     static Quest maybeQuest;
 
     public static void AddQuest(Quest quest)
     {
-        foreach (Quest activeQuest in quests)
+        if (quests.ContainsKey(quest.questName))
         {
-            if (activeQuest.questName == quest.questName)
-            {
-                return;
-            }
+            return;
         }
         QuestUI window = ResourceLoader.Load<PackedScene>(instance.questWindow).Instantiate<QuestUI>();
         window.SetupQuestUI(quest.questName, quest.questDescription, quest.spellQuestReward, quest.goldQuestReward, ActivateQuest);
@@ -33,7 +30,7 @@ public partial class QuestManager : Node2D
     private static void ActivateQuest()
     {
         if (maybeQuest == null) return;
-        quests.Add(maybeQuest);
+        quests[maybeQuest.questName] = QuestProgression.InProgress;
         TextMessageWriter.Print("Start " + maybeQuest.questName + " quest");
     }
 
@@ -42,35 +39,53 @@ public partial class QuestManager : Node2D
     /// </summary>
     /// <param name="quest">The quest to check</param>
     /// <returns>True if quest is already completed, false otherwise</returns>
-    public static bool CheckForCompletedQuest(Quest quest)
+    public static QuestProgression CheckQuestProgression(Quest quest)
     {
-        foreach (Quest activeQuest in quests)
+        if (quests.ContainsKey(quest.questName))
         {
-            if (activeQuest.questName == quest.questName)
-            {
-                return activeQuest.completed;
-            }
+            return quests[quest.questName];
         }
-        return false;
+        return QuestProgression.NotStarted;
     }
     public override void _Ready()
     {
         instance = this;
-        SceneManager.OnAllEnemiesDefeated += FinishDefeatEnemyQuest;
     }
 
-    private void FinishDefeatEnemyQuest()
-    {
-        foreach (Quest q in quests)
-        {
-            if (q.questType == QuestType.KillAllEnemies)
-            {
 
-                q.CompleteQuest(SceneManager.GetCurrentLevelIdentifier());
-            }
+
+    public ISaveData SaveState()
+    {
+        var data = new QuestData();
+        data.quests = quests;
+        return data;
+    }
+
+    public void LoadState(ISaveData state)
+    {
+        if (state is QuestData data)
+        {
+            quests = data.quests;
         }
     }
 
+    internal static void CompleteQuest(Quest quest)
+    {
+        quests[quest.questName] = QuestProgression.Completed;
+    }
+
+
+    public class QuestData : ISaveData
+    {
+        public Dictionary<string, QuestProgression> quests { get; set; }
+    }
+}
+
+public enum QuestProgression
+{
+    NotStarted,
+    InProgress,
+    Completed
 }
 
 public enum QuestType

@@ -16,4 +16,5 @@ public enum LevelIdentifier
     Castle,
     Inn,
     Shop,
+    Bar
 }

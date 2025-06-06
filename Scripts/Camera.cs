@@ -1,5 +1,6 @@
 using Godot;
 using Game.SceneManagement;
+
 namespace Game.Camera;
 
 public partial class Camera : Camera2D

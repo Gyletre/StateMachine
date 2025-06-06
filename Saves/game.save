@@ -1,0 +1,46 @@
+{
+  "c6a7dee0-6cae-4bf6-8ef6-a232ba05503f": {
+    "Type": "Game.SceneManagement.SceneData, StateMachines, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Data": {
+      "lastScene": "uid://vtw5fq5qkgsm",
+      "enemiesDefeatedInScene": {
+        "ForestTown": true,
+        "Plains": true,
+        "CastleTown": true,
+        "Inn": true
+      }
+    }
+  },
+  "41a89e25-a4a7-4482-aa35-638d70273aa8": {
+    "Type": "Game.StateMachine.PlayerState.PlayerData, StateMachines, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Data": {
+      "knownSpells": [
+        1,
+        3,
+        2
+      ],
+      "hp": 24,
+      "scenePositions": {
+        "ForestTown": [
+          -50,
+          -280
+        ]
+      }
+    }
+  },
+  "27ff0535-075d-48f8-be88-5269de0b77fd": {
+    "Type": "Game.Quest.QuestManager\u002BQuestData, StateMachines, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Data": {
+      "quests": {
+        "save forest town": 2,
+        "save castle town": 2
+      }
+    }
+  },
+  "21bd95c1-05a0-4f81-a2e9-f9c4ac77eb07": {
+    "Type": "Game.StateMachine.EnemyState.EnemyData, StateMachines, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Data": {
+      "hp": 50
+    }
+  }
+}

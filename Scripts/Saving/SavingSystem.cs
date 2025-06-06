@@ -23,11 +23,6 @@ namespace Game.Saving
             foreach (SaveableEntity saveable in manager.GetSaveables())
             {
                 ISaveData data = saveable.CaptureState();
-                if (data == null)
-                {
-                    GD.PrintErr("No saveable data given");
-                }
-                else GD.Print(data.ToString());
                 Type dataType = data.GetType();
                 state[saveable.GetUniqueIdentifier()] = new SaveWrapper
                 {

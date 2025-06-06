@@ -18,6 +18,9 @@ sceneHolder = NodePath("SceneHolder")
 [node name="SavingSystem" type="Node" parent="."]
 script = ExtResource("7_thx0b")
 
+[node name="SaveableEntity" parent="." instance=ExtResource("3_fhdvy")]
+uniqueIdentifier = "c6a7dee0-6cae-4bf6-8ef6-a232ba05503f"
+
 [node name="Player" parent="." instance=ExtResource("2_2lire")]
 
 [node name="SaveableEntity" parent="Player" instance=ExtResource("3_fhdvy")]
@@ -25,6 +28,9 @@ uniqueIdentifier = "41a89e25-a4a7-4482-aa35-638d70273aa8"
 
 [node name="QuestManager" parent="." instance=ExtResource("3_t7rfq")]
 questWindow = "uid://sbqq1627caa3"
+
+[node name="SaveableEntity" parent="QuestManager" instance=ExtResource("3_fhdvy")]
+uniqueIdentifier = "27ff0535-075d-48f8-be88-5269de0b77fd"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)

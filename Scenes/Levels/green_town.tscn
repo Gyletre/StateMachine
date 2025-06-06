@@ -71,9 +71,6 @@ Please put an end to his rampage"
 spellQuestReward = 3
 goldQuestReward = 13
 
-[node name="SaveableEntity" parent="NPC/Quest" instance=ExtResource("8_88iaa")]
-uniqueIdentifier = "61afa979-a4a1-4633-a6ca-1049e79ea1ef"
-
 [node name="SceneLoadingArea" parent="." instance=ExtResource("11_ufqj6")]
 position = Vector2(-49, -330)
 sceneToLoad = SubResource("Resource_88iaa")

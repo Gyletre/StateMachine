@@ -14,6 +14,7 @@ public class EnemyMoveState : EnemyBaseState
     {
         hitBoxLocations = stateMachine.hitBoxManager.GetHitBoxLocations();
         stateMachine.animator.SwitchAnimation(AnimationType.Idle);
+        if (stateMachine.hp <= 0) stateMachine.SwitchState(new EnemyDieState(stateMachine));
     }
     public override void Tick(double delta)
     {

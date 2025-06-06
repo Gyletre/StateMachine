@@ -6,7 +6,7 @@ using Game.SceneManagement;
 
 namespace Game.Quest;
 
-public partial class Quest : Node, ISaveable
+public partial class Quest : Node
 {
     [Export] public string questName;
     [Export] public QuestType questType;
@@ -19,47 +19,45 @@ public partial class Quest : Node, ISaveable
 
     private bool rewardReceived = false;
 
-    public void StartQuest()
+    public void QuestInteraction()
     {
         if (rewardReceived) return;
-        if (!QuestManager.CheckForCompletedQuest(this))
+        if (QuestManager.CheckQuestProgression(this) == QuestProgression.NotStarted)
         {
             QuestManager.AddQuest(this);
         }
-        else
+        else if (QuestManager.CheckQuestProgression(this) == QuestProgression.InProgress)
         {
-            TextMessageWriter.Print("TYSM, here is your reward");
-            if (spellQuestReward != Spell.None) SceneManager.player.LearnSpell(spellQuestReward);
-            if (goldQuestReward > 0) TextMessageWriter.Print("+ " + goldQuestReward + " gold");
-            rewardReceived = true;
+            CheckIfQuestIsCompleted();
+        }
+        else if (QuestManager.CheckQuestProgression(this) == QuestProgression.Completed)
+        {
+            TextMessageWriter.Print("Thanks for doing my quest");
         }
 
     }
-    public void CompleteQuest(LevelIdentifier level)
+
+    private void CheckIfQuestIsCompleted()
     {
-        if (questLocation == level)
+        switch (questType)
         {
-            TextMessageWriter.Print("completed " + questName + " quest");
-            completed = true;
+            case QuestType.KillAllEnemies:
+                if (!SceneManager.enemiesDefeatedInScene.ContainsKey(questLocation) || !SceneManager.enemiesDefeatedInScene[questLocation]) { return; }
+                break;
+            case QuestType.FetchItem:
+                //return if item is not in inventory
+                break;
+            case QuestType.TalkToOtherNPC:
+                //return if other npc is not talked to  
+                break;
+            default:
+                return;
         }
+        TextMessageWriter.Print("TYSM, here is your reward");
+        if (spellQuestReward != Spell.None) SceneManager.player.LearnSpell(spellQuestReward);
+        if (goldQuestReward > 0) TextMessageWriter.Print("+ " + goldQuestReward + " gold");
+        QuestManager.CompleteQuest(this);
+
     }
 
-    public ISaveData SaveState()
-    {
-        QuestData data = new();
-        data.rewardReceived = rewardReceived;
-        return data;
-    }
-
-    public void LoadState(ISaveData state)
-    {
-        if (state is QuestData data)
-            rewardReceived = data.rewardReceived;
-    }
-
-}
-[Serializable]
-public class QuestData : ISaveData
-{
-    public bool rewardReceived { get; set; }
 }

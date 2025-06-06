@@ -67,7 +67,6 @@ public partial class TileButton : TileMapLayer
     private void PressButton()
     {
         ChangeButtonColor(pressedOffset);
-        TextMessageWriter.Print("pressed!");
         OnPressed?.Invoke();
         GetTree().CreateTimer(0.1f).Timeout += () =>
         {

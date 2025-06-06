@@ -17,7 +17,7 @@ namespace Game.Quest
         private void StartDialogue()
         {
             if (quest == null) return;
-            quest.StartQuest();
+            quest.QuestInteraction();
         }
     }
 }
