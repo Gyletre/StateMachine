@@ -14,17 +14,20 @@ public partial class QuestManager : Node2D, ISaveable
     static QuestManager instance;
     static Dictionary<string, QuestProgression> quests = new();
     static Quest maybeQuest;
+    static Action OnAccepted;
 
-    public static void AddQuest(Quest quest)
+    public static void AddQuest(Quest quest, Action onAccepted)
     {
         if (quests.ContainsKey(quest.questName))
         {
+            onAccepted?.Invoke();
             return;
         }
         QuestUI window = ResourceLoader.Load<PackedScene>(instance.questWindow).Instantiate<QuestUI>();
         window.SetupQuestUI(quest.questName, quest.questDescription, quest.spellQuestReward, quest.goldQuestReward, ActivateQuest);
         instance.GetNode("/root/SceneManager/UI").AddChild(window);
         maybeQuest = quest;
+        OnAccepted = onAccepted;
     }
 
     private static void ActivateQuest()
@@ -32,6 +35,7 @@ public partial class QuestManager : Node2D, ISaveable
         if (maybeQuest == null) return;
         quests[maybeQuest.questName] = QuestProgression.InProgress;
         TextMessageWriter.Print("Start " + maybeQuest.questName + " quest");
+        OnAccepted?.Invoke();
     }
 
     /// <summary>

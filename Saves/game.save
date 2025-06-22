@@ -2,12 +2,10 @@
   "c6a7dee0-6cae-4bf6-8ef6-a232ba05503f": {
     "Type": "Game.SceneManagement.SceneData, StateMachines, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
     "Data": {
-      "lastScene": "uid://vtw5fq5qkgsm",
+      "lastScene": "res://Scenes/Levels/inn.tscn",
       "enemiesDefeatedInScene": {
         "ForestTown": true,
-        "Plains": true,
-        "CastleTown": true,
-        "Inn": true
+        "Plains": true
       }
     }
   },
@@ -16,14 +14,13 @@
     "Data": {
       "knownSpells": [
         1,
-        3,
-        2
+        3
       ],
-      "hp": 24,
+      "hp": 80,
       "scenePositions": {
-        "ForestTown": [
-          -50,
-          -280
+        "Inn": [
+          302.1194,
+          398.98654
         ]
       }
     }
@@ -33,14 +30,32 @@
     "Data": {
       "quests": {
         "save forest town": 2,
-        "save castle town": 2
+        "save castle town": 1
       }
     }
   },
   "21bd95c1-05a0-4f81-a2e9-f9c4ac77eb07": {
     "Type": "Game.StateMachine.EnemyState.EnemyData, StateMachines, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
     "Data": {
-      "hp": 50
+      "hp": 0
+    }
+  },
+  "3d916b98-9b35-4963-ad69-fd282a7f1f56": {
+    "Type": "Game.StateMachine.EnemyState.EnemyData, StateMachines, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Data": {
+      "hp": -5
+    }
+  },
+  "1ada8d2d-45fa-4515-bd89-cc188e0cae49": {
+    "Type": "Game.StateMachine.EnemyState.EnemyData, StateMachines, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Data": {
+      "hp": 0
+    }
+  },
+  "4099e7df-69bd-4519-a17a-937d614fc476": {
+    "Type": "Game.StateMachine.EnemyState.EnemyData, StateMachines, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+    "Data": {
+      "hp": -25
     }
   }
 }

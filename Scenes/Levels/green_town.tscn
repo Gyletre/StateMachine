@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://vtw5fq5qkgsm"]
+[gd_scene load_steps=23 format=4 uid="uid://vtw5fq5qkgsm"]
 
 [ext_resource type="Script" uid="uid://bvrl05h37f67w" path="res://Scripts/SceneManagement/Level.cs" id="1_xucae"]
 [ext_resource type="TileSet" uid="uid://d1135588x1rok" path="res://project_assets/tiles/franuka/cities/green_city/green_city.tres" id="2_1lbkn"]
@@ -12,12 +12,74 @@
 [ext_resource type="PackedScene" uid="uid://do7hl00dmpsp0" path="res://Scenes/Entities/npc/npc.tscn" id="10_02l4q"]
 [ext_resource type="PackedScene" uid="uid://diwnnjmsiixfr" path="res://Scenes/Entities/npc/quest/quest.tscn" id="11_l68ju"]
 [ext_resource type="PackedScene" uid="uid://fexywfr8l07h" path="res://Scenes/Entities/scene_loading_area.tscn" id="11_ufqj6"]
+[ext_resource type="Script" uid="uid://cymojuw3si21h" path="res://Scenes/UI/Dialogue/Dialogue.cs" id="12_kgtod"]
+[ext_resource type="Script" uid="uid://wfwp7pirocr5" path="res://Scripts/UI/Dialogue/DialogueEntry.cs" id="13_6n24d"]
 
 [sub_resource type="Resource" id="Resource_02l4q"]
 script = ExtResource("6_xucae")
 scene = "uid://cxqg1wumgmcui"
 playerPos = Vector2(-162, 90)
 metadata/_custom_type_script = "uid://bbr64qqoev8kg"
+
+[sub_resource type="Resource" id="Resource_qnb8j"]
+script = ExtResource("13_6n24d")
+text = "Hello! I have a quest for you."
+type = 4
+pEmotion = 0
+answerOptions = PackedStringArray("i\'ll accept it", "no way i\'ll do that")
+answerJumps = PackedInt32Array(0, 2)
+jumpDistance = 1
+metadata/_custom_type_script = "uid://wfwp7pirocr5"
+
+[sub_resource type="Resource" id="Resource_gw2r6"]
+script = ExtResource("13_6n24d")
+text = "what do you need me to do?"
+type = 1
+pEmotion = 5
+answerOptions = PackedStringArray()
+answerJumps = PackedInt32Array()
+jumpDistance = 1
+metadata/_custom_type_script = "uid://wfwp7pirocr5"
+
+[sub_resource type="Resource" id="Resource_qe7hp"]
+script = ExtResource("13_6n24d")
+text = "you must defeat the paladin"
+type = 2
+pEmotion = 0
+answerOptions = PackedStringArray()
+answerJumps = PackedInt32Array()
+jumpDistance = 90
+metadata/_custom_type_script = "uid://wfwp7pirocr5"
+
+[sub_resource type="Resource" id="Resource_si0ma"]
+script = ExtResource("13_6n24d")
+text = "I will not help"
+type = 1
+pEmotion = 2
+answerOptions = PackedStringArray()
+answerJumps = PackedInt32Array()
+jumpDistance = 1
+metadata/_custom_type_script = "uid://wfwp7pirocr5"
+
+[sub_resource type="Resource" id="Resource_5uuma"]
+script = ExtResource("13_6n24d")
+text = "oh no. i hope you will change your mind"
+type = 0
+pEmotion = 0
+answerOptions = PackedStringArray()
+answerJumps = PackedInt32Array()
+jumpDistance = 90
+metadata/_custom_type_script = "uid://wfwp7pirocr5"
+
+[sub_resource type="Resource" id="Resource_kgtod"]
+script = ExtResource("13_6n24d")
+text = "hello again"
+type = 5
+pEmotion = 0
+answerOptions = PackedStringArray()
+answerJumps = PackedInt32Array()
+jumpDistance = 1
+metadata/_custom_type_script = "uid://wfwp7pirocr5"
 
 [sub_resource type="Resource" id="Resource_88iaa"]
 script = ExtResource("6_xucae")
@@ -60,9 +122,10 @@ uniqueIdentifier = "21bd95c1-05a0-4f81-a2e9-f9c4ac77eb07"
 [node name="MapConstrictCamera" parent="." instance=ExtResource("8_s4yi8")]
 activeRestrict = true
 
-[node name="NPC" parent="." node_paths=PackedStringArray("quest") instance=ExtResource("10_02l4q")]
+[node name="NPC" parent="." node_paths=PackedStringArray("quest", "dialogue") instance=ExtResource("10_02l4q")]
 position = Vector2(-118, -126)
 quest = NodePath("Quest")
+dialogue = NodePath("Dialogue")
 
 [node name="Quest" parent="NPC" instance=ExtResource("11_l68ju")]
 questName = "save forest town"
@@ -70,6 +133,10 @@ questDescription = "A paladin has been spreading chaos in town
 Please put an end to his rampage"
 spellQuestReward = 3
 goldQuestReward = 13
+
+[node name="Dialogue" type="Node" parent="NPC"]
+script = ExtResource("12_kgtod")
+dialogueEntries = Array[Object]([SubResource("Resource_qnb8j"), SubResource("Resource_gw2r6"), SubResource("Resource_qe7hp"), SubResource("Resource_si0ma"), SubResource("Resource_5uuma"), SubResource("Resource_kgtod")])
 
 [node name="SceneLoadingArea" parent="." instance=ExtResource("11_ufqj6")]
 position = Vector2(-49, -330)

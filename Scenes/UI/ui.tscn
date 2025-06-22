@@ -1,14 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://ds8jlqxdu3i4a"]
+[gd_scene load_steps=4 format=3 uid="uid://ds8jlqxdu3i4a"]
 
 [ext_resource type="PackedScene" uid="uid://bjl06syux4xup" path="res://Scenes/UI/spell_menu.tscn" id="1_de23q"]
 [ext_resource type="PackedScene" uid="uid://plkgayikbpve" path="res://Scenes/UI/text_message_writer.tscn" id="2_c7mb3"]
+[ext_resource type="PackedScene" uid="uid://8h840bmqe6er" path="res://Scenes/UI/Dialogue/dialogue_manager.tscn" id="3_c7mb3"]
 
 [node name="UI" type="CanvasLayer"]
 
 [node name="Spell Menu" parent="." instance=ExtResource("1_de23q")]
+z_index = 5
 offset_left = 1.0
 offset_right = 1.0
 
 [node name="TextMessageWriter" parent="." instance=ExtResource("2_c7mb3")]
 position = Vector2(572, 557)
 scale = Vector2(2, 2)
+
+[node name="DialogueManager" parent="." instance=ExtResource("3_c7mb3")]
+z_index = 10

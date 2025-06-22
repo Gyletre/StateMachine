@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://ca0jv6uoj2s8j"]
+[gd_scene load_steps=15 format=4 uid="uid://ca0jv6uoj2s8j"]
 
 [ext_resource type="PackedScene" uid="uid://cvctrotsrikbn" path="res://Scenes/tilemap_layers.tscn" id="1_3puqs"]
 [ext_resource type="Script" uid="uid://bvrl05h37f67w" path="res://Scripts/SceneManagement/Level.cs" id="1_sy7qn"]
@@ -7,11 +7,53 @@
 [ext_resource type="Script" uid="uid://bbr64qqoev8kg" path="res://Scripts/SceneManagement/SceneConfig.cs" id="4_7xknv"]
 [ext_resource type="PackedScene" uid="uid://do7hl00dmpsp0" path="res://Scenes/Entities/npc/npc.tscn" id="5_gveqm"]
 [ext_resource type="PackedScene" uid="uid://diwnnjmsiixfr" path="res://Scenes/Entities/npc/quest/quest.tscn" id="6_x3y3x"]
+[ext_resource type="Script" uid="uid://cymojuw3si21h" path="res://Scenes/UI/Dialogue/Dialogue.cs" id="8_8uwec"]
+[ext_resource type="Script" uid="uid://wfwp7pirocr5" path="res://Scripts/UI/Dialogue/DialogueEntry.cs" id="9_hki02"]
 
 [sub_resource type="Resource" id="Resource_gn85m"]
 script = ExtResource("4_7xknv")
 scene = "res://Scenes/Levels/castle_town.tscn"
 playerPos = Vector2(560, 340)
+
+[sub_resource type="Resource" id="Resource_vsos3"]
+script = ExtResource("9_hki02")
+text = "do my quest dammit"
+type = 0
+pEmotion = 0
+answerOptions = PackedStringArray()
+answerJumps = PackedInt32Array()
+jumpDistance = 1
+metadata/_custom_type_script = "uid://wfwp7pirocr5"
+
+[sub_resource type="Resource" id="Resource_6u3a7"]
+script = ExtResource("9_hki02")
+text = "you don't have to be so mad"
+type = 1
+pEmotion = 3
+answerOptions = PackedStringArray()
+answerJumps = PackedInt32Array()
+jumpDistance = 1
+metadata/_custom_type_script = "uid://wfwp7pirocr5"
+
+[sub_resource type="Resource" id="Resource_weh4d"]
+script = ExtResource("9_hki02")
+text = "thank you <3"
+type = 2
+pEmotion = 0
+answerOptions = PackedStringArray()
+answerJumps = PackedInt32Array()
+jumpDistance = 2
+metadata/_custom_type_script = "uid://wfwp7pirocr5"
+
+[sub_resource type="Resource" id="Resource_8uwec"]
+script = ExtResource("9_hki02")
+text = "thank you again <3"
+type = 5
+pEmotion = 0
+answerOptions = PackedStringArray()
+answerJumps = PackedInt32Array()
+jumpDistance = 1
+metadata/_custom_type_script = "uid://wfwp7pirocr5"
 
 [node name="Inn" type="Node2D"]
 script = ExtResource("1_sy7qn")
@@ -41,9 +83,10 @@ position = Vector2(560, 496)
 position = Vector2(304, 399)
 toEnter = SubResource("Resource_gn85m")
 
-[node name="NPC" parent="." node_paths=PackedStringArray("quest") instance=ExtResource("5_gveqm")]
+[node name="NPC" parent="." node_paths=PackedStringArray("quest", "dialogue") instance=ExtResource("5_gveqm")]
 position = Vector2(113, 239)
 quest = NodePath("Quest")
+dialogue = NodePath("Dialogue")
 
 [node name="Quest" parent="NPC" instance=ExtResource("6_x3y3x")]
 questName = "save castle town"
@@ -52,6 +95,10 @@ Please get rid of them for me!"
 spellQuestReward = 2
 goldQuestReward = 69
 questLocation = 1
+
+[node name="Dialogue" type="Node" parent="NPC"]
+script = ExtResource("8_8uwec")
+dialogueEntries = Array[Object]([SubResource("Resource_vsos3"), SubResource("Resource_6u3a7"), SubResource("Resource_weh4d"), SubResource("Resource_8uwec")])
 
 [editable path="TilemapLayers"]
 [editable path="MapConstrictCamera"]

@@ -103,7 +103,6 @@ namespace Game.StateMachine.PlayerState
 				hp = hp
 			};
 			playerSaveData.SetPos(SceneManager.GetCurrentLevelIdentifier(), GlobalPosition);
-			GD.Print(playerSaveData.knownSpells + " " + playerSaveData.hp);
 			return playerSaveData;
 
 		}
@@ -113,6 +112,7 @@ namespace Game.StateMachine.PlayerState
 			if (state is PlayerData playerSaveData)
 			{
 				knownSpells = playerSaveData.knownSpells;
+				OnSpellAdded?.Invoke();
 				hp = playerSaveData.hp;
 				var pos = playerSaveData.GetPos(SceneManager.GetCurrentLevelIdentifier());
 				GlobalPosition = pos != null ? pos.Value : GlobalPosition;

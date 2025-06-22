@@ -19,12 +19,13 @@ public partial class Quest : Node
 
     private bool rewardReceived = false;
 
-    public void QuestInteraction()
+    public void QuestInteraction(Action onAccepted)
     {
         if (rewardReceived) return;
         if (QuestManager.CheckQuestProgression(this) == QuestProgression.NotStarted)
         {
-            QuestManager.AddQuest(this);
+            QuestManager.AddQuest(this, onAccepted);
+            return;
         }
         else if (QuestManager.CheckQuestProgression(this) == QuestProgression.InProgress)
         {
@@ -34,6 +35,7 @@ public partial class Quest : Node
         {
             TextMessageWriter.Print("Thanks for doing my quest");
         }
+        onAccepted?.Invoke();
 
     }
 
@@ -57,7 +59,10 @@ public partial class Quest : Node
         if (spellQuestReward != Spell.None) SceneManager.player.LearnSpell(spellQuestReward);
         if (goldQuestReward > 0) TextMessageWriter.Print("+ " + goldQuestReward + " gold");
         QuestManager.CompleteQuest(this);
-
     }
 
+    internal bool IsCompleted()
+    {
+        return QuestManager.CheckQuestProgression(this) != QuestProgression.NotStarted;
+    }
 }
