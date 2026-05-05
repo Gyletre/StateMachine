@@ -90,9 +90,9 @@ namespace Game.Saving
         #endregion
 
 
-        public void Delete(string defaultSaveFile = "game")
+        public void Delete(string saveFile = "game")
         {
-            File.Delete(GetPathFromSaveFile(defaultSaveFile));
+            File.Delete(GetPathFromSaveFile(saveFile));
         }
 
 

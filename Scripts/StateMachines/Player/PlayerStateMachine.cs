@@ -114,7 +114,9 @@ namespace Game.StateMachine.PlayerState
 			{
 				knownSpells = playerSaveData.knownSpells;
 				hp = playerSaveData.hp;
-				GlobalPosition = playerSaveData.GetPos(SceneManager.GetCurrentLevelIdentifier());
+				if (playerSaveData.scenePositions.ContainsKey(Enum.GetName(SceneManager.GetCurrentLevelIdentifier())))
+					GlobalPosition = playerSaveData.GetPos(SceneManager.GetCurrentLevelIdentifier());
+
 			}
 		}
 	}
