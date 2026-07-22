@@ -13,14 +13,12 @@ public class EnemyHurtState : EnemyBaseState
     {
         stateMachine.animator.SwitchAnimation(AnimationType.Hurt, OnEnd: OnEnd);
         stateMachine.OnDamageTaken?.Invoke(stateMachine.hp);
-        stateMachine.invulnerable = true;
     }
 
     public override void Tick(double delta) { }
 
     public override void Exit()
     {
-        stateMachine.invulnerable = false;
     }
 
 
@@ -31,6 +29,6 @@ public class EnemyHurtState : EnemyBaseState
             stateMachine.SwitchState(new EnemyDieState(stateMachine));
             return;
         }
-        stateMachine.SwitchState(new EnemyMoveState(stateMachine));
+        stateMachine.SwitchState(new EnemyCombatState(stateMachine));
     }
 }

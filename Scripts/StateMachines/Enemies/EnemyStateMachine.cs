@@ -3,28 +3,45 @@ using Game.Animation;
 using System;
 using Game.UI;
 using Game.SceneManagement;
+using Game.Combat;
 
 namespace Game.StateMachine.EnemyState;
 
-public partial class EnemyStateMachine : StateMachine, Enemy, ISaveable
+public partial class EnemyStateMachine : StateMachine, Enemy, ISaveable, CombatParticipant
 {
+	#region components
 	[Export] public Area2D hitbox;
 	[Export] public Area2D detectionArea;
 	[Export] public HitBoxManager hitBoxManager;
 	[Export] public Animator animator;
-	[Export] public int speed = 70;
-	[Export] public double attackCooldown = 1;
-	[Export] public int maxHp = 50;
 	[Export] public HealthBar healthBar;
+	#endregion
+	#region stats
+	[Export] public int speed = 70;
+	[Export] public int maxHp = 50;
 	[Export] public int attack = 5;
-	public Action<int> OnDamageTaken;
-	public double attackCooldownTime = 0;
-	public int hp;
+	[Export] public int combatActionLimit = 2;
+	#endregion
 
-	public bool detectedPlayer = false;
+	public int combatActions = 0;
+	public int hp;
 	public Node2D player;
 	public bool invulnerable;
+	public Action<int> OnDamageTaken;
+	#region combatParticipant
+	public Action StartTurn { get; set; } = null;
+	public Action EndTurn { get; set; } = null;
+	public RoundData roundData { get; set; } = null;
 
+	public void BeginCombat()
+	{
+		SwitchState(new EnemyCombatState(this));
+	}
+	public void EndCombat()
+	{
+		SwitchState(new EnemyMoveState(this));
+	}
+	#endregion
 
 	public void TakeDamage(int amount)
 	{
@@ -51,28 +68,22 @@ public partial class EnemyStateMachine : StateMachine, Enemy, ISaveable
 		OnDamageTaken += healthBar.UpdateHealthBar;
 
 		hitbox.BodyEntered += OnCollideWithPlayer;
-		detectionArea.BodyEntered += HuntPlayer;
-		detectionArea.BodyExited += StopHuntingPlayer;
+		detectionArea.BodyEntered += TargetPlayer;
+		detectionArea.BodyExited += StopTargetPlayer;
 		SwitchState(new EnemyMoveState(this));
 	}
-	public override void _Process(double delta)
-	{
-		attackCooldownTime = Mathf.Max(0, attackCooldownTime - (delta * slowrate));
-	}
 
-	private void HuntPlayer(Node2D body)
+	private void TargetPlayer(Node2D body)
 	{
 		if (body is Player)
 		{
-			detectedPlayer = true;
 			player = body;
 		}
 	}
-	private void StopHuntingPlayer(Node2D body)
+	private void StopTargetPlayer(Node2D body)
 	{
 		if (body is Player)
 		{
-			detectedPlayer = false;
 			player = null;
 		}
 	}
@@ -102,8 +113,6 @@ public partial class EnemyStateMachine : StateMachine, Enemy, ISaveable
 				Visible = false;
 			}
 		}
-
-
 	}
 }
 [Serializable]

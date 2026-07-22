@@ -4,28 +4,39 @@ using System.Collections.Generic;
 using Game.UI;
 using Game.Animation;
 using Game.SceneManagement;
+using Game.Combat;
 
 namespace Game.StateMachine.PlayerState
 {
-	public partial class PlayerStateMachine : StateMachine, Player, PlayerManageable, ISaveable
+	public partial class PlayerStateMachine : StateMachine, Player, PlayerManageable, ISaveable, CombatParticipant
 	{
+		#region components
 		[Export] public InputReader inputReader;
 		[Export] public Animator animator;
 		[Export] public HitBoxManager hitBoxManager;
 		[Export] public HealthBar healthBar;
+		#endregion
+		#region stats
 		[Export] public float speed { get; private set; } = 50;
 		[Export] public double invincibility = 1;
 		[Export] public int maxHP = 100;
-
-		public Action<int> OnDamageTaken;
-		public double invincibilityTime = 0;
+		public int combatActionLimit = 2;
 		public int baseAttack = 5;
 		public int damageMultiplier = 1;
 		public int hp;
+		#endregion
+		public Action StartTurn { get; set; } = null;
+		public Action EndTurn { get; set; } = null;
+		public RoundData roundData { get; set; } = null;
+
+		public Action<int> OnDamageTaken;
+		public event Action OnSpellAdded;
+		public double invincibilityTime = 0;
+
+		bool isCombat = false;
+
 		public List<Spell> knownSpells = new();
 		public Spell[] spellsEquipped = new Spell[3];
-
-		public event Action OnSpellAdded;
 
 		public override void _Ready()
 		{
@@ -59,9 +70,9 @@ namespace Game.StateMachine.PlayerState
 			slowrate = rate;
 			animator.animationSpeed = rate;
 		}
-		public int GetAttack()
+		public int GetAttackDamage(int baseDamage)
 		{
-			return baseAttack * damageMultiplier;
+			return (baseDamage + baseAttack) * damageMultiplier;
 		}
 		public void EquipSpell(int num, Spell spell)
 		{
@@ -118,6 +129,24 @@ namespace Game.StateMachine.PlayerState
 					GlobalPosition = playerSaveData.GetPos(SceneManager.GetCurrentLevelIdentifier());
 
 			}
+		}
+
+		public void BeginCombat()
+		{
+			isCombat = true;
+			SwitchState(new PlayerCombatState(this));
+		}
+
+		public void EndCombat()
+		{
+			isCombat = false;
+			SwitchState(new PlayerMoveState(this));
+		}
+		public void ReturnToMovementState()
+		{
+			if (isCombat) SwitchState(new PlayerCombatState(this));
+			else SwitchState(new PlayerMoveState(this));
+
 		}
 	}
 	public class PlayerData : ISaveData

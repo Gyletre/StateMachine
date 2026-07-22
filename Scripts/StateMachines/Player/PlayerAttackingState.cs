@@ -4,12 +4,15 @@ namespace Game.StateMachine.PlayerState
 {
     public class PlayerAttackingState : PlayerBaseState
     {
+        bool validAttack;
         public PlayerAttackingState(PlayerStateMachine stateMachine) : base(stateMachine)
         {
         }
 
         public override void Enter()
         {
+            GD.Print("Entered attacking state");
+            validAttack = false;
             stateMachine.animator.SwitchAnimation(AnimationType.MeleeAttack, OnHit, OnAnimationEnded);
         }
 
@@ -18,6 +21,10 @@ namespace Game.StateMachine.PlayerState
         public override void Exit()
         {
             stateMachine.inputReader.IsAttacking();
+            if (validAttack)
+            {
+                stateMachine.roundData.combatActions--;
+            }
         }
         private void OnHit(int direction, float time)
         {
@@ -28,14 +35,15 @@ namespace Game.StateMachine.PlayerState
         {
             if (body is Enemy e)
             {
-                e.TakeDamage(stateMachine.GetAttack());
+                validAttack = true;
+                e.TakeDamage(stateMachine.GetAttackDamage(0));
             }
         }
 
 
         void OnAnimationEnded()
         {
-            stateMachine.SwitchState(new PlayerMoveState(stateMachine));
+            stateMachine.ReturnToMovementState();
         }
     }
 }

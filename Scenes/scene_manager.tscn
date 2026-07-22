@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ldpvr4fmttm3"]
+[gd_scene load_steps=11 format=3 uid="uid://ldpvr4fmttm3"]
 
 [ext_resource type="Script" uid="uid://3f2q2us7c66g" path="res://Scripts/SceneManagement/SceneManager.cs" id="1_ak3r1"]
 [ext_resource type="PackedScene" uid="uid://vtw5fq5qkgsm" path="res://Scenes/Levels/green_town.tscn" id="1_gukrn"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ds8jlqxdu3i4a" path="res://Scenes/UI/ui.tscn" id="6_t7rfq"]
 [ext_resource type="Script" uid="uid://6rl613717pd7" path="res://Scripts/Saving/SavingSystem.cs" id="7_thx0b"]
 [ext_resource type="PackedScene" uid="uid://b0ry7pcfaqb3d" path="res://Scenes/UI/fader.tscn" id="7_ye2ax"]
+[ext_resource type="Script" uid="uid://bdegddqlwabt7" path="res://Scripts/Combat/CombatManager.cs" id="10_0eamy"]
 
 [node name="SceneManager" type="Node2D" node_paths=PackedStringArray("sceneHolder")]
 y_sort_enabled = true
@@ -17,6 +18,9 @@ sceneHolder = NodePath("SceneHolder")
 
 [node name="SavingSystem" type="Node" parent="."]
 script = ExtResource("7_thx0b")
+
+[node name="CombatManager" type="Node" parent="."]
+script = ExtResource("10_0eamy")
 
 [node name="Player" parent="." instance=ExtResource("2_2lire")]
 
@@ -36,6 +40,7 @@ y_sort_enabled = true
 [node name="GreenCity" parent="SceneHolder" instance=ExtResource("1_gukrn")]
 
 [node name="UI" parent="." instance=ExtResource("6_t7rfq")]
+process_mode = 3
 
 [node name="Fader" parent="UI" instance=ExtResource("7_ye2ax")]
 mouse_filter = 2

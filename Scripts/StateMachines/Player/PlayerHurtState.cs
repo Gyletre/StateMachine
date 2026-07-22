@@ -13,7 +13,6 @@ public class PlayerHurtState : PlayerBaseState
     {
         stateMachine.animator.SwitchAnimation(AnimationType.Hurt, OnEnd: ReturnToMove);
         stateMachine.OnDamageTaken?.Invoke(stateMachine.hp);
-        stateMachine.invincibilityTime = stateMachine.invincibility;
     }
 
     public override void Tick(double delta)
@@ -31,6 +30,6 @@ public class PlayerHurtState : PlayerBaseState
             stateMachine.SwitchState(new PlayerDieState(stateMachine));
             return;
         }
-        stateMachine.SwitchState(new PlayerMoveState(stateMachine));
+        stateMachine.ReturnToMovementState();
     }
 }

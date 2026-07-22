@@ -12,7 +12,6 @@ public class EnemyAttackState : EnemyBaseState
     public override void Enter()
     {
         stateMachine.animator.SwitchAnimation(AnimationType.Attack, OnHit, OnAttackFinished);
-        stateMachine.attackCooldownTime = stateMachine.attackCooldown;
         stateMachine.invulnerable = true;
     }
 
@@ -37,6 +36,6 @@ public class EnemyAttackState : EnemyBaseState
 
     private void OnAttackFinished()
     {
-        stateMachine.SwitchState(new EnemyMoveState(stateMachine));
+        stateMachine.SwitchState(new EnemyCombatState(stateMachine));
     }
 }

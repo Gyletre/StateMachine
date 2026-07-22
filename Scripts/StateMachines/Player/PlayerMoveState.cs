@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Diagnostics;
 
 namespace Game.StateMachine.PlayerState
 {
@@ -13,12 +14,11 @@ namespace Game.StateMachine.PlayerState
 
         public override void Enter()
         {
+            stateMachine.StartTurn = null;
+            GD.Print("Entered movement state");
             stateMachine.animator.SwitchAnimation(AnimationType.Idle);
             stateMachine.inputReader.JumpEvent += Jump;
-            for (int i = 0; i < stateMachine.inputReader.abilities.Length; i++)
-            {
-                stateMachine.inputReader.abilities[i] += ActivateAbility;
-            }
+
         }
         public override void Tick(double delta)
         {
@@ -27,22 +27,13 @@ namespace Game.StateMachine.PlayerState
             {
                 stateMachine.SwitchState(new PlayerAttackingState(stateMachine));
             }
-
         }
+
         public override void Exit()
         {
             stateMachine.inputReader.JumpEvent -= Jump;
-            for (int i = 0; i < stateMachine.inputReader.abilities.Length; i++)
-            {
-                stateMachine.inputReader.abilities[i] -= ActivateAbility;
-            }
         }
-        private void ActivateAbility(int spellNo)
-        {
-            Spell spell = stateMachine.spellsEquipped[spellNo];
-            if (spell == Spell.None) return;
-            stateMachine.SwitchState(new PlayerSpellCastingState(stateMachine, spell));
-        }
+
         private void Jump()
         {
             stateMachine.SwitchState(new PlayerJumpingState(stateMachine));

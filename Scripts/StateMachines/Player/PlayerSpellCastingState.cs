@@ -18,6 +18,7 @@ namespace Game.StateMachine.PlayerState
 
         public override void Enter()
         {
+            GD.Print("Entered spellcasting state");
             TextMessageWriter.Print("Casting " + Enum.GetName(currentSpell));
             if (!stateMachine.knownSpells.Contains(currentSpell)) // checks if player knows spell
             {

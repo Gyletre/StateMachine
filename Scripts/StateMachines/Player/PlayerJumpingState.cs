@@ -14,6 +14,7 @@ namespace Game.StateMachine.PlayerState
 
         public override void Enter()
         {
+            GD.Print("Entered jumping state");
             stateMachine.animator.SwitchAnimation(AnimationType.Jump, OnEnd: LandOnGround);
         }
 

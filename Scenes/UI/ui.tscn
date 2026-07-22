@@ -12,3 +12,4 @@ offset_right = 1.0
 [node name="TextMessageWriter" parent="." instance=ExtResource("2_c7mb3")]
 position = Vector2(572, 557)
 scale = Vector2(2, 2)
+fadeTime = 10.0
