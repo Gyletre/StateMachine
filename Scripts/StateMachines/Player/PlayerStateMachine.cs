@@ -11,12 +11,14 @@ namespace Game.StateMachine.PlayerState
 	public partial class PlayerStateMachine : StateMachine, Player, PlayerManageable, ISaveable, CombatParticipant
 	{
 		#region components
+		[ExportGroup("Components")]
 		[Export] public InputReader inputReader;
 		[Export] public Animator animator;
 		[Export] public HitBoxManager hitBoxManager;
 		[Export] public HealthBar healthBar;
 		#endregion
 		#region stats
+		[ExportGroup("stats")]
 		[Export] public float speed { get; private set; } = 50;
 		[Export] public double invincibility = 1;
 		[Export] public int maxHP = 100;
@@ -31,7 +33,6 @@ namespace Game.StateMachine.PlayerState
 
 		public Action<int> OnDamageTaken;
 		public event Action OnSpellAdded;
-		public double invincibilityTime = 0;
 
 		bool isCombat = false;
 
@@ -47,10 +48,6 @@ namespace Game.StateMachine.PlayerState
 			OnDamageTaken += healthBar.UpdateHealthBar;
 			SwitchState(new PlayerMoveState(this));
 		}
-		public override void _Process(double delta)
-		{
-			invincibilityTime = Mathf.Max(0, invincibilityTime - delta * slowrate);
-		}
 		public override void _ExitTree()
 		{
 			Camera.Camera.instance.mode = Camera.CameraMode.Cutscene;
@@ -59,16 +56,9 @@ namespace Game.StateMachine.PlayerState
 
 		public void TakeDamage(int amount)
 		{
-			if (invincibilityTime > 0) return;
 			hp -= amount;
 			SwitchState(new PlayerHurtState(this));
 
-		}
-
-		public void SlowDown(float rate)
-		{
-			slowrate = rate;
-			animator.animationSpeed = rate;
 		}
 		public int GetAttackDamage(int baseDamage)
 		{
@@ -177,7 +167,6 @@ namespace Game
 	{
 		public Vector2 GetGlobalPos();
 		public void SetGlobalPos(Vector2 pos);
-		public void SlowDown(float rate);
 		public List<Spell> GetKnownSpells();
 		public void LearnSpell(Spell spell);
 		public Action<int>[] GetAbilityKeys();

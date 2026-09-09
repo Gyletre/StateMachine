@@ -7,14 +7,12 @@ namespace Game.SceneManagement;
 
 public partial class SceneManager : Node2D, SaveableManager
 {
-	[Export] Node sceneHolder;
+	[Export] SceneHolder sceneHolder;
 	static SceneManager instance;
 	public static Fader fader;
 	public static PlayerManageable player;
 	public static List<Enemy> enemies = new();
-	public static Action OnAllEnemiesDefeated;
 	public static Action OnSceneChanged;
-
 	private static List<SaveableEntity> saveables = new();
 	private static SavingSystem savingSystem;
 	private static SceneConfig sceneToLoad;
@@ -25,74 +23,40 @@ public partial class SceneManager : Node2D, SaveableManager
 
 	public static LevelIdentifier GetCurrentLevelIdentifier()
 	{
-		return instance.sceneHolder.GetChild<Level>(0).id;
+		return instance.sceneHolder.GetCurrentLevelID();
 	}
 	public static void LoadMap(SceneConfig sceneToLoad)
 	{
 		SceneManager.sceneToLoad = sceneToLoad;
 		fader.FadeOut(ChangeScene);
 	}
-
 	private static void ChangeScene()
 	{
 		savingSystem.Save();
-		instance.sceneHolder.GetChild(0).Free();
-		var scene = ResourceLoader.Load<PackedScene>(sceneToLoad.scene).Instantiate();
-		instance.sceneHolder.AddChild(scene);
-		instance.enemiesDefeated = false;
+		instance.sceneHolder.LoadScene(sceneToLoad);
+		OnSceneChanged?.Invoke();
 		savingSystem.Load();
 		player.SetGlobalPos(sceneToLoad.playerPos);
 		savingSystem.Save();
 		fader.FadeIn();
 	}
-
-	public void SlowEnemies(float rate, float duration)
-	{
-		if (rate > 0) enemySpeed = rate;
-
-		foreach (Enemy e in enemies)
-		{
-			e.SlowDown(rate);
-		}
-		if (duration > 0)
-		{
-			GetTree().CreateTimer(duration).Timeout += () =>
-			{
-				SlowEnemies(1, -1);
-			};
-		}
-
-	}
-	public void SlowPlayer(float rate, float duration)
-	{
-		if (rate > 0) playerSpeed = rate;
-		player.SlowDown(rate);
-		if (duration > 0)
-		{
-			GetTree().CreateTimer(duration).Timeout += () =>
-			{
-				SlowPlayer(1, -1);
-			};
-		}
-	}
 	public void Pause()
 	{
-		SlowPlayer(0, -1);
-		SlowEnemies(0, -1);
+		GetTree().Paused = true;
 		paused = true;
 	}
 	public void Unpause()
 	{
-		SlowPlayer(playerSpeed, -1);
-		SlowEnemies(enemySpeed, -1);
+		GetTree().Paused = false;
 		paused = false;
 	}
 	public override void _Ready()
 	{
 		savingSystem = SavingSystem.instance;
+		savingSystem.Load();
 		instance = this;
+		player.SetGlobalPos(instance.sceneHolder.LoadLastScene());
 	}
-
 	public override void _Process(double delta)
 	{
 		if (Input.IsActionJustPressed("pause"))
@@ -104,16 +68,12 @@ public partial class SceneManager : Node2D, SaveableManager
 		{
 			EnemiesDefeated();
 		}
-
 	}
-
-
 	private void EnemiesDefeated()
 	{
 		if (!enemiesDefeated)
 		{
 			enemiesDefeated = true;
-			OnAllEnemiesDefeated?.Invoke();
 		}
 	}
 

@@ -1,20 +1,34 @@
-[gd_scene load_steps=11 format=3 uid="uid://ldpvr4fmttm3"]
+[gd_scene load_steps=14 format=3 uid="uid://ldpvr4fmttm3"]
 
 [ext_resource type="Script" uid="uid://3f2q2us7c66g" path="res://Scripts/SceneManagement/SceneManager.cs" id="1_ak3r1"]
-[ext_resource type="PackedScene" uid="uid://vtw5fq5qkgsm" path="res://Scenes/Levels/green_town.tscn" id="1_gukrn"]
 [ext_resource type="PackedScene" uid="uid://cpmtxtugd5fmr" path="res://Scenes/Entities/player/player.tscn" id="2_2lire"]
 [ext_resource type="PackedScene" uid="uid://ctyxv3gne8v57" path="res://Scenes/Saving/saveable_entity.tscn" id="3_fhdvy"]
 [ext_resource type="PackedScene" uid="uid://b8144pyhpi88k" path="res://Scenes/Entities/npc/quest/quest_manager.tscn" id="3_t7rfq"]
 [ext_resource type="Script" uid="uid://qdyx26nqcc30" path="res://Scripts/Camera.cs" id="4_8j8h1"]
+[ext_resource type="PackedScene" uid="uid://vtw5fq5qkgsm" path="res://Scenes/Levels/green_town.tscn" id="4_ccwmf"]
 [ext_resource type="PackedScene" uid="uid://ds8jlqxdu3i4a" path="res://Scenes/UI/ui.tscn" id="6_t7rfq"]
 [ext_resource type="Script" uid="uid://6rl613717pd7" path="res://Scripts/Saving/SavingSystem.cs" id="7_thx0b"]
 [ext_resource type="PackedScene" uid="uid://b0ry7pcfaqb3d" path="res://Scenes/UI/fader.tscn" id="7_ye2ax"]
+[ext_resource type="Script" uid="uid://d1055bf8f8viv" path="res://Scripts/SceneManagement/SceneHolder.cs" id="8_0eamy"]
+[ext_resource type="Script" uid="uid://bbr64qqoev8kg" path="res://Scripts/SceneManagement/SceneConfig.cs" id="9_424ls"]
 [ext_resource type="Script" uid="uid://bdegddqlwabt7" path="res://Scripts/Combat/CombatManager.cs" id="10_0eamy"]
+
+[sub_resource type="Resource" id="Resource_ccwmf"]
+script = ExtResource("9_424ls")
+scene = "uid://vtw5fq5qkgsm"
+metadata/_custom_type_script = "uid://bbr64qqoev8kg"
 
 [node name="SceneManager" type="Node2D" node_paths=PackedStringArray("sceneHolder")]
 y_sort_enabled = true
 script = ExtResource("1_ak3r1")
 sceneHolder = NodePath("SceneHolder")
+
+[node name="SceneHolder" type="Node2D" parent="."]
+y_sort_enabled = true
+script = ExtResource("8_0eamy")
+lastScene = SubResource("Resource_ccwmf")
+
+[node name="GreenTown" parent="SceneHolder" instance=ExtResource("4_ccwmf")]
 
 [node name="SavingSystem" type="Node" parent="."]
 script = ExtResource("7_thx0b")
@@ -34,13 +48,9 @@ questWindow = "uid://sbqq1627caa3"
 zoom = Vector2(2, 2)
 script = ExtResource("4_8j8h1")
 
-[node name="SceneHolder" type="Node2D" parent="."]
-y_sort_enabled = true
-
-[node name="GreenCity" parent="SceneHolder" instance=ExtResource("1_gukrn")]
-
 [node name="UI" parent="." instance=ExtResource("6_t7rfq")]
 process_mode = 3
 
 [node name="Fader" parent="UI" instance=ExtResource("7_ye2ax")]
+modulate = Color(1, 1, 1, 0)
 mouse_filter = 2

@@ -27,7 +27,6 @@ namespace Game.Saving
                 {
                     GD.PrintErr("No saveable data given");
                 }
-                else GD.Print(data.ToString());
                 Type dataType = data.GetType();
                 state[saveable.GetUniqueIdentifier()] = new SaveWrapper
                 {

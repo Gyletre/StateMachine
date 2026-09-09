@@ -5,6 +5,7 @@ using System.IO;
 using System.Net.Quic;
 using Game.UI;
 using Game.SceneManagement;
+using Game.Combat;
 
 namespace Game.Quest;
 
@@ -56,7 +57,7 @@ public partial class QuestManager : Node2D
     public override void _Ready()
     {
         instance = this;
-        SceneManager.OnAllEnemiesDefeated += FinishDefeatEnemyQuest;
+        CombatManager.OnAllEnemiesDefeated += FinishDefeatEnemyQuest;
     }
 
     private void FinishDefeatEnemyQuest()

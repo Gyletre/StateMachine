@@ -53,13 +53,6 @@ public partial class EnemyStateMachine : StateMachine, Enemy, ISaveable, CombatP
 		}
 		SwitchState(new EnemyHurtState(this));
 	}
-
-	public void SlowDown(float rate)
-	{
-		slowrate = rate;
-		animator.animationSpeed = rate;
-	}
-
 	public override void _Ready()
 	{
 		SceneManager.enemies.Add(this);

@@ -10,8 +10,10 @@ public partial class CombatManager : Node
 {
     static int next;
     static List<CombatParticipant> combat_order = new();
+    public static Action OnAllEnemiesDefeated;
     public static void StartCombat()
     {
+        if (combat_order.Count > 0) return;
         if (SceneManager.player is CombatParticipant p)
         {
             p.BeginCombat();
@@ -33,16 +35,40 @@ public partial class CombatManager : Node
         next = 0;
         NextTurn();
     }
+    public static void EndCombat()
+    {
+        if (combat_order.Count == 0) return;
+        foreach (CombatParticipant cp in combat_order)
+        {
+            cp.EndTurn = null;
+            cp.EndCombat();
+        }
+        combat_order = new();
+    }
+    public override void _Ready()
+    {
+        SceneManager.OnSceneChanged += EndCombat;
+    }
+
+    public override void _Process(double delta)
+    {
+        if (combat_order.Count == 0) { return; }
+        if (SceneManager.enemies.Count == 0)
+        {
+            GD.Print("Player wins");
+            OnAllEnemiesDefeated?.Invoke();
+            EndCombat();
+        }
+        else if (SceneManager.player == null)
+        {
+            GD.Print("Enemy wins");
+            EndCombat();
+        }
+    }
 
     private static void NextTurn()
     {
-        string namelist = "";
-        foreach (Node2D participant in combat_order)
-        {
-            namelist += " ";
-            namelist += (participant != null) ? participant.Name : "NULL";
-        }
-        GD.Print($"Combat participants: {namelist}");
+        GD.Print($"Combat participants: {combat_order.Count}");
 
         while (combat_order[next] == null)
         {
@@ -57,22 +83,6 @@ public partial class CombatManager : Node
         next %= combat_order.Count;
         GD.Print($"Next turn is {((Node2D)combat_order[next]).Name}'s turn.");
     }
-    public override void _Process(double delta)
-    {
-        if (SceneManager.enemies.Count == 0)
-        {
-            //Player wins
-        }
-        else if (SceneManager.player == null)
-        {
-            //Enemies win
-        }
-        foreach (CombatParticipant cp in combat_order)
-        {
-            cp.EndCombat();
-        }
-    }
-
 
 
     private static void ShuffleParticipants()
@@ -88,5 +98,4 @@ public partial class CombatManager : Node
             combat_order[n] = cp;
         }
     }
-
 }

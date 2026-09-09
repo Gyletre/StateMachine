@@ -22,38 +22,18 @@ namespace Game
             }
             return false;
         }
-
-        public override void _Process(double delta)
+        public override void _Input(InputEvent @event)
         {
-            if (Input.IsActionJustPressed("attack"))
-                isAttacking = true;
+            if (Input.IsActionJustPressed("attack")) isAttacking = true;
+            if (Input.IsActionJustPressed("dodge")) DodgeEvent?.Invoke();
+            if (Input.IsActionJustPressed("jump")) JumpEvent?.Invoke();
 
-            if (Input.IsActionJustPressed("dodge"))
-            {
-                DodgeEvent?.Invoke();
-            }
-            if (Input.IsActionJustPressed("jump"))
-            {
-                JumpEvent?.Invoke();
-            }
-            if (Input.IsActionJustPressed("ability1"))
-            {
-                abilities[0]?.Invoke(0);
-            }
-            if (Input.IsActionJustPressed("ability2"))
-            {
-                abilities[1]?.Invoke(1);
-            }
-            if (Input.IsActionJustPressed("ability3"))
-            {
-                abilities[2]?.Invoke(2);
-            }
-
-            float x, y;
-            x = Input.GetActionStrength("right") - Input.GetActionStrength("left");
-            y = Input.GetActionStrength("down") - Input.GetActionStrength("up");
-            moveDirection = new Vector2(x, y).Normalized();
+            if (Input.IsActionJustPressed("ability1")) abilities[0]?.Invoke(0);
+            if (Input.IsActionJustPressed("ability2")) abilities[1]?.Invoke(1);
+            if (Input.IsActionJustPressed("ability3")) abilities[2]?.Invoke(2);
+            moveDirection = new Vector2(Input.GetActionStrength("right") - Input.GetActionStrength("left"),
+                                        Input.GetActionStrength("down") - Input.GetActionStrength("up")
+                                        ).Normalized();
         }
-
     }
 }

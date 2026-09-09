@@ -21,30 +21,23 @@ height = 34.0
 
 [sub_resource type="Resource" id="Resource_k5sfr"]
 script = ExtResource("5_d7d75")
-type = 0
 looping = true
 texture = ExtResource("6_8wki5")
-YOffset = 0
 length = 4
 times = PackedFloat32Array(0.5, 0.5, 0.5, 0.5)
-hitFrame = -1
 
 [sub_resource type="Resource" id="Resource_b7chc"]
 script = ExtResource("5_d7d75")
 type = 1
 looping = true
 texture = ExtResource("7_qutje")
-YOffset = 0
 length = 4
 times = PackedFloat32Array(0.25, 0.25, 0.25, 0.25)
-hitFrame = -1
 
 [sub_resource type="Resource" id="Resource_cirw3"]
 script = ExtResource("5_d7d75")
 type = 5
-looping = false
 texture = ExtResource("3_6b4lp")
-YOffset = 0
 length = 4
 times = PackedFloat32Array(0.1, 0.1, 0.1, 0.1)
 hitFrame = 0
@@ -52,43 +45,32 @@ hitFrame = 0
 [sub_resource type="Resource" id="Resource_4h0yc"]
 script = ExtResource("5_d7d75")
 type = 2
-looping = false
 texture = ExtResource("8_w7em6")
-YOffset = 0
 length = 2
 times = PackedFloat32Array(0.4, 0.2)
-hitFrame = -1
 
 [sub_resource type="Resource" id="Resource_hksvg"]
 script = ExtResource("5_d7d75")
 type = 3
-looping = false
 texture = ExtResource("9_h2gvh")
-YOffset = 0
 length = 1
 times = PackedFloat32Array(1)
-hitFrame = -1
 
 [sub_resource type="Resource" id="Resource_yicnn"]
 script = ExtResource("5_d7d75")
 type = 6
-looping = false
 texture = ExtResource("10_en4d4")
-YOffset = 0
 length = 1
 times = PackedFloat32Array(0.1)
-hitFrame = -1
 metadata/_custom_type_script = "uid://ck2qlx5qlwci7"
 
 [sub_resource type="Resource" id="Resource_y87ki"]
 script = ExtResource("5_d7d75")
 type = 15
-looping = false
 texture = ExtResource("11_yicnn")
 YOffset = -32
 length = 1
 times = PackedFloat32Array(0.75)
-hitFrame = -1
 metadata/_custom_type_script = "uid://ck2qlx5qlwci7"
 
 [sub_resource type="Resource" id="Resource_jvrqy"]

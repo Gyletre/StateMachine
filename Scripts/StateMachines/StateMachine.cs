@@ -6,7 +6,6 @@ namespace Game.StateMachine
     public abstract partial class StateMachine : CharacterBody2D
     {
         State currentState;
-        public float slowrate = 1f;
         public void SwitchState(State newState)
         {
             currentState?.Exit();
@@ -15,7 +14,7 @@ namespace Game.StateMachine
         }
         public override void _PhysicsProcess(double delta)
         {
-            currentState?.Tick(delta * slowrate);
+            currentState?.Tick(delta);
         }
     }
 }

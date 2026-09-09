@@ -31,11 +31,9 @@ public partial class SaveableEntity : Node
         if (Engine.IsEditorHint()) return;
         SavingSystem.manager.RemoveSaveable(this);
     }
-
     public override void _Process(double delta)
     {
         if (!string.IsNullOrEmpty(uniqueIdentifier)) return;
         uniqueIdentifier = Guid.NewGuid().ToString();
     }
-
 }
