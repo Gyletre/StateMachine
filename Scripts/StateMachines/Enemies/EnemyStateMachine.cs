@@ -16,6 +16,7 @@ public partial class EnemyStateMachine : StateMachine, Enemy, ISaveable, CombatP
 	[Export] public Animator animator;
 	[Export] public HealthBar healthBar;
 	#endregion
+
 	#region stats
 	[Export] public int speed = 70;
 	[Export] public int maxHp = 50;
@@ -28,6 +29,7 @@ public partial class EnemyStateMachine : StateMachine, Enemy, ISaveable, CombatP
 	public Node2D player;
 	public bool invulnerable;
 	public Action<int> OnDamageTaken;
+
 	#region combatParticipant
 	public Action StartTurn { get; set; } = null;
 	public Action EndTurn { get; set; } = null;
@@ -102,8 +104,11 @@ public partial class EnemyStateMachine : StateMachine, Enemy, ISaveable, CombatP
 			hp = data.hp;
 			if (hp <= 0)
 			{
-				SwitchState(new EnemyDieState(this));
-				Visible = false;
+				if (SceneManager.enemies.Contains(this))
+				{
+					SceneManager.enemies.Remove(this);
+				}
+				QueueFree();
 			}
 		}
 	}

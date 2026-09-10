@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=15 format=3 uid="uid://d1135588x1rok"]
+[gd_resource type="TileSet" format=3 uid="uid://d1135588x1rok"]
 
 [ext_resource type="Texture2D" uid="uid://u1beubma5kyd" path="res://project_assets/tiles/franuka/cities/green_city/House_big_3 (open).png" id="1_vcjjf"]
 [ext_resource type="Texture2D" uid="uid://c8a6qmymy0fi0" path="res://project_assets/tiles/franuka/cities/green_city/House_small_3 (closed).png" id="2_r1ef6"]

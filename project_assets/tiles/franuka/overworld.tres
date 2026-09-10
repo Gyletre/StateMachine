@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=11 format=3 uid="uid://owk6v4gp7m2j"]
+[gd_resource type="TileSet" format=3 uid="uid://owk6v4gp7m2j"]
 
 [ext_resource type="Texture2D" uid="uid://b8nnctty4x04t" path="res://project_assets/tiles/franuka/Coastlines.png" id="1_dif5v"]
 [ext_resource type="Texture2D" uid="uid://cmkwcxbcbuw60" path="res://project_assets/tiles/franuka/Dirt.png" id="2_3rxfs"]

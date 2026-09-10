@@ -32,6 +32,7 @@ public class EnemyDieState : EnemyBaseState
 
     private void Die()
     {
+
         stateMachine.Visible = false;
     }
 }

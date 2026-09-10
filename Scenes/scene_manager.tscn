@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ldpvr4fmttm3"]
+[gd_scene format=3 uid="uid://ldpvr4fmttm3"]
 
 [ext_resource type="Script" uid="uid://3f2q2us7c66g" path="res://Scripts/SceneManagement/SceneManager.cs" id="1_ak3r1"]
 [ext_resource type="PackedScene" uid="uid://cpmtxtugd5fmr" path="res://Scenes/Entities/player/player.tscn" id="2_2lire"]
@@ -18,39 +18,41 @@ script = ExtResource("9_424ls")
 scene = "uid://vtw5fq5qkgsm"
 metadata/_custom_type_script = "uid://bbr64qqoev8kg"
 
-[node name="SceneManager" type="Node2D" node_paths=PackedStringArray("sceneHolder")]
+[node name="SceneManager" type="Node2D" unique_id=1520563919 node_paths=PackedStringArray("sceneHolder")]
 y_sort_enabled = true
 script = ExtResource("1_ak3r1")
 sceneHolder = NodePath("SceneHolder")
 
-[node name="SceneHolder" type="Node2D" parent="."]
+[node name="SavingSystem" type="Node" parent="." unique_id=534844308]
+script = ExtResource("7_thx0b")
+
+[node name="Player" parent="." unique_id=1762184037 instance=ExtResource("2_2lire")]
+
+[node name="SaveableEntity" parent="Player" unique_id=997256348 instance=ExtResource("3_fhdvy")]
+uniqueIdentifier = "player"
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2053425666]
+zoom = Vector2(2, 2)
+script = ExtResource("4_8j8h1")
+
+[node name="SceneHolder" type="Node2D" parent="." unique_id=2113100191]
 y_sort_enabled = true
 script = ExtResource("8_0eamy")
 lastScene = SubResource("Resource_ccwmf")
 
-[node name="GreenTown" parent="SceneHolder" instance=ExtResource("4_ccwmf")]
+[node name="GreenTown" parent="SceneHolder" unique_id=373586662 instance=ExtResource("4_ccwmf")]
 
-[node name="SavingSystem" type="Node" parent="."]
-script = ExtResource("7_thx0b")
+[node name="SaveableEntity" parent="SceneHolder" unique_id=1336679928 instance=ExtResource("3_fhdvy")]
+uniqueIdentifier = "cea8aeae-e6cb-46a3-810c-6fc8670640fb"
 
-[node name="CombatManager" type="Node" parent="."]
+[node name="CombatManager" type="Node" parent="." unique_id=168108876]
 script = ExtResource("10_0eamy")
 
-[node name="Player" parent="." instance=ExtResource("2_2lire")]
-
-[node name="SaveableEntity" parent="Player" instance=ExtResource("3_fhdvy")]
-uniqueIdentifier = "41a89e25-a4a7-4482-aa35-638d70273aa8"
-
-[node name="QuestManager" parent="." instance=ExtResource("3_t7rfq")]
+[node name="QuestManager" parent="." unique_id=584922247 instance=ExtResource("3_t7rfq")]
 questWindow = "uid://sbqq1627caa3"
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
-script = ExtResource("4_8j8h1")
-
-[node name="UI" parent="." instance=ExtResource("6_t7rfq")]
+[node name="UI" parent="." unique_id=200556235 instance=ExtResource("6_t7rfq")]
 process_mode = 3
 
-[node name="Fader" parent="UI" instance=ExtResource("7_ye2ax")]
-modulate = Color(1, 1, 1, 0)
+[node name="Fader" parent="UI" unique_id=1154174033 instance=ExtResource("7_ye2ax")]
 mouse_filter = 2

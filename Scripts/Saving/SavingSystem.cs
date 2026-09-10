@@ -13,6 +13,7 @@ namespace Game.Saving
         #region SAVING
         public void Save(string saveFile = "game")
         {
+
             Dictionary<string, SaveWrapper> state = LoadFile(saveFile);
             CaptureState(state);
             SaveFile(saveFile, state);
@@ -39,6 +40,7 @@ namespace Game.Saving
         private void SaveFile(string saveFile, Dictionary<string, SaveWrapper> state)
         {
             string path = GetPathFromSaveFile(saveFile);
+            GD.Print($"Saving to file path: {path}");
 
             string data = JsonSerializer.Serialize(state, new JsonSerializerOptions
             {
@@ -60,7 +62,12 @@ namespace Game.Saving
         {
             string path = GetPathFromSaveFile(saveFile);
 
-            if (!File.Exists(path)) { return new Dictionary<string, SaveWrapper>(); }
+            if (!File.Exists(path))
+            {
+                GD.Print("No save found");
+                return new Dictionary<string, SaveWrapper>();
+            }
+            GD.Print($"Loaded save file from path: {path}");
 
             var jsonString = File.ReadAllText(path);
             var rawData = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(jsonString);

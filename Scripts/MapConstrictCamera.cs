@@ -14,8 +14,9 @@ namespace Game.Camera
 		}
 		public void SetCameraLimits()
 		{
-			Camera.instance.SetCameraConstraints((Vector2I)GetChild<Node2D>(0).GlobalPosition,
-													 (Vector2I)GetChild<Node2D>(1).GlobalPosition);
+			Vector2I tl = (Vector2I)GetChild<Node2D>(0).GlobalPosition;
+			Vector2I br = (Vector2I)GetChild<Node2D>(1).GlobalPosition;
+			Camera.instance.SetCameraConstraints(tl, br);
 		}
 	}
 }

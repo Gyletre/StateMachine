@@ -50,13 +50,18 @@ public partial class SceneManager : Node2D, SaveableManager
 		GetTree().Paused = false;
 		paused = false;
 	}
+	public override void _EnterTree()
+	{
+		instance = this;
+	}
+
 	public override void _Ready()
 	{
 		savingSystem = SavingSystem.instance;
 		savingSystem.Load();
-		instance = this;
 		player.SetGlobalPos(instance.sceneHolder.LoadLastScene());
 	}
+
 	public override void _Process(double delta)
 	{
 		if (Input.IsActionJustPressed("pause"))
@@ -69,6 +74,7 @@ public partial class SceneManager : Node2D, SaveableManager
 			EnemiesDefeated();
 		}
 	}
+	
 	private void EnemiesDefeated()
 	{
 		if (!enemiesDefeated)
