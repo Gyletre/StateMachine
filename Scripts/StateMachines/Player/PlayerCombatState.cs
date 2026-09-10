@@ -24,6 +24,7 @@ public partial class PlayerCombatState : PlayerBaseState
             stateMachine.inputReader.abilities[i] += ActivateAbility;
         }
         stateMachine.inputReader.IsAttacking();
+        stateMachine.animator.SwitchAnimation(AnimationType.Idle);
     }
 
 
@@ -79,6 +80,7 @@ public partial class PlayerCombatState : PlayerBaseState
     {
         if (stateMachine.roundData == null) return;
         stateMachine.roundData = null;
+        stateMachine.animator.SwitchAnimation(AnimationType.Idle);
         stateMachine.EndTurn.Invoke();
     }
 }

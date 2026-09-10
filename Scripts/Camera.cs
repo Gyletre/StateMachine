@@ -6,6 +6,7 @@ public partial class Camera : Camera2D
 {
     public static Camera instance;
     public CameraMode mode;
+    public Vector2 combatTarget;
     PlayerManageable player;
     /// <summary>
     /// Sets camera restrictions by sending position of top left corner and bottom right corner of current map
@@ -27,7 +28,7 @@ public partial class Camera : Camera2D
     {
         if (instance == null)
         {
-            mode = CameraMode.Player;
+            mode = CameraMode.FreeMove;
             instance = this;
             player = SceneManager.player;
         }
@@ -40,18 +41,18 @@ public partial class Camera : Camera2D
     public override void _Process(double delta)
     {
         if (mode == CameraMode.Cutscene) return;
-        if (player != null && mode == CameraMode.Player)
+        if (player != null && mode == CameraMode.FreeMove)
             GlobalPosition = player.GetGlobalPos();
-        else if (mode == CameraMode.Spell)
+        else if (mode == CameraMode.Combat)
         {
-            GlobalPosition = player.GetGlobalPos() + (GetGlobalMousePosition() - player.GetGlobalPos()) * 0.2f;
+
         }
     }
 
 }
 public enum CameraMode
 {
-    Player,
-    Spell,
+    FreeMove,
+    Combat,
     Cutscene
 }

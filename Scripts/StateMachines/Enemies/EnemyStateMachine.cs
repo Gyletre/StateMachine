@@ -26,7 +26,8 @@ public partial class EnemyStateMachine : StateMachine, Enemy, ISaveable, CombatP
 
 	public int combatActions = 0;
 	public int hp;
-	public Node2D player;
+	public Node2D player { get => staticPlayer; set => staticPlayer = value; }
+	private static Node2D staticPlayer;
 	public bool invulnerable;
 	public Action<int> OnDamageTaken;
 
@@ -34,6 +35,7 @@ public partial class EnemyStateMachine : StateMachine, Enemy, ISaveable, CombatP
 	public Action StartTurn { get; set; } = null;
 	public Action EndTurn { get; set; } = null;
 	public RoundData roundData { get; set; } = null;
+	public bool IsAlive { get; set; } = true;
 
 	public void BeginCombat()
 	{
@@ -61,32 +63,20 @@ public partial class EnemyStateMachine : StateMachine, Enemy, ISaveable, CombatP
 		healthBar.UpdateMaxHP(maxHp);
 		hp = maxHp;
 		OnDamageTaken += healthBar.UpdateHealthBar;
-
-		hitbox.BodyEntered += OnCollideWithPlayer;
 		detectionArea.BodyEntered += TargetPlayer;
-		detectionArea.BodyExited += StopTargetPlayer;
 		SwitchState(new EnemyMoveState(this));
 	}
+	public override void _ExitTree()
+	{
+		SceneManager.enemies.Remove(this);
+	}
+
 
 	private void TargetPlayer(Node2D body)
 	{
 		if (body is Player)
 		{
 			player = body;
-		}
-	}
-	private void StopTargetPlayer(Node2D body)
-	{
-		if (body is Player)
-		{
-			player = null;
-		}
-	}
-	private void OnCollideWithPlayer(Node2D body)
-	{
-		if (body is Player p)
-		{
-			p.TakeDamage(attack - Mathf.CeilToInt(attack / 2));
 		}
 	}
 

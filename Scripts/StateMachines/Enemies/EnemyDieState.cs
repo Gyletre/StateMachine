@@ -15,6 +15,7 @@ public class EnemyDieState : EnemyBaseState
 
     public override void Enter()
     {
+        stateMachine.IsAlive = false;
         stateMachine.animator.SwitchAnimation(AnimationType.Death, OnEnd: Die);
         stateMachine.invulnerable = true;
         SceneManager.enemies.Remove(stateMachine);
@@ -32,7 +33,7 @@ public class EnemyDieState : EnemyBaseState
 
     private void Die()
     {
-
         stateMachine.Visible = false;
+
     }
 }

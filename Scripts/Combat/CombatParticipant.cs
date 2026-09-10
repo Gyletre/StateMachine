@@ -10,6 +10,8 @@ public interface CombatParticipant
     public RoundData roundData { get; set; }
     public Action StartTurn { get; set; }
     public Action EndTurn { get; set; }
+    public bool IsAlive { get; set; }
+    public Vector2 GlobalPosition { get; set; }
 
 }
 

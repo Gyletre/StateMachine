@@ -12,9 +12,14 @@ public partial class EnemyCombatState : EnemyBaseState
     {
     }
 
-
+    float turnTime = 5f;
     public override void Enter()
     {
+        if (!GodotObject.IsInstanceValid(stateMachine))
+        {
+            GD.PrintErr("EnemyStateMachine is INVALID when entering combat!");
+            return;
+        }
         GD.Print($"{stateMachine.Name} enter combat state");
         stateMachine.StartTurn = Activate;
         hitBoxLocations = stateMachine.hitBoxManager.GetHitBoxLocations();
@@ -37,6 +42,12 @@ public partial class EnemyCombatState : EnemyBaseState
     public override void Tick(double delta)
     {
         if (stateMachine.roundData == null) return;
+        if (stateMachine.player == null || turnTime <= 0)
+        {
+            EndTurn();
+            return;
+        }
+        turnTime -= (float)delta;
         int shortestDir;
         float shortestLen;
         Vector2 direction;
@@ -64,6 +75,7 @@ public partial class EnemyCombatState : EnemyBaseState
             if (stateMachine.GlobalPosition.DistanceTo(stateMachine.roundData.startPoint) > stateMachine.roundData.movementRange)
             {
                 EndTurn();
+                return;
             }
         }
         if (stateMachine.roundData.combatActions == 0)
@@ -76,6 +88,7 @@ public partial class EnemyCombatState : EnemyBaseState
     private void EndTurn()
     {
         stateMachine.roundData = null;
+        stateMachine.animator.SwitchAnimation(AnimationType.Idle);
         stateMachine.EndTurn.Invoke();
     }
 

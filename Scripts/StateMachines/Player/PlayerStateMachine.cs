@@ -30,6 +30,7 @@ namespace Game.StateMachine.PlayerState
 		public Action StartTurn { get; set; } = null;
 		public Action EndTurn { get; set; } = null;
 		public RoundData roundData { get; set; } = null;
+		public bool IsAlive { get; set; } = true;
 
 		public Action<int> OnDamageTaken;
 		public event Action OnSpellAdded;
@@ -114,6 +115,7 @@ namespace Game.StateMachine.PlayerState
 			if (state is PlayerData playerSaveData)
 			{
 				knownSpells = playerSaveData.knownSpells;
+				OnSpellAdded?.Invoke();
 				hp = playerSaveData.hp;
 				if (playerSaveData.scenePositions.ContainsKey(Enum.GetName(SceneManager.GetCurrentLevelIdentifier())))
 					GlobalPosition = playerSaveData.GetPos(SceneManager.GetCurrentLevelIdentifier());
